@@ -1,0 +1,134 @@
+<div class="col-lg-12">
+<div class="panel panel-default">
+    <div class="panel-heading">
+    	<h2>Ajouter un utilisateurs</h2>
+    	
+    </div>
+    <!-- /.panel-heading -->
+     <div class="panel-body">
+     		<div class="col-md-6 col-lg-8">
+                <div class="row">
+	        		<div class="form-group col-lg-12 ">
+	                    <label>Titre *</label>
+	                    <input class="form-control" placeholder="Oliver Durant">
+	                </div>
+	        		
+	        		
+                </div> 
+                <div class="row">	        		
+	        		<div class="form-group col-lg-12 ">
+	                    <label>Pseudo</label>
+	                    <input class="form-control" placeholder="Oliv75">
+	                </div>
+                </div> 
+        		<div class="row">
+	        		<div class="form-group col-lg-12 ">
+	                    <label>Email *</label>
+	                    <input class="form-control" required placeholder="test@emailtest.fr">
+	                </div>
+	        		
+        		</div>
+        		<div class="row">
+        			<div class="form-group col-lg-12 ">
+	                    <label>Téléphone *</label>
+	                    <input class="form-control" placeholder="+3356895478">
+	                </div>
+	            </div>
+                <div class="row">
+	        		<div class="form-group col-lg-12  ">
+	                    <label>Entreprise</label>
+	                    <input class="form-control" placeholder="SARL TITOTI">
+	                </div>
+                </div>
+                <div class="row">
+                	<div class="form-group col-lg-12  ">
+	                    <label>Fonction/Poste</label>
+	                    <input class="form-control" placeholder="R&D - chercheur">
+	                </div>
+                </div>
+                <hr>
+                <div class="row">
+					<div class="form-group col-lg-12 ">
+                        <label>Utilisé le nom complet</label>
+                        <div class="onoffswitch">
+						    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchName" >
+						    <label class="onoffswitch-label" for="myonoffswitchName">
+						        <span class="onoffswitch-inner"></span>
+						        <span class="onoffswitch-switch"></span>
+						    </label>
+						</div>
+	                </div>
+					<div class="form-group col-lg-12 ">
+                        <label>Publier mon email</label>
+                        <div class="onoffswitch">
+						    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchEmail" >
+						    <label class="onoffswitch-label" for="myonoffswitchEmail">
+						        <span class="onoffswitch-inner"></span>
+						        <span class="onoffswitch-switch"></span>
+						    </label>
+						</div>
+	                </div>
+					<div class="form-group col-lg-12 ">
+                        <label>Publier mon numéro de téléphone</label>
+                        <div class="onoffswitch">
+						    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitchPhone" >
+						    <label class="onoffswitch-label" for="myonoffswitchPhone">
+						        <span class="onoffswitch-inner"></span>
+						        <span class="onoffswitch-switch"></span>
+						    </label>
+						</div>
+	                </div>
+            	</div>
+
+			</div>
+    		<div class="col-md-6 col-lg-4">
+	            <div class="panel panel-default">
+	            	
+	            	<div class="panel-heading">
+		            	<div class="row">
+				    	
+				    		<div class="form-group form-group-image col-lg-12">
+				    			<img src="images/no-user.jpg" style="width:100%">
+				    			<div class="btn btn-default "><i class="fa fa-floppy-o fa-fw"></i> Ajouter une image</div>
+				    		</div>
+				    	</div>
+				    	<hr>
+		                <div class="row">
+		                	<div class="form-group col-lg-12 ">
+			                    <label>Date</label>
+			                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+			                    <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+			                </div>
+		                </div>
+		                <div class="row">
+		                	<div class="form-group col-lg-12 ">
+			                    <label>Status</label>
+			                    <div class="btn-group">
+							        <label class="btn btn-warning" ng-model="radioModel" btn-radio="'Left'">Brouillons</label>
+							        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Middle'">Publié</label>
+							        <label class="btn btn-danger" ng-model="radioModel" btn-radio="'Right'">Innactif</label>
+							    </div>
+			                </div>
+		                </div>
+
+			    	</div>
+			    </div>
+        	</div>
+        	
+        	 
+	</div>
+	<div class="panel-footer" style="text-align:center">
+		<div class="row">
+			<div class="col-sm-4">
+				<a ui-sref=".add"><div class="btn  btn-default col-sm-12"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et rester</div></a>
+			</div>
+			<div class="col-sm-4">
+				<a ui-sref=".add"><div class="btn  btn-success col-sm-12"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et fermer</div></a>
+			</div>
+			<div class="col-sm-4">
+    			<a ui-sref="^"><div class="btn  btn-danger col-sm-12"><i class="fa fa-times fa-fw"></i> Annuler</div></a>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

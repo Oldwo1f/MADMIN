@@ -1,0 +1,317 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Articles <a ui-sref=".add"><div class="btn  btn-primary pull-right"><i class="fa fa-plus fa-fw"></i> Ajouter un article</div></a></h1>
+
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+	<div ui-view></div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading-table ">
+            	<div class="row">
+	            	<div class="col-md-4">
+	            		
+                    </div>
+
+
+	            	 
+            	</div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+                <div class="col-md-8 col-md-offset-4 panel-heading-table">
+                    <form role="form" class="" >
+                        <div class="form-group input-group  col-md-6 pull-right">
+                            <input type="text" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                       <!--  <div class=" pull-right form-group col-md-4 input-group ">
+                                <select class="form-control">
+                                    <option>Toutes Catégories</option>
+                                    <option>Qui veut la paeux de roger</option>
+                                    <option>Systeme solaire</option>
+                                    <option>danger danger !</option>
+                                </select>
+                            </div> -->
+                    </form>
+                </div>
+
+                <div class="table-responsive col-lg-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Catégorie  <i class="fa sorter  fa-user fa-sort-desc"></i><i class="fa fa-user sorter fa-sort-asc"></i></i></th>
+                                <th>Titre <i class="fa sorter  fa-user fa-sort-desc"></i><i class="fa fa-user sorter fa-sort-asc"></i></th>
+                                <th>Nb Vue <i class="fa  sorter fa-user fa-sort-desc"></i><i class="fa fa-user sorter fa-sort-asc"></i></th>
+                                <th>Tag <i class="fa  sorter fa-user fa-sort-desc"></i><i class="fa fa-user sorter fa-sort-asc"></i></th>
+                                <th>Date <i class="fa sorter active fa-user fa-sort-desc"></i><i class="fa fa-user sorter fa-sort-asc"></i></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><label class="label label-default" style="color:black;background:pink;">Qui veut la peaux de roger rabit</label></td>
+                                <td>Mark Otto titre tres long et encore plus long</td>
+                                <td>225</td>
+                                <td><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> soleil</div><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> lune</div></td>
+                                <td>21/12/2014</td>
+                                <td>
+                                    <div class="tablebtn btn btn-xs btn-danger pull-right"><i class="fa fa-trash fa-fw"></i></div>
+                                    <a ui-sref=".edit"><div class="tablebtn btn btn-xs btn-primary pull-right"><i class="fa fa-edit fa-fw"></i></div></a>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label class="label label-default" style="color:white;background:red;">Qui veut la peaux de roger rabit</label></td>
+                                <td>Tyuo Roger</td>
+                                <td>56</td>
+                                <td><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> soleil</div><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> lune</div><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> espace</div><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> terre</div></td>
+                                <td>21/12/2014</td>
+                                <td>
+                                    <div class="tablebtn btn btn-xs btn-danger pull-right"><i class="fa fa-trash-o fa-fw"></i></div>
+                                    <div class="tablebtn btn btn-xs btn-primary pull-right"><i class="fa fa-edit fa-fw"></i></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label label-default" style="color:white;background:teal;">Le systeme solaire</label></td>
+                                <td>Mark Otto</td>
+                                <td>2025</td>
+                                <td><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> soleil</div><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> lune</div></td>
+                                <td>21/12/2014</td>
+                                <td>
+                                	<div class="tablebtn btn btn-xs btn-danger pull-right"><i class="fa fa-trash fa-fw"></i></div>
+                                	<a ui-sref=".edit"><div class="tablebtn btn btn-xs btn-primary pull-right"><i class="fa fa-edit fa-fw"></i></div></a>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label class="label label-default" style="color:white;background:green;">danger danger!</label></td>
+                                <td>Tyuo Roger</td>
+                                <td>56</td>
+                                <td><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> soleil</div><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> lune</div></td>
+                                <td>21/12/2014</td>
+                                <td>
+                                    <div class="tablebtn btn btn-xs btn-danger pull-right"><i class="fa fa-trash-o fa-fw"></i></div>
+                                    <div class="tablebtn btn btn-xs btn-primary pull-right"><i class="fa fa-edit fa-fw"></i></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label label-default" style="color:white;background:orangered;">Qui veut la peaux de roger rabit</label></td>
+                                <td>Tyuo Roger</td>
+                                <td>56</td>
+                                <td><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> soleil</div><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> lune</div></td>
+                                <td>21/12/2014</td>
+                                <td>
+                                	<div class="tablebtn btn btn-xs btn-danger pull-right"><i class="fa fa-trash-o fa-fw"></i></div>
+                                	<div class="tablebtn btn btn-xs btn-primary pull-right"><i class="fa fa-edit fa-fw"></i></div>
+                                </td>
+                            </tr>
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+               	<nav class=" col-lg-12">
+				  <ul class="pagination ">
+				    <li class="disable">
+				      <a href="#" aria-label="Previous" >
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				    <li class="active"><a href="#" >1</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li>
+				    <li>
+				      <a href="#" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+        <div class="row">
+	        <div class="col-md-12 col-lg-12">
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            <i class="fa fa-bar-chart-o fa-fw"></i> Activité des mes derniers articles
+
+			            <div class="pull-right">
+			                <div class="btn-group">
+			                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+			                        Période
+			                        <span class="caret"></span>
+			                    </button>
+			                    <ul class="dropdown-menu pull-right" role="menu">
+			                        <li><a href="#">Cette semaine</a>
+			                        </li>
+			                        <li><a href="#">Le moi dernier</a>
+			                        </li>
+			                        <li><a href="#">Cette année</a>
+			                        </li>
+			                        <li class="divider"></li>
+			                        <li><a href="#">Depuis la création du site</a>
+			                        </li>
+			                    </ul>
+			                </div>
+			            </div>
+			        </div>
+			        <!-- /.panel-heading -->
+			        <div class="panel-body">
+			            <div id="chart-article-aqui" ></div>
+			        </div>
+		        <!-- /.panel-body -->
+		    	</div>
+        	</div> 
+        	<div class="col-md-4 col-lg-3">
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            <i class="fa fa-bar-chart-o fa-fw"></i> Articles les plus vues
+			            <div class="pull-right">
+			                <!-- <div class="btn-group">
+			                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+			                        Actions
+			                        <span class="caret"></span>
+			                    </button>
+			                    <ul class="dropdown-menu pull-right" role="menu">
+			                        <li><a href="#">Cette semaine</a>
+			                        </li>
+			                        <li><a href="#">Ce moi</a>
+			                        </li>
+			                        <li><a href="#">Cette année</a>
+			                        </li>
+			                        <li class="divider"></li>
+			                        <li><a href="#">Depuis la création du site</a>
+			                        </li>
+			                    </ul>
+			                </div> -->
+			            </div>
+			        </div>
+			        <!-- /.panel-heading -->
+			        <div class="panel-body">
+			            <div id="chart-article-acti" ></div>
+			        </div>
+		        <!-- /.panel-body -->
+			    </div>
+	    	</div>
+
+		</div> 
+
+    </div>
+</div>
+<script type="text/javascript">
+$(function() {
+
+    Morris.Donut({
+        element: 'chart-article-acti',
+        data: [{
+            label: "Aujourd'hui",
+            value: 12
+        }, {
+            label: "Cette semaine",
+            value: 36
+        }, {
+            label: "Le moi dernier",
+            value: 20
+        }, {
+            label: "Il y a moins de 6 mois",
+            value: 50
+        }, {
+            label: "Ceci est un tres grand titre d'articles qui peut erte long",
+            value: 13
+        }],
+        colors:['darkgreen','green','lightgreen','orange','red'],
+        resize: true
+    });
+
+    // Morris.Area({
+    //     element: 'chart-article-aqui',
+    //     data: [{
+    //         period: '2012 Q1',
+    //         user: 2666,
+    //         membre: 2294,
+    //     }, {
+    //         period: '2012 Q2',
+    //         user: 2778,
+    //         membre: 302,
+    //     }, {
+    //         period: '2012 Q3',
+    //         user: 4912,
+    //         membre: 1969,
+    //     }, {
+    //         period: '2012 Q4',
+    //         user: 3767,
+    //         membre: 3597,
+    //     }, {
+    //         period: '2012 Q5',
+    //         user: 6810,
+    //         membre: 1914,
+        
+    //     }, {
+    //         period: '2012 Q6',
+    //         user: 6810,
+    //         membre: 1914,
+        
+    //     }],
+    //     behaveLikeLine:'false',
+    //     xkey: 'period',
+    //     ykeys: ['user','membre'],
+    //     labels: ['User','Membre'],
+    //     lineColors: ['#777','green'],
+    //     fillOpacity:'1',
+    //     xLabelFormat: function (x) {
+    //               var IndexToMonth = [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aoû", "Sep", "Oct", "Nov", "Dec" ];
+    //               var month = IndexToMonth[ x.getMonth() ];
+    //               var year = x.getFullYear();
+    //               return year + ' ' + month;
+    //           },
+    //       dateFormat: function (x) {
+    //               var IndexToMonth = [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aoû", "Sep", "Oct", "Nov", "Dec" ];
+    //               var month = IndexToMonth[ new Date(x).getMonth() ];
+    //               var year = new Date(x).getFullYear();
+    //               return year + ' ' + month;
+    //           },
+    //     pointSize: 5,
+    //     hideHover: 'auto',
+    //     resize: true,
+    //     xLabels:'month'
+    // });
+
+    Morris.Bar({
+      element: 'chart-article-aqui',
+      data: [
+        { y: 'Ceci est un tres grand titre d\'articlesCeci est un tres grand titre d\'articles', a: 100, b: 9 },
+        { y: 'lorem ipsum dolor si amet', a: 75,  b: 6 },
+        { y: 'Ceci est un tres grand titre d\'articles', a: 50,  b: 40 },
+        { y: 'Articles Ceci est un tres grand titre d\'articles', a: 75,  b: 6 },
+        { y: 'Articles 5', a: 50,  b: 18 },
+        { y: 'Articles 6', a: 75,  b: 2 },
+        // { y: 'Articles 7', a: 100, b: 9 },
+        // { y: 'Articles 8', a: 50,  b: 18 },
+        // { y: 'Articles 9', a: 75,  b: 2 },
+        // { y: 'Articles 10', a: 100, b: 9 }
+      ],
+      
+      xkey: 'y',
+      ykeys: ['a','b'],
+      labels: ['nbVue','nbShare'],
+      stacked:true,
+      barColors:['green','blue']
+    });
+
+
+});
+</script>
