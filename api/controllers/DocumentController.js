@@ -61,6 +61,7 @@ module.exports={
 			    		fs.writeFileSync('uploads/files/'+goodname,fs.readFileSync('.tmp/uploads/'+tmpname));
 			    		
 			    		file.filename = goodname;
+			    		// file.description = '';
 			    		file.nbDowload = Math.round(Math.random()*100)
 
 

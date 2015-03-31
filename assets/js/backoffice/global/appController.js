@@ -1,6 +1,7 @@
 app.controller('appCtrl',['$auth', '$location', '$scope', 'configService', 'filterFilter', '$filter', '$state', 'accountService', function appCtrl($auth,$location,$scope,configService,filterFilter,$filter,$state,accountService) {
 	
   $scope.h1 = configService.h1;
+  $scope.url = configService.url;
   accountService.getProfile().then(function (data) {
     $scope.me = data;
   })

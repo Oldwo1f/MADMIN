@@ -61,9 +61,10 @@ module.exports.policies = {
     
   },
   DocumentController: {
-    
     '*': [true],
-    
+  },
+  TagController: {
+    '*': [true],
   }
 
   

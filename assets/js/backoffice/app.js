@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','color-picker','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
+var app = angular.module('app', ['jsTag','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','color-picker','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
 
 app.run(['amMoment', function(amMoment) {
     amMoment.changeLocale('fr');
@@ -87,6 +87,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                 }
             })
 
+// Tags            
+            .state('/.tags', {
+                url: "tags?page&user&admin&membre&slug",
+                views: {
+                    '':{
+                        // resolve: {
+                          // users: function(userService,$stateParams) {
+                          //       console.log($stateParams);
+                          //   return userService.fetchUsers($stateParams);
+                          // }
+                        // },
+                        controller:'tagsCtrl',
+                        templateUrl:"/templates/backoffice/global/tags.html"
+                    }
+                   
+                }
+            })  
 // USER            
             .state('/.users', {
                 url: "users?page&user&admin&membre&slug",

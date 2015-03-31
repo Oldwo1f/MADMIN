@@ -82,7 +82,7 @@
 		                </nav>
 		               	<nav class=" col-xs-4">
 		                    <span class=" pull-right totalTable" style="">par page</span>
-						   <select class="form-control pull-right" ng-change="reloadImages()" style="width: 80px;margin: 20px 0px;padding: 5px 10px;height: 30px;" ng-model="filter.perPage" name="perPage" >
+						   <select class="form-control pull-right" ng-change="reload()" style="width: 80px;margin: 20px 0px;padding: 5px 10px;height: 30px;" ng-model="filter.perPage" name="perPage" >
 		                                        <option value="10">10</option>
 		                                        <option value="20">20</option>
 		                                        <option value="50">50</option>
@@ -151,14 +151,14 @@
 				                </div> 
 				                <div class="row">	        		
 					        		<div class="form-group col-lg-12 ">
-					                    <label tooltip-placement="right" tooltip="La description sert à décrire le contenu du fichier">Description</label>
-					                    <input class="form-control" placeholder="Description" name="description" type="text" ng-model="selectedFile.description">
+					                    <label tooltip-placement="right" tooltip="La description sert à décrire le contenu du fichier">Tag</label>
+					                    <js-tag></js-tag>
 					                </div>
 				                </div> 
 				                <div class="row">	        		
 					        		<div class="form-group col-lg-12 ">
 					                    <label tooltip-placement="right" tooltip="La description sert à décrire le contenu du fichier">Description</label>
-					                    <markdownpreview ng-model="selectedFile.description" handleerror="'content'" minheight="300" placehold="'Description'" />
+					                    <markdownpreview ng-model="selectedFile.description" handleerror="'content'" minheight="100" placehold="'Description'" />
 					                </div>
 				                </div> 
 				                <div class="row">	        		

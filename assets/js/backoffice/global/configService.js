@@ -3,6 +3,7 @@ app.factory('configService', ['$http', '$q', function ($http,$q) {
     service.frontConfig={};
     console.log('configService');
     service.h1 = 'Administration - Nutrimarketing';
+    service.url = 'http://nutrimarketing.eu';
     // service.frontConfig={
     //     imageResize:{
     //         article:[

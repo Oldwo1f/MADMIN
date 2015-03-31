@@ -11,7 +11,7 @@ module.exports = {
   	attributes: {
   		filename:{type:'string',required:true},
   		name:{type:'string',required:true},
-  		description:{type:'text'},
+  		description:{type:'text',defaultsTo:''},
   		nbDowload:{type:'int'},
   		size:{type:'int'},
   		type:{type:'string'},

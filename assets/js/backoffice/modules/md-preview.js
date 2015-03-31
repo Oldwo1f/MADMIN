@@ -8,6 +8,9 @@
       $scope.addlinkoff = true;
       $scope.addimgoff = true;
       $scope.md2Html = function() {
+
+        console.log('HERE');
+        console.log($scope.model);
         $scope.html = $window.marked($scope.model);
         $scope.htmlSafe = $sce.trustAsHtml($scope.html);
       };
@@ -69,7 +72,7 @@
 
   .directive('markdownpreview', function() {
     return {
-      template:'<div class="form-group col-xs-12" >'+
+      template:'<div class="" >'+
       '<div class="markdaownheader">'+
       '<li ng-click="addimgoff = true; addlinkoff=!addlinkoff" ng-hide="previewmode" title="Ajouter un lien" class="glyphicon glyphicon-link"></li>'+
       '<li ng-click="addlinkoff= true; addimgoff=!addimgoff" ng-hide="previewmode" title="Ajouter une image" class="glyphicon glyphicon-picture"></li>'+

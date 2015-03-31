@@ -77,6 +77,15 @@ module.exports.routes = {
   'PUT /document':'DocumentController.update',
   'DELETE /document/:id':'DocumentController.delete',
   
+//DOCUMENTS
+  'GET /tag/fetch':'TagController.fetchAll',
+  'POST /tag/add':'TagController.add',
+  'DELETE /tag/:id':'TagController.delete',
+  'GET /tag/fixture':'TagController.fixture',
+  // 'GET /file/download/:name':'DocumentController.serve',
+  // 'POST /upload/file':'DocumentController.upload',
+  // 'PUT /document':'DocumentController.update',
+  
 
 
   /***************************************************************************

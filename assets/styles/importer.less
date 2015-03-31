@@ -7,6 +7,7 @@
 @import "/bower_components/angularjs-color-picker/angularjs-color-picker.css";
 @import "/bower_components/angular-chart.js/dist/angular-chart.css";
 @import "/bower_components/ngImgCrop/compile/minified/ng-img-crop.css";
+@import "/bower_components/jsTag/jsTag/compiled/jsTag.css";
 /*@import "/bower_components/bootstrap-colorpicker-master/dist/css/bootstrap-colorpicker.min.css";*/
 
 @import "var.less";
@@ -131,11 +132,11 @@ input.ng-valid-required.ng-valid:not(.ng-invalid), textarea.ng-valid-required.ng
   border-color: #62b14c; }
  
 form[class*="ng-invalid"] button.btn {
-  background: #63bff8;
   transition: none; }
  
 form button.btn:not(.btn-default) {
-  transition: all ease-in 0.5s;
+  transition: all ease-in 0.5s; }
+  form button.btn.btn-success {
   background: #62b14c; }
 
 /*# sourceMappingURL=style.css.map */
@@ -472,3 +473,40 @@ form button.btn:not(.btn-default) {
 .miniaturespinner{width:100%;text-align:center;font-size:30px;padding:30px 0px;}
 .bigminiaturespinner{width:100%;text-align:center;font-size:70px;padding:100px 0px;background:#EEE;}
 .rowselected{background:#EEE;}
+
+
+.markdaownheader {.border-radius(5px);text-align: right;color: #AAA;background: white;border: 1px solid #CCC; font-size: 1.2em;position: absolute;top: 3px;right: 40px; display:none;z-index:111;}
+.form-group:hover .markdaownheader {display:block;}
+.markdaownheader li{ cursor:pointer;margin:0px 5px;color: #AAA; }
+.markdaownheader li:hover{color: #555;}
+.inlinecountdown{display:none;}
+input:focus + .inlinecountdown{display:block;}
+.cheatsheets{z-index: 99;background:#EEE; position: relative;height:0; overflow-y:hidden; .transition(all 1s linear); }
+.cheatsheets.visible{margin-bottom: 0; height:470px;}
+.block-info{ margin-top:20px;}
+.block-info:last-child{ margin-bottom:20px;}
+.block-info h3{ font-size: 1.2em;}
+.block-info ul{ padding-left:20px;}
+.block-info ul li { margin-top:5px;}
+span.placeholderabsolute {position:absolute;left: 17px;pointer-events:none; padding-left:15px;z-index: 110; line-height: 46px;color:#777;}
+
+.urlprefix{ position:absolute;left:17px; top:15px; color: #777;}
+
+.MdPreview-html{font-size:1em;height: auto;}
+.MdPreview-html h1{font-size:2em;color:red;}
+.MdPreview-html h2{font-size:1.9em;color:black;}
+.MdPreview-html h3{font-size:1.7em;color:black;}
+.MdPreview-html h4{font-size:1.5em;color:black;}
+.MdPreview-html h5{font-size:1.3em;color:black;}
+.MdPreview-html h6{font-size:1.1em;color:black;}
+.MdPreview-html ol{list-style-type:upper-roman;padding-left:20px;}
+.MdPreview-html ol ol{list-style-type:decimal;}
+.MdPreview-html ol ol ol{list-style-type:lower-alpha;}
+.MdPreview-html ul{list-style-type:initial;padding-left:20px;}
+.MdPreview-html strong{font-weight:bold;}
+.MdPreview-html em{font-style:italic;}
+.MdPreview-html blockquote{quotes: "«" "»";padding-left: 20px;padding-right: 20px;}
+.MdPreview-html blockquote:before{content: "«";}
+.MdPreview-html blockquote:after{content: "»";float:right;padding-right: 20px;}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{cursor:text;}
+.jt-tag span:before{content:'tototo';}

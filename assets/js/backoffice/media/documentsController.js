@@ -5,7 +5,9 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
     $scope.index=0;
     $scope.uploads=[];
     $scope.list=[];
-    $scope.selectedFile='';
+    $scope.selectedFile={};
+    $scope.selectedFile.description='';
+    $scope.test='tttttttt';
 
 
 
@@ -21,6 +23,7 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
         }
         $scope.list[argument].selected=true;
          $scope.selectedFile=$scope.list[argument];
+         // $scope.selectedFile.description = $scope.selectedFile.description || '';
          document.body.scrollTop=0;
     }
    $scope.remove=function () {
@@ -45,6 +48,7 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
 
         documentService.update($scope.selectedFile).then(function (data) {
             console.log(data);
+            $scope.reload();
             messageCenterService.add('success', 'Options enregistrés', { status: messageCenterService.status.unseen ,timeout: 3000});
             document.body.scrollTop=0;
         },function (err) {
@@ -72,6 +76,7 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
                 for(var i=0; i< $scope.list.length;i++)
                 {
                     if($scope.list[i].id === $scope.selectedFile.id){
+                        $scope.selectedFile=$scope.list[i];
                         $scope.list[i].selected=true;
                         olderSelection=true;
                     }
