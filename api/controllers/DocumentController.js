@@ -194,7 +194,7 @@ module.exports={
 	    
 	},
 	update:function  (req,res,next) {
-		console.log('UPDATEIMAGE');
+		console.log('UPDATEDOCUMENT');
 		console.log(req.body);
 
 		var newnametest = req.body.filename.substring(0,req.body.filename.lastIndexOf('.'))
@@ -203,7 +203,10 @@ module.exports={
 		console.log(ext);
 		
 
-		Document.findOne(req.body.id,function (err,data) {
+		Document.findOne(req.body.id).exec(function (err,data) {
+
+			console.log(data);
+			console.log(err);
 			if(err) res.status(400).send(err)
 			
 			if(req.body.name){
@@ -239,10 +242,54 @@ module.exports={
 			if(req.body.description)
 			data.description = req.body.description;
 
-			data.save(function (err,data) {
+			if(req.body.tags)
+			{
+				async.map(req.body.tags,function (item, callback) {
+					console.log('for',item);
+					Tag.find({text:item.text}).exec(function (err,data) {
+						console.log('data1',data);
+						if(data.length==0)
+						{
+							Tag.create(item).exec(function (err,data) {
+								if(err)
+									callback(err)
+
+								console.log('datacreated',data);
+								callback(null,data)
+							})
+						}else{
+							console.log('callbackExist');
+							callback(null,data[0])
+						}
+
+					})
+
+				},function (err,results) {
+					if(err)
+						console.log('error:' , err);
+
+					console.log('results',results);
+					for(var i in results)
+					{
+						console.log(data);
+						data.tags.add(results[i]);
+						console.log('here');
+						data.save(function (err,data) {
+							console.log(err);
+						if(err) res.status(400).send(err)
+							res.status(200).send(data)
+						});
+					}
+				})
+				
+			}else
+			{
+				data.save(function (err,data) {
 				if(err) res.status(400).send(err)
 					res.status(200).send(data)
-			});
+				});
+			}
+			
 		})
 	},
 	delete:function  (req,res,next) {

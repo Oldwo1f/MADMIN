@@ -15,6 +15,7 @@ module.exports = {
   		nbDowload:{type:'int'},
   		size:{type:'int'},
   		type:{type:'string'},
+  		tags:{collection:'tag'},
   		
 	},
   	beforeDestroy: function (values, cb) {

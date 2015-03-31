@@ -1,4 +1,4 @@
-var app = angular.module('app', ['jsTag','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','color-picker','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
+var app = angular.module('app', ['ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','color-picker','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
 
 app.run(['amMoment', function(amMoment) {
     amMoment.changeLocale('fr');

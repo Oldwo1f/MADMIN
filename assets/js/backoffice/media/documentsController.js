@@ -9,7 +9,12 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
     $scope.selectedFile.description='';
     $scope.test='tttttttt';
 
+    $scope.selectedFile.tags = [{ text: 'Tag1' }, { text: 'Tag2' }]
 
+          // Export jsTags options, inlcuding our own tags object
+      // $scope.tags = {
+      //   "tags": new JSTagsCollection(["jsTag", "angularJS"])
+      // };
 
 
 
@@ -23,6 +28,13 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
         }
         $scope.list[argument].selected=true;
          $scope.selectedFile=$scope.list[argument];
+         $scope.selectedFile.tags = [{ text: 'Tag5' }, { text: 'Tag6' }]
+         // $scope.$apply(function () {
+            // $scope.tagsOptions.tags = new JSTagsCollection(["Titi", "tototototo"]) 
+         // })
+    // console.log($scope.tagsOptions);
+         
+    //       console.log($scope.selectedFile);
          // $scope.selectedFile.description = $scope.selectedFile.description || '';
          document.body.scrollTop=0;
     }

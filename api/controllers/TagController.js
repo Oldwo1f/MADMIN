@@ -38,7 +38,7 @@ module.exports = {
 		    		console.log('filterPage========================>' +filter.page);
 		    		// {filename:{'contains':filter.slug}}
 		    		// .sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage)
-				Tag.find({name:{'contains':filter.slug}}).sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).exec(function (err,users){
+				Tag.find({text:{'contains':filter.slug}}).sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).exec(function (err,users){
 					
 					console.log('err==',err);
 						if(err)
@@ -51,7 +51,7 @@ module.exports = {
 		    count:function(callback){
 
 		    	console.log('FIND DOCUMENTS');
-		            Tag.count({name:{'contains':filter.slug}}).exec(function (err,count){
+		            Tag.count({text:{'contains':filter.slug}}).exec(function (err,count){
 						if(err)
 							callback(err)
 						callback(null,count)
@@ -106,7 +106,7 @@ module.exports = {
 		for(var i in list)
 		{
 
-			Tag.create({name:list[i]}).exec(function (err,data) {
+			Tag.create({text:list[i]}).exec(function (err,data) {
 				console.log(data);
 			})
 		}

@@ -53,7 +53,7 @@
 		                            <tr class="chargement" ng-if="loading"> <td colspan="6"><i class="fa fa-user sorter fa-spinner fa-spin"></i></td></tr>
 		                            <tr ng-repeat="item in list" ng-click="select($index)" ng-class="{rowselected:item.selected}">
 		                                
-		                                <td><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> {{item.name}}</div></td>
+		                                <td><div class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> {{item.text}}</div></td>
 		                                <td>{{item.createdAt| date:'MMM yyyy'}}</td>
 		                            </tr>
 		                           
@@ -100,7 +100,7 @@
 				                <div class="row">	        		
 					        		<div class="form-group col-xs-12 col-md-12 ">
 					                    <label >Nom</label>
-					                    <input class="form-control" name="name"  disabled required ng-model="selected.name" ng-minlength="2">
+					                    <input class="form-control" name="text"  disabled required ng-model="selected.text" ng-minlength="2">
 					                </div>	        		
 				                </div> 
 				                
@@ -140,7 +140,7 @@
 				                <div class="row">	        		
 					        		<div class="form-group col-xs-12 col-md-12 ">
 					                    <label >Nom</label>
-					                    <input class="form-control" name="name"  required ng-model="newItem.name" ng-minlength="2">
+					                    <input class="form-control" name="text"  required ng-model="newItem.text" ng-minlength="2">
 					                </div>	        		
 				                </div> 
 				                

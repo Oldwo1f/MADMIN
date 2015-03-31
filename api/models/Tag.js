@@ -9,7 +9,7 @@ module.exports = {
 
   	schema: true,
   	attributes: {
-  		name:{type:'string',required:true},
+  		text:{type:'string',required:true},
   		nbDocuments:{type:'int',defaultsTo:1},
   		nbArticles:{type:'int',defaultsTo:1},
   		nbProjects:{type:'int',defaultsTo:1},

@@ -57,7 +57,7 @@ var jsFilesToInject = [
   'bower_components/angular-animate/angular-animate.js',
   'bower_components/ng-file-upload/angular-file-upload-shim.min.js',
   'bower_components/ng-file-upload/angular-file-upload.min.js',
-  'bower_components/jsTag/jsTag/compiled/jsTag.min.js',
+  'bower_components/ng-tags-input/ng-tags-input.min.js',
   // 'bower_components/ng-load/ng-load.js',
   // 'bower_components/sb-admin-v2/demo/js/dashboard-demo.js',
   // 'js/plugin/jquery.js',
