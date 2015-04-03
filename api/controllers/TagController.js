@@ -77,6 +77,23 @@ module.exports = {
 		});
 
 	},
+	list:function(req,res,next) {
+		  
+				Tag.find({text:{'contains':req.params.slug}}).sort('text ASC').exec(function (err,users){
+					
+					if(err){
+						res.status(401).send(err);
+					}
+					else{
+						var datas = _.pluck(users,'text')
+						console.log(datas);
+						res.status(200).send(datas)
+					}
+						
+				});
+		   
+		
+	},
 	add:function  (req,res,next) {
 		console.log('ADDTAG');
 		if(req.body)

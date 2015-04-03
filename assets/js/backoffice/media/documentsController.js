@@ -1,4 +1,4 @@
-app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentService', 'messageCenterService', function ($scope, $upload,$timeout,documentService,messageCenterService) {
+app.controller('documentsCtrl', ['tagService', '$scope', '$upload', '$timeout', 'documentService', 'messageCenterService', function (tagService,$scope, $upload,$timeout,documentService,messageCenterService) {
     // $scope.$watch('files', function () {
     //     $scope.upload($scope.files);
     // });
@@ -9,14 +9,16 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
     $scope.selectedFile.description='';
     $scope.test='tttttttt';
 
-    $scope.selectedFile.tags = [{ text: 'Tag1' }, { text: 'Tag2' }]
 
           // Export jsTags options, inlcuding our own tags object
       // $scope.tags = {
       //   "tags": new JSTagsCollection(["jsTag", "angularJS"])
       // };
 
-
+    $scope.autocompleteTag = function(query) {
+        console.log('query',query);
+        return tagService.autocomplete(query);
+    };
 
     $scope.select=function (argument) {
         console.log(argument);
@@ -28,7 +30,6 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
         }
         $scope.list[argument].selected=true;
          $scope.selectedFile=$scope.list[argument];
-         $scope.selectedFile.tags = [{ text: 'Tag5' }, { text: 'Tag6' }]
          // $scope.$apply(function () {
             // $scope.tagsOptions.tags = new JSTagsCollection(["Titi", "tototototo"]) 
          // })
@@ -70,7 +71,14 @@ app.controller('documentsCtrl', ['$scope', '$upload', '$timeout', 'documentServi
         })
 
    }
-   
+   $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
+  };
+
+  
     $scope.loading=true;
     $scope.filter = documentService.filter;
     $scope.reload= function () {

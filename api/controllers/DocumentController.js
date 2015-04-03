@@ -63,6 +63,7 @@ module.exports={
 			    		file.filename = goodname;
 			    		// file.description = '';
 			    		file.nbDowload = Math.round(Math.random()*100)
+			    		file.date = new Date();
 
 
 
@@ -135,13 +136,12 @@ module.exports={
 		    		console.log('filterPage========================>' +filter.page);
 		    		// {filename:{'contains':filter.slug}}
 		    		// .sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage)
-				Document.find({filename:{'contains':filter.slug}}).sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).exec(function (err,users){
+				Document.find({filename:{'contains':filter.slug}}).populate('tags').sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).exec(function (err,users){
 					
 					console.log('err==',err);
 						if(err)
 							callback(err)
 						callback(null,users)
-						// res.status(200).send({users:users,total:})
 						
 				});
 		    },
@@ -152,7 +152,6 @@ module.exports={
 						if(err)
 							callback(err)
 						callback(null,count)
-						// res.status(200).send({users:users,total:})
 						
 				});
 		    }
@@ -203,9 +202,10 @@ module.exports={
 		console.log(ext);
 		
 
-		Document.findOne(req.body.id).exec(function (err,data) {
+		Document.findOne(req.body.id).populate('tags').exec(function (err,data) {
 
 			console.log(data);
+			console.log('data.tags.length 1:',data.tags.length);
 			console.log(err);
 			if(err) res.status(400).send(err)
 			
@@ -241,6 +241,8 @@ module.exports={
 			}
 			if(req.body.description)
 			data.description = req.body.description;
+			if(req.body.date)
+			data.date = req.body.date;
 
 			if(req.body.tags)
 			{
@@ -268,18 +270,40 @@ module.exports={
 					if(err)
 						console.log('error:' , err);
 
-					console.log('results',results);
 					for(var i in results)
 					{
-						console.log(data);
-						data.tags.add(results[i]);
-						console.log('here');
-						data.save(function (err,data) {
-							console.log(err);
-						if(err) res.status(400).send(err)
-							res.status(200).send(data)
-						});
+						if(!_.contains(_.pluck(data.tags, 'id'),results[i].id)){
+							data.tags.add(results[i]);
+							results[i].nbDocuments= Number(results[i].nbDocuments)+1;
+							results[i].save(function (err,data) {
+								console.log(data);
+							})
+						}
 					}
+					console.log('data.tags.length:',data.tags.length);
+					for(var i=0; i< data.tags.length;i++)
+					{
+
+						console.log('data.tags[i].text',data.tags[i].text , 'id:',data.tags[i].id);
+						if(!_.contains(_.pluck(req.body.tags,'text'),data.tags[i].text)){
+							data.tags.remove(data.tags[i].id);
+							Tag.find(data.tags[i].id).exec(function (err,tag) {
+								console.log('tag',tag);
+								tag=tag[0]
+								tag.nbDocuments= Number(tag.nbDocuments)-1;
+								tag.save(function (err,data) {
+									console.log(data);
+								})
+							})
+						}
+					}
+
+					console.log('------------------------');
+					
+					data.save(function (err,data) {
+					if(err) res.status(400).send(err)
+						res.status(200).send(data)
+					});
 				})
 				
 			}else

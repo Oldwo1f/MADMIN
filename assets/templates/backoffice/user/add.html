@@ -5,7 +5,7 @@
     <tabset>
 		<tab heading="Ajouter un utilisateur">
      	
-        <form novalidate name="FORMaddNewUser" role="form" ng-fab-form-options="customFormOptions" ng-init="setFormScope(this)">
+        <form  name="FORMaddNewUser" role="form" ng-fab-form-options="customFormOptions" ng-init="setFormScope(this)">
 			<div class="panel-body">
 
 	    		<div class="col-md-6 col-lg-4">
@@ -23,7 +23,7 @@
 			                <div class="row">
 			                	<div class="form-group col-lg-12 ">
 				                    <label>Role</label>
-				                    <select class="form-control" ng-model="formData.role" name="role" required>
+				                    <select prevent-submit-enter class="form-control" ng-model="formData.role" name="role" required>
 			                            <option value="user">User</option>
 			                            <option value="member">Membre</option>
 			                            <option value="admin">admin</option>
@@ -37,7 +37,7 @@
 	                <div class="row">
 		        		<div class="form-group col-lg-3 col-md-4   ">
 		                    <label>Civilité </label>
-		                    <select class="form-control" required ng-model="formData.civ"  name="civ">
+		                    <select prevent-submit-enter class="form-control" required ng-model="formData.civ"  name="civ">
 	                            <option value="M.">M.</option>
 	                            <option value="Mme">Mme</option>
 	                            <option value="Mlle">Mlle</option>
@@ -45,7 +45,7 @@
 		                </div>
 		        		<div class="form-group col-lg-9 col-md-8 ">
 		                    <label>Nom Complet </label>
-		                    <input class="form-control" type="text" name="name" ng-model="formData.name" placeholder="Oliver Durant" ng-minlength="5"
+		                    <input auto-focus prevent-submit-enter class="form-control" type="text" name="name" ng-model="formData.name" placeholder="Oliver Durant" ng-minlength="5"
 	                       required>
 		                </div>
 		        		
@@ -55,14 +55,14 @@
 		        		<div class="form-group col-lg-12 ">
 		                    <label>Pseudo *</label>
 		                    <span ng-show="FORMaddNewUser.pseudo.$pending"><i class="fa fa-spinner fa-spin"></i>Vérification de disponibilité</span>
-		                    <input class="form-control" placeholder="Oliv75" name="pseudo" ng-model-options="{ debounce : { 'default' : 500, blur : 0 } }" required ng-model="formData.pseudo" uniquepseudo="formData.pseudo" ng-minlength="5">
+		                    <input class="form-control" prevent-submit-enter placeholder="Oliv75" name="pseudo" ng-model-options="{ debounce : { 'default' : 500, blur : 0 } }" required ng-model="formData.pseudo" uniquepseudo="formData.pseudo" ng-minlength="5">
 		                </div>
 	                </div> 
 	        		<div class="row">
 		        		<div class="form-group col-lg-12 ">
 		                    <label>Email *</label>
 		                    <span ng-show="FORMaddNewUser.email.$pending"><i class="fa fa-spinner fa-spin"></i>Vérification de disponibilité</span>
-		                    <input type="email" 
+		                    <input type="email" prevent-submit-enter 
 		                    uniqueemail="formData.email"  name="email" ng-model-options="{ debounce : { 'default' : 500, blur : 0 } }"
 	                       class="form-control"
 	                       ng-model="formData.email"
@@ -73,20 +73,20 @@
 	        		<div class="row">
 	        			<div class="form-group col-lg-12 ">
 		                    <label>Téléphone</label>
-		                    <input class="form-control" name="phone"  ng-model="formData.phone" ng-pattern="/^\+?([0-9]|-)*$/i" placeholder="+3356895478" validation-msg-pattern="Entrez un numéro au format international" max-length="12" required>
+		                    <input class="form-control" prevent-submit-enter name="phone"  ng-model="formData.phone" ng-pattern="/^\+?([0-9]|-|\ )*$/i" placeholder="+3356895478" validation-msg-pattern="Entrez un numéro de téléphone" max-length="12" required>
 		                </div>
 		            </div>
 		            <hr>
 	                <div class="row">
 		        		<div class="form-group col-lg-12  ">
 		                    <label>Entreprise</label>
-		                    <input class="form-control" name="company" placeholder="SARL TITOTI" ng-model="formData.company" required>
+		                    <input class="form-control" prevent-submit-enter name="company" placeholder="SARL TITOTI" ng-model="formData.company" required>
 		                </div>
 	                </div>
 	                <div class="row">
 	                	<div class="form-group col-lg-12  ">
 		                    <label>Fonction / Poste</label>
-		                    <input class="form-control" name="fonction" placeholder="R&D - chercheur"  ng-model="formData.fonction" >
+		                    <input class="form-control" prevent-submit-enter name="fonction" placeholder="R&D - chercheur"  ng-model="formData.fonction" >
 		                </div>
 	                </div>
 	                <hr>

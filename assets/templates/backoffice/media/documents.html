@@ -53,8 +53,10 @@
 		                	<table class="table table-hover">
 		                        <thead>
 		                            <tr>
-		                                <th style="min-width:350px;"><i class="fa sorter  fa-user fa-sort-desc" ng-click="setOrder('name ASC')" ng-class="{active: filter.order=='name ASC'}"></i><i class="fa fa-user sorter fa-sort-asc" ng-click="setOrder('name DESC')" ng-class="{active: filter.order=='name DESC'}"></i> Nom </th>
-		                                <th style="min-width:150px;"> Tag</th>
+		                                
+		                                <th > Type</th>
+		                                 <th style="min-width:350px;"><i class="fa sorter  fa-user fa-sort-desc" ng-click="setOrder('name ASC')" ng-class="{active: filter.order=='name ASC'}"></i><i class="fa fa-user sorter fa-sort-asc" ng-click="setOrder('name DESC')" ng-class="{active: filter.order=='name DESC'}"></i> Nom </th>
+		                                <th style="min-width:150px;"> Tags</th>
 		                                <th style="min-width:100px;"><i class="fa sorter fa-user fa-sort-desc" ng-class="{active: filter.order=='createdAt ASC'}" ng-click="setOrder('createdAt ASC')"></i><i class="fa fa-user sorter fa-sort-asc" ng-class="{active: filter.order=='createdAt DESC'}" ng-click="setOrder('createdAt DESC')"></i> Créé en</th>
 		                            </tr>
 		                        </thead>
@@ -63,8 +65,37 @@
 		                            <tr class="chargement" ng-if="loading"> <td colspan="6"><i class="fa fa-user sorter fa-spinner fa-spin"></i></td></tr>
 		                            <tr ng-repeat="item in list" ng-click="select($index)" ng-class="{rowselected:item.selected}">
 		                                
+		                                <td><div   ng-switch="item.type" >
+
+
+								            <div ng-if="item.type | regex:'image':false" class="text-center" tooltip='image' tooltip-placement="bottom"><i  class="fa fa-file-image-o"></i></div>
+								            <div ng-if="item.type | regex:'video':false" class="text-center" tooltip='video' tooltip-placement="bottom"><i  class="fa fa-file-video-o"></i></div>
+								            <div ng-if="item.type | regex:'pdf':false" class="text-center" tooltip='pdf' tooltip-placement="bottom"><i  class="fa fa-file-pdf-o"></i></div>
+								            <div ng-if="item.type | regex:'zip':false" class="text-center" tooltip='zip' tooltip-placement="bottom"><i  class="fa fa-file-zip-o"></i></div>
+								            <div ng-if="item.type | regex:'rar':false" class="text-center" tooltip='rar' tooltip-placement="bottom"><i  class="fa fa-file-rar-o"></i></div>
+								            <div ng-if="item.type | regex:'audio':false" class="text-center" tooltip='audio' tooltip-placement="bottom"><i  class="fa fa-file-sound-o"></i></div>
+								            <div ng-if="item.type | regex:'spreadsheet':false" class="text-center" tooltip='feuille de calcule' tooltip-placement="bottom"><i  class="fa fa-file-excel-o"></i></div>
+								            <div ng-if="item.type | regex:'excel':false" class="text-center" tooltip='feuille de calcule' tooltip-placement="bottom"><i  class="fa fa-file-excel-o"></i></div>
+								            <div ng-if="(item.type | regex:'text':false) " class="text-center" tooltip='text' tooltip-placement="bottom"><i  class="fa fa-file-text-o"></i></div>
+								            <div ng-if="(item.type | regex:'word':false) " class="text-center" tooltip='word' tooltip-placement="bottom"><i  class="fa fa-file-text-o"></i></div>
+
+								            <div ng-if="
+								            !(item.type | regex:'image':false)
+								             &&
+								            !(item.type | regex:'video':false) &&
+								            !(item.type | regex:'pdf':false) &&
+								            !(item.type | regex:'zip':false) &&
+								            !(item.type | regex:'rar':false) &&
+								            !(item.type | regex:'audio':false) &&
+								            !(item.type | regex:'spreadsheet':false) &&
+								            !(item.type | regex:'excel':false) &&
+								            !(item.type | regex:'text':false) &&
+								            !(item.type | regex:'word':false)" 
+								            class="text-center" tooltip='{{item.type}}' tooltip-placement="bottom"><i  class="fa fa-file-o"></i></div></td>
 		                                <td>{{item.name}}</td>
-		                                <td>tag,tag,tag</td>
+		                                <td>
+		                                	<div ng-repeat="tag in item.tags" class=" label label-xs label-primary "><i class="fa fa-tag fa-fw"></i> {{tag.text}}</div>
+		                                </td>
 		                                <td>{{item.createdAt| date:'MMM yyyy'}}</td>
 		                            </tr>
 		                           
@@ -106,12 +137,12 @@
 			        <!-- /.panel-heading -->
 			        <div class="panel-body imageOptions">
 			          
-			           <form novalidate name="FORMaddNewUser" role="form" ng-fab-form-options="customFormOptions" ng-init="setFormScope(this)">
+			           <form name="FORMeditDocument" role="form" ng-fab-form-options="customFormOptions" ng-init="setFormScope(this)">
 						
 				                <div class="row">	        		
 					        		<div class="form-group col-xs-9 col-md-10 ">
 					                    <label >Nom</label>
-					                    <input class="form-control" name="name"  required ng-model="selectedFile.name" ng-minlength="5">
+					                    <input prevent-submit-enter class="form-control" name="name"  required ng-model="selectedFile.name" ng-minlength="5">
 					                </div>	        		
 					        		<div class="form-group col-xs-3 col-md-2 ">
 					                    <label >Type </label>
@@ -152,7 +183,9 @@
 				                <div class="row">	        		
 					        		<div class="form-group col-lg-12 ">
 					                    <label tooltip-placement="right" tooltip="La description sert à décrire le contenu du fichier">Tags</label>
-					                    <tags-input ng-model="selectedFile.tags"></tags-input>
+					                    <tags-input class="mytaginput" ng-model="selectedFile.tags">
+					                    	<auto-complete source="autocompleteTag($query)"></auto-complete>
+					                	</tags-input>
 					                </div>
 				                </div> 
 				                <div class="row">	        		
@@ -162,6 +195,15 @@
 					                </div>
 				                </div> 
 				                <div class="row">	        		
+					        		<div class="form-group col-xs-6 col-md-4 col-lg-6 ">
+					                    <label >Date</label>
+					                    <p class="input-group">
+					                    <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="selectedFile.date" is-open="opened"   date-disabled="disabled(date, mode)" ng-required="true" close-text="Fermer" />
+					                    <span class="input-group-btn">
+							                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+							            </span>
+							        	</p>
+					                </div>
 					        		<div class="form-group col-xs-6 col-md-4 col-lg-3 ">
 					                    <label >Poid</label>
 					                    <input class="form-control text-right" value="{{selectedFile.size | bytes}}" disabled type="text"> </input>
@@ -169,7 +211,7 @@
 					        		<div class="form-group col-xs-6 col-md-4 col-lg-3 ">
 					                    <label >Téléchargement</label>
 					                    <input class="form-control text-right" value="{{selectedFile.nbDowload}}" disabled type="text"></input>
-					                </div>
+					                </div>	        		
 				                </div> 
 				        		
 				        	 

@@ -48,6 +48,7 @@ console.log('userController');
   	};
 	$scope.editUser = function(id) {
     	$state.go(".edit",{ id: id })
+    	clearSelection()
   	};
 	$scope.remove = function(id) {
     	userService.remove(id).then(function(data) {

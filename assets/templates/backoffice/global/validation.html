@@ -6,7 +6,7 @@
       (requisres the setDirtyOnSubmit-option to be set-->
     <ul class="list-unstyled validation-errors"
         ng-show="field.$invalid && (field.$touched || field.$dirty || form.$triedSubmit)">
-        <li ng-message="requisred">Champ requis</li>
+        <li ng-message="required">Champ requis</li>
         <li ng-message="password">Mot de passe invalide</li>
         <li ng-message="email">Email invalide</li>
         <li ng-message="pattern">Veuillez revoir votre saisie</li>
@@ -22,6 +22,7 @@
         <li ng-message="file">Erreur avec le fichier</li>
         <li ng-message="uniqueemail">Cette email est déjà utilisée</li>
         <li ng-message="uniquepseudo">Ce pseudo est déjà utilisé</li>
+        <li ng-message="uniquename">Ce nom est déjà utilisé</li>
 
         <!-- ng-fab-form provides you with access to the
         input-element-attributes, allowing you to display their values

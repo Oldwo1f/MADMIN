@@ -4,11 +4,12 @@
 @import "/bower_components/sb-admin-v2/css/sb-admin.css";
 @import "/bower_components/morrisjs/morris.css";
 @import "/bower_components/font-awesome/css/font-awesome.min.css";
-@import "/bower_components/angularjs-color-picker/angularjs-color-picker.css";
+/*@import "/bower_components/angularjs-color-picker/angularjs-color-picker.css";*/
 @import "/bower_components/angular-chart.js/dist/angular-chart.css";
 @import "/bower_components/ngImgCrop/compile/minified/ng-img-crop.css";
 @import "/bower_components/jsTag/jsTag/compiled/jsTag.css";
 @import "/bower_components/ng-tags-input/ng-tags-input.css";
+@import "/bower_components/jquery-minicolors/jquery.minicolors.css";
 /*@import "/bower_components/bootstrap-colorpicker-master/dist/css/bootstrap-colorpicker.min.css";*/
 
 @import "var.less";
@@ -101,6 +102,7 @@ border-bottom-right-radius:5px;
     display: block;
     overflow: hidden; }  
   .validation li {
+      z-index: 5;
     display: block;
     line-height: 1;
     background: #c00640;
@@ -157,6 +159,11 @@ form button.btn:not(.btn-default) {
   text-transform: uppercase;
   background-color: #f6f6f6;
   border-color: #cfd9db;
+}
+.panel-default > .panel-heading h2{
+  
+  text-transform: none;
+  
 }
 
 .form-control {
@@ -258,13 +265,13 @@ form button.btn:not(.btn-default) {
   background-color: #3367d6;
 }
 
-.btn-success {
+/*.btn-success {
   background-color: #0f9d58;
-}
+}*/
 
-.btn-success:hover {
+/*.btn-success:hover {
   background-color: #196c4a;
-}
+}*/
 
 .btn-danger {
   background-color: #db4437;
@@ -480,8 +487,8 @@ form button.btn:not(.btn-default) {
 .form-group:hover .markdaownheader {display:block;}
 .markdaownheader li{ cursor:pointer;margin:0px 5px;color: #AAA; }
 .markdaownheader li:hover{color: #555;}
-.inlinecountdown{display:none;}
-input:focus + .inlinecountdown{display:block;}
+
+
 .cheatsheets{z-index: 99;background:#EEE; position: relative;height:0; overflow-y:hidden; .transition(all 1s linear); }
 .cheatsheets.visible{margin-bottom: 0; height:470px;}
 .block-info{ margin-top:20px;}
@@ -491,7 +498,7 @@ input:focus + .inlinecountdown{display:block;}
 .block-info ul li { margin-top:5px;}
 span.placeholderabsolute {position:absolute;left: 17px;pointer-events:none; padding-left:15px;z-index: 110; line-height: 46px;color:#777;}
 
-.urlprefix{ position:absolute;left:17px; top:15px; color: #777;}
+.urlprefix{ position:absolute;  left: 28px; top: 33px; color: #777;}
 
 .MdPreview-html{font-size:1em;height: auto;}
 .MdPreview-html h1{font-size:2em;color:red;}
@@ -510,3 +517,11 @@ span.placeholderabsolute {position:absolute;left: 17px;pointer-events:none; padd
 .MdPreview-html blockquote:before{content: "«";}
 .MdPreview-html blockquote:after{content: "»";float:right;padding-right: 20px;}
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{cursor:text;}
+.mytaginput .tag-list .tag-item{color:white;background:#428bca;}
+.mytaginput .tag-list .tag-item:before{content:"\f02b";margin-right:5px;font-family: 'FontAwesome';}
+.mytaginput .tags .tag-list .remove-button{color:white;}
+.listAudit{padding-left:0px;list-style:none;}
+.inlinecountdown {position: absolute;text-align: right;display: inline-block;right: 20px;top: 24px;font-size: 0.7em;display: none;}
+input:focus + .inlinecountdown{display:block;}
+textarea:focus + .inlinecountdown{display:block;}
+/*.btn-group .btn{display:inline-block;}*/

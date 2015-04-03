@@ -76,9 +76,10 @@ module.exports.routes = {
   'POST /upload/file':'DocumentController.upload',
   'PUT /document':'DocumentController.update',
   'DELETE /document/:id':'DocumentController.delete',
-  
+ 
 //DOCUMENTS
   'GET /tag/fetch':'TagController.fetchAll',
+  'GET /tag/list/:slug':'TagController.list',
   'POST /tag/add':'TagController.add',
   'DELETE /tag/:id':'TagController.delete',
   'GET /tag/fixture':'TagController.fixture',
@@ -86,8 +87,18 @@ module.exports.routes = {
   // 'POST /upload/file':'DocumentController.upload',
   // 'PUT /document':'DocumentController.update',
   
+//CATEGORY BLOG
+  'GET /categoryBlog/fetch':'CategoryBlogController.fetchAll',
+  'GET /categoryBlog/list':'CategoryBlogController.list',
+  'POST /categoryBlog/add':'CategoryBlogController.add',
+  'DELETE /categoryBlog/:id':'CategoryBlogController.delete',
+  'PUT /categoryBlog':'CategoryBlogController.update',  
 
-
+//Article BLOG
+  'GET /article/fetch':'ArticleController.fetchAll',
+  'POST /article/add':'ArticleController.add',
+  'DELETE /article/:id':'ArticleController.delete',
+  'PUT /article':'ArticleController.update',
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

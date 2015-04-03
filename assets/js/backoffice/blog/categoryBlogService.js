@@ -1,4 +1,4 @@
-app.factory('tagService', ['$http', '$q', function ($http,$q) {
+app.factory('categoryBlogService', ['$http', '$q', function ($http,$q) {
     var service = {};
     service.items=[];
 
@@ -8,9 +8,22 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
         var deferred = $q.defer();
         // console.log(stateParams);
         // console.log(service.filter);
-        $http({method:'get',url:'/tag/fetch',params:service.filter}).success(function (data,status) {
+        $http({method:'get',url:'/categoryBlog/fetch',params:service.filter}).success(function (data,status) {
             console.log(data);
             service.items =data;
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            deferred.reject('error perso');
+        })
+
+        return deferred.promise;
+    };
+    service.list= function(stateParams) {
+        var deferred = $q.defer();
+        // console.log(stateParams);
+        // console.log(service.filter);
+        $http({method:'get',url:'/categoryBlog/list'}).success(function (data,status) {
+            console.log(data);
             deferred.resolve(data);
         }).error(function (data,status) {
             deferred.reject('error perso');
@@ -22,7 +35,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     service.autocomplete= function(query) {
         var deferred = $q.defer();
 
-        $http.get('/tag/list/'+query).success(function (data,status) {
+        $http.get('/categoryBlog/list/'+query).success(function (data,status) {
             // service.items=data
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -36,7 +49,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     service.fetch= function(id) {
         var deferred = $q.defer();
 
-        $http.get('/tag/'+id).success(function (data,status) {
+        $http.get('/categoryBlog/'+id).success(function (data,status) {
             service.items=data
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -50,7 +63,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     // service.loadGraph= function(mode) {
     //     var deferred = $q.defer();
     //     // var period= 'month';
-    //     $http.get('/tag/graph/'+mode).success(function (data,status) {
+    //     $http.get('/categoryBlog/graph/'+mode).success(function (data,status) {
     //         console.log('resolveGRAPH');
     //         console.log(data);
     //         deferred.resolve(data);
@@ -63,7 +76,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     // service.loadGraph2= function(mode) {
     //     var deferred = $q.defer();
     //     // var period= 'month';
-    //     $http.get('/tag/graph2/'+mode).success(function (data,status) {
+    //     $http.get('/categoryBlog/graph2/'+mode).success(function (data,status) {
     //         console.log('resolveGRAPH');
     //         console.log(data);
     //         deferred.resolve(data);
@@ -77,12 +90,12 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
 
 
 
-    service.add=function(tag){
+    service.add=function(categoryBlog){
 
         console.log('ADDNEW Service');
         var deferred = $q.defer();
-        // tag.role = 'tag'
-        $http.post('/tag/add',tag).success(function (data2,status2) {
+        // categoryBlog.role = 'categoryBlog'
+        $http.post('/categoryBlog/add',categoryBlog).success(function (data2,status2) {
             console.log('SUCCESS');
             console.log(data2);
             deferred.resolve(data2);
@@ -97,12 +110,12 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
         
         return deferred.promise;      
     }
-    service.edit=function(tag){
+    service.edit=function(categoryBlog){
 
         console.log('EDIT Service');
         var deferred = $q.defer();
-        // tag.role = 'tag'
-        $http.put('/tag',tag).success(function (data2,status2) {
+        // categoryBlog.role = 'categoryBlog'
+        $http.put('/categoryBlog',categoryBlog).success(function (data2,status2) {
             console.log('SUCCESS');
             console.log(data2);
             deferred.resolve(data2);
@@ -118,12 +131,12 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
         return deferred.promise;      
     }
 
-    service.remove=function(tag){
+    service.remove=function(categoryBlog){
 
         console.log('REMOVE Service');
         var deferred = $q.defer();
-        // tag.role = 'tag'
-        $http.delete('/tag/'+tag).success(function (data2,status2) {
+        // categoryBlog.role = 'categoryBlog'
+        $http.delete('/categoryBlog/'+categoryBlog).success(function (data2,status2) {
             console.log('SUCCESS');
             console.log(data2);
             deferred.resolve(data2);

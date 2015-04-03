@@ -1,4 +1,4 @@
-app.factory('tagService', ['$http', '$q', function ($http,$q) {
+app.factory('articleService', ['$http', '$q', function ($http,$q) {
     var service = {};
     service.items=[];
 
@@ -8,7 +8,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
         var deferred = $q.defer();
         // console.log(stateParams);
         // console.log(service.filter);
-        $http({method:'get',url:'/tag/fetch',params:service.filter}).success(function (data,status) {
+        $http({method:'get',url:'/article/fetch',params:service.filter}).success(function (data,status) {
             console.log(data);
             service.items =data;
             deferred.resolve(data);
@@ -22,7 +22,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     service.autocomplete= function(query) {
         var deferred = $q.defer();
 
-        $http.get('/tag/list/'+query).success(function (data,status) {
+        $http.get('/article/list/'+query).success(function (data,status) {
             // service.items=data
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -36,7 +36,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     service.fetch= function(id) {
         var deferred = $q.defer();
 
-        $http.get('/tag/'+id).success(function (data,status) {
+        $http.get('/article/'+id).success(function (data,status) {
             service.items=data
             deferred.resolve(data);
         }).error(function (data,status) {
@@ -50,7 +50,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     // service.loadGraph= function(mode) {
     //     var deferred = $q.defer();
     //     // var period= 'month';
-    //     $http.get('/tag/graph/'+mode).success(function (data,status) {
+    //     $http.get('/article/graph/'+mode).success(function (data,status) {
     //         console.log('resolveGRAPH');
     //         console.log(data);
     //         deferred.resolve(data);
@@ -63,7 +63,7 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
     // service.loadGraph2= function(mode) {
     //     var deferred = $q.defer();
     //     // var period= 'month';
-    //     $http.get('/tag/graph2/'+mode).success(function (data,status) {
+    //     $http.get('/article/graph2/'+mode).success(function (data,status) {
     //         console.log('resolveGRAPH');
     //         console.log(data);
     //         deferred.resolve(data);
@@ -77,12 +77,12 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
 
 
 
-    service.add=function(tag){
+    service.add=function(article){
 
         console.log('ADDNEW Service');
         var deferred = $q.defer();
-        // tag.role = 'tag'
-        $http.post('/tag/add',tag).success(function (data2,status2) {
+        // article.role = 'article'
+        $http.post('/article/add',article).success(function (data2,status2) {
             console.log('SUCCESS');
             console.log(data2);
             deferred.resolve(data2);
@@ -97,12 +97,12 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
         
         return deferred.promise;      
     }
-    service.edit=function(tag){
+    service.edit=function(article){
 
         console.log('EDIT Service');
         var deferred = $q.defer();
-        // tag.role = 'tag'
-        $http.put('/tag',tag).success(function (data2,status2) {
+        // article.role = 'article'
+        $http.put('/article',article).success(function (data2,status2) {
             console.log('SUCCESS');
             console.log(data2);
             deferred.resolve(data2);
@@ -118,12 +118,12 @@ app.factory('tagService', ['$http', '$q', function ($http,$q) {
         return deferred.promise;      
     }
 
-    service.remove=function(tag){
+    service.remove=function(article){
 
         console.log('REMOVE Service');
         var deferred = $q.defer();
-        // tag.role = 'tag'
-        $http.delete('/tag/'+tag).success(function (data2,status2) {
+        // article.role = 'article'
+        $http.delete('/article/'+article).success(function (data2,status2) {
             console.log('SUCCESS');
             console.log(data2);
             deferred.resolve(data2);

@@ -65,6 +65,13 @@ module.exports.policies = {
   },
   TagController: {
     '*': [true],
+  },
+  CategoryBlogController: {
+    '*': [true],
+    'add': ['ensureUniqueCatBlogName'],
+  },
+  ArticleController: {
+    '*': [true],
   }
 
   

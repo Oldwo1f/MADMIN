@@ -1,8 +1,25 @@
-var app = angular.module('app', ['ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','color-picker','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
+
+
+var app = angular.module('app', ['ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','minicolors','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
 
 app.run(['amMoment', function(amMoment) {
     amMoment.changeLocale('fr');
 }]);
+app.config(function (minicolorsProvider) {
+    angular.extend(minicolorsProvider.defaults, {
+      control: 'hue',
+      position: 'bottom left',
+      theme: 'bootstrap'
+    });
+  });
+function clearSelection() {
+    if(document.selection && document.selection.empty) {
+        document.selection.empty();
+    } else if(window.getSelection) {
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+    }
+}
 app.run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
@@ -18,6 +35,20 @@ app.run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $s
             $state.go('/.dashboard');
         }
     };
+}]);
+app.config(['tagsInputConfigProvider', function(tagsInputConfigProvider) {
+  tagsInputConfigProvider
+    .setDefaults('tagsInput', {
+      placeholder: 'Ajouter un tag',
+      minLength: 2,
+      addOnEnter: false
+    })
+    .setDefaults('autoComplete', {
+      debounceDelay: 200,
+      loadOnDownArrow: true,
+      loadOnEmpty: true,
+      minLength:2
+    })
 }]);
 app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($stateProvider, $urlRouterProvider,$authProvider) {
 
@@ -150,28 +181,40 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                     })
 
 // BLOG            
-            .state('/.categories', {
+            .state('/.categoriesBlog', {
                 url: "categories",
 
                 views: {
                     '':{
+                        controller:'categoryBlogCtrl',
                       templateUrl:"/templates/backoffice/blog/category.html"
                     }
                 }
             })            
-                    .state('/.categories.add', {
+                    .state('/.categoriesBlog.add', {
                         url: "/add",
                         views: {
                           '':{
+                            controller:"addCategoryBlogCtrl",
                             templateUrl:"/templates/backoffice/blog/addcategory.html"
                             }
                         }
                     })            
-                    .state('/.categories.edit', {
-                        url: "/edit",
+                    .state('/.categoriesBlog.edit', {
+                        url: "/edit:id",
                         views: {
                           '':{
-                            templateUrl:"/templates/backoffice/blog/editcategory.html"
+                            controller:'editCategoryBlogCtrl',
+                            templateUrl:"/templates/backoffice/blog/editcategory.html",
+                            resolve:{
+                                  item : ['categoryBlogService', '$stateParams', function(categoryBlogService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return categoryBlogService.fetch($stateParams.id);
+                                  }]
+                                }
                           }
                         }
                     })
@@ -180,7 +223,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
 
                 views: {
                     '':{
-                      templateUrl:"/templates/backoffice/blog/articles.html"
+                        controller:'articleCtrl',
+                        templateUrl:"/templates/backoffice/blog/articles.html"
                     }
                 }
             })    
@@ -188,7 +232,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                         url: "/add",
                         views: {
                           '':{
-                            templateUrl:"/templates/backoffice/blog/addarticle.html"
+                                controller:'addArticleCtrl',
+                                templateUrl:"/templates/backoffice/blog/addarticle.html",
+                                resolve:{
+                                  category : ['categoryBlogService', '$stateParams', function(categoryBlogService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return categoryBlogService.list($stateParams.id);
+                                  }]
+                                }
                             }
                         }
                     })            
@@ -196,6 +250,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                         url: "/edit",
                         views: {
                           '':{
+                            controller:'editArticleCtrl',
                             templateUrl:"/templates/backoffice/blog/editarticle.html"
                           }
                         }
