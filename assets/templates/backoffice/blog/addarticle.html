@@ -3,7 +3,7 @@
     
     <!-- /.panel-heading -->
     <tabset>
-		<tab heading="Ajouter un utilisateur">
+		<tab heading="Informations générales">
      	
         <form  name="FORMaddNewArticle" ng-submit="submit()" role="form" ng-fab-form-options="customFormOptions" ng-init="setFormScope(this)">
 			<div class="panel-body">
@@ -54,9 +54,9 @@
 		                    <label >Status</label>
 		                    <div>
 			                    <div class="btn-group">
-							        <label class="btn" ng-class="{'btn-success':formData.status=='active','btn-warning':formData.status=='draft','btn-danger':formData.status=='inactive'}" ng-model="formData.status" btn-radio="'active'">Publié</label>
-							        <label class="btn" ng-class="{'btn-success':formData.status=='active','btn-warning':formData.status=='draft','btn-danger':formData.status=='inactive'}" ng-model="formData.status" btn-radio="'draft'">Brouillon</label>
-							        <label class="btn" ng-class="{'btn-success':formData.status=='active','btn-warning':formData.status=='draft','btn-danger':formData.status=='inactive'}" ng-model="formData.status" btn-radio="'inactive'">Inactif</label>
+							        <label class="btn" ng-class="{'btn-success':formData.status=='actif','btn-warning':formData.status=='draft','btn-danger':formData.status=='inactif'}" ng-model="formData.status" btn-radio="'actif'">Actif</label>
+							        <label class="btn" ng-class="{'btn-success':formData.status=='actif','btn-warning':formData.status=='draft','btn-danger':formData.status=='inactif'}" ng-model="formData.status" btn-radio="'draft'">Brouillon</label>
+							        <label class="btn" ng-class="{'btn-success':formData.status=='actif','btn-warning':formData.status=='draft','btn-danger':formData.status=='inactif'}" ng-model="formData.status" btn-radio="'inactif'">Inactif</label>
 							    </div>
 							</div>
 		                </div>
@@ -93,10 +93,10 @@
 		<div class="panel-footer" style="text-align:center">
 			<div class="row">
 				<div class="col-sm-4" style='margin-bottom:4px;'>
-					<a class="btn  btn-default col-sm-12"   ng-click="addArticle()"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et rester</a>
+					<a class="btn  btn-default col-sm-12"   ng-click="addArticle('stay')"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et rester</a>
 				</div>
 				<div class="col-sm-4" style='margin-bottom:4px;'>
-					<a class="btn  btn-success col-sm-12" ng-click="addArticle()" ><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et fermer</a>
+					<a class="btn  btn-success col-sm-12" ng-click="addArticle('close')" ><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et fermer</a>
 				</div>
 				<div class="col-sm-4" style='margin-bottom:4px;'>
 	    			<a ui-sref="^"><div class="btn  btn-danger col-sm-12"><i class="fa fa-times fa-fw"></i> Annuler</div></a>
@@ -105,6 +105,116 @@
 		</div>
 	</form>
 
+	</tab>
+	<tab heading="Images et médias">
+
+	            	<div class="panel-body" >
+	            		<div class="row">
+	            			<div class="col col-xs-12">
+		            			<h3>Images de l'article <button class="btn btn-primary pull-right" ng-click="openImages()">Ajouter une image</button></h3>
+			            		<ul class="listbigimages" ui-sortable="sortableOptions" ng-model="formData.images">
+			            			<li ng-if="formData.images.length==0" style="border:none;width:100%"><p style="text-align:center;padding-top:90px;color:grey;">Aucune image</p></li>
+									<li ng-repeat="image in formData.images  | orderBy:'index':false" class="pull-left">
+										<img ng-src="file/image/adminThumbs/{{image.filename}}" alt="{{image.filename}}" width="200" height="200" >
+										<removeremove class="btnremoveimg " action="removeimage" image="image"></removeremove>
+									</li>
+								</ul>
+								<hr>
+	            			</div>
+	            			
+	            			<div class="col col-xs-12">
+	            				<hr>
+	            			</div>
+	            			<div class="col col-xs-12">
+	            				<h3>Images de l'article <button class="btn btn-primary pull-right" ng-click="openImages()">Ajouter une image</button></h3>
+			            		<ul class="listDocs" ui-sortable="sortableOptions2" ng-model="formData.documents">
+			            			<li ng-if="formData.documents.length==0" style="border:none;width:100%"><p style="text-align:center;padding-top:90px;color:grey;">Aucune document</p></li>
+									<!-- <li ng-repeat="document in formData.documents  | orderBy:'index':false">
+										{{document.filename}}
+										<removeremovetable class="btnremoveimg " action="removedocument" ></removeremovetable>
+									</li> -->
+								</ul>
+		            			<h3>Video</h3>
+			            		<textarea>
+			            		</textarea>
+	            				<hr>
+	            			</div>
+	            		</div>
+	            	</div>
+	            	<div class="panel-footer" style="text-align:center">
+						<div class="row">
+							<div class="col-sm-4" style='margin-bottom:4px;'>
+								<a class="btn  btn-default col-sm-12"   ng-click="addArticle('stay')"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et rester</a>
+							</div>
+							<div class="col-sm-4" style='margin-bottom:4px;'>
+								<a class="btn  btn-success col-sm-12" ng-click="addArticle('close')" ><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et fermer</a>
+							</div>
+							<div class="col-sm-4" style='margin-bottom:4px;'>
+				    			<a ui-sref="^"><div class="btn  btn-danger col-sm-12"><i class="fa fa-times fa-fw"></i> Annuler</div></a>
+							</div>
+						</div>
+					</div>
+                <!-- /.table-responsive -->
+
+			<!-- <div class="col-md-4 col-lg-6">
+
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            <i class="fa fa-gears fa-fw"></i> Options de l'image
+
+			            <div class="pull-right"><removeremove action="remove" itemid="selectedImage.id"></removeremove></div>
+			        </div>
+			       
+			        <div class="panel-body imageOptions">
+			           <img ng-show="selectedImageFinishLoading" imageonload action="loadBigImage"  ng-src="file/image/originalsize/{{selectedImage.filename}}">
+			           <div  ng-show="!selectedImageFinishLoading" class="bigminiaturespinner"><i class="fa fa-user sorter fa-spinner fa-spin"></i></div>
+			           <hr>
+			           <form novalidate name="FORMaddNewUser" role="form" ng-fab-form-options="customFormOptions" ng-init="setFormScope(this)">
+						
+				                <div class="row">	        		
+					        		<div class="form-group col-lg-12 ">
+					                    <label tooltip-placement="right" tooltip="Le nom sert a rertouver l'image plus facilement">Nom</label>
+					                    <input class="form-control" placeholder="Nom de l'image" name="name"  required ng-model="selectedImage.name" ng-minlength="5">
+					                </div>
+				                </div> <div class="row">	        		
+					        		<div class="form-group col-lg-12 ">
+					                    <label tooltip-placement="right" tooltip="La description sert au référencement de vos images. Remplissez la avec des mots clefs">Description</label>
+					                    <input class="form-control" placeholder="Description" name="alt" type="text" ng-model="selectedImage.alt">
+					                </div>
+				                </div> 
+				                <div class="row">	        		
+					        		<div class="form-group col-xs-4 col-md-3 col-lg-2 ">
+					                    <label >Poid</label>
+					                    <input class="form-control" value="{{selectedImage.size | bytes}}" disabled type="text"> </input>
+					                </div>	        		
+					        		<div class="form-group col-xs-8 col-md-9 col-lg-10 ">
+					                    <label >Url</label>
+					                    <input class="form-control" value="{{url}}/file/image/originalsize/{{selectedImage.filename}}" disabled type="text"> </input>
+					                </div>
+				                </div> 
+				        		
+				        	 
+					
+						<div class="panel-footer" style="text-align:center">
+							<div class="row">
+								<div class="col-sm-4" style='margin-bottom:4px;'>
+								</div>
+								<div class="col-sm-4" style='margin-bottom:4px;'>
+								</div>
+								<div class="col-sm-4" style='margin-bottom:4px;'>
+									<button type="submit" ng-click="saveImage()" class="btn  btn-success col-sm-12"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer</button>
+								</div>
+							</div>
+						</div>
+					</form>
+			        </div>
+
+
+			    </div>
+    		</div> -->
+	</tab>
+	<tab heading="Commentaires">
+image
 	</tab>
 		   
 	</tabset>

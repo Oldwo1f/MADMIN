@@ -110,22 +110,22 @@
 						<div class="form-group col-lg-12 ">
 	                        <label>Utilisé le nom complet</label>
 						    <div class="btn-group" required>
-						        <label class="btn btn-success" ng-model="formData.usename" btn-radio="true">Oui</label>
-						        <label class="btn btn-danger" ng-model="formData.usename" btn-radio="false">Non</label>
+						        <label class="btn"  ng-class="{'btn-success':formData.usename==true,'btn-danger':formData.usename==false}" ng-model="formData.usename" btn-radio="true">Oui</label>
+						        <label class="btn"  ng-class="{'btn-success':formData.usename==true,'btn-danger':formData.usename==false}"  ng-model="formData.usename" btn-radio="false">Non</label>
 						    </div>
 		                </div>
 						<div class="form-group col-lg-12 ">
 	                        <label>Publier mon email</label>
 	                        <div class="btn-group">
-						        <label class="btn btn-success" ng-model="formData.publishEmail" btn-radio="true">Oui</label>
-						        <label class="btn btn-danger" ng-model="formData.publishEmail" btn-radio="false">Non</label>
+						        <label class="btn "  ng-class="{'btn-success':formData.publishEmail==true,'btn-danger':formData.publishEmail==false}"  ng-model="formData.publishEmail" btn-radio="true">Oui</label>
+						        <label class="btn "  ng-class="{'btn-success':formData.publishEmail==true,'btn-danger':formData.publishEmail==false}"  ng-model="formData.publishEmail" btn-radio="false">Non</label>
 						    </div>
 		                </div>
 						<div class="form-group col-lg-12 ">
 	                        <label>Publier mon numéro de téléphone</label>
 	                        <div class="btn-group">
-						        <label class="btn btn-success" ng-model="formData.publishPhone" btn-radio="true">Oui</label>
-						        <label class="btn btn-danger" ng-model="formData.publishPhone" btn-radio="false">Non</label>
+						        <label class="btn "  ng-class="{'btn-success':formData.publishPhone==true,'btn-danger':formData.publishPhone==false}"  ng-model="formData.publishPhone" btn-radio="true">Oui</label>
+						        <label class="btn "  ng-class="{'btn-success':formData.publishPhone==true,'btn-danger':formData.publishPhone==false}"  ng-model="formData.publishPhone" btn-radio="false">Non</label>
 						    </div>
 		                </div>
 						</div>

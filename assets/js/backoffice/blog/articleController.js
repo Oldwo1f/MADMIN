@@ -7,7 +7,6 @@ app.controller('articleCtrl',['messageCenterService', '$scope', 'filterFilter', 
 	console.log('articleController');
 	document.body.scrollTop=0;
 	$scope.list=articleService.articles;
-	$scope.loading=false;
 	$scope.filter = articleService.filter;
 	 $scope.selected={};
 	 $scope.selectedFinishLoading=false;
@@ -123,34 +122,154 @@ app.controller('articleCtrl',['messageCenterService', '$scope', 'filterFilter', 
 
 }]);
 
+app.controller('ModalInstanceImagesCtrl',['$scope', '$modalInstance','imageService', function ($scope, $modalInstance,imageService) {
 
+  
+	$scope.selectedImage=null;
+	$scope.selectedImageIndex=null;
+    $scope.loadingImages=true;
+    // $scope.images=imageService.images;
+    $scope.filter = imageService.filter;
+    $scope.reloadImages= function () {
+        $scope.loadingImages=true;
+        $scope.users = imageService.fetch().then(function(data) {
+            $scope.images = data.images ;
+            $scope.total = data.total ;
+            $scope.loadingImages=false;
+            console.log('images',$scope.images);
+            document.body.scrollTop=0;
+        },function(err) {
+            console.log(err);
+        });
+    }
+    $scope.reloadImages();
+    $scope.pageChanged = function() {
+        console.log('Page changed to: ' + $scope.filter.page);
+        $scope.reloadImages()
+    };
+	$scope.loadImage=function (index) {
+       console.log("loadImage",index);
 
-app.controller('addArticleCtrl',['tagService','$scope', 'filterFilter', '$filter', '$state', 'articleService', '$rootScope', 'messageCenterService','category', function addArticleCtrl(tagService,$scope,filterFilter,$filter,$state,articleService,$rootScope,messageCenterService,category) {
+       $scope.$apply(function () {
+           $scope.images[index].finishloading=true;
+       })
+
+   }
+   $scope.selectImg=function (argument) {
+   		if($scope.selectedImageIndex==argument)
+   		{
+   			$modalInstance.close($scope.selectedImage);
+   		}else{
+        	$scope.selectedImage=null;
+        	for(var i in $scope.images){
+            $scope.images[i].selected=false;
+
+        	}
+        	$scope.images[argument].selected=true;
+         	$scope.selectedImage=$scope.images[argument];
+         	$scope.selectedImageIndex=argument;
+   		}
+    }
+	$scope.ok = function () {
+		$modalInstance.close($scope.selected.item);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+}]);
+
+app.controller('addArticleCtrl',['imageService','tagService','$scope', 'filterFilter', '$filter', '$state', 'articleService', '$rootScope', 'messageCenterService','category','$modal', function addArticleCtrl(imageService,tagService,$scope,filterFilter,$filter,$state,articleService,$rootScope,messageCenterService,category,$modal) {
 	document.body.scrollTop=0;
 	console.log('category----->',category);
 	$scope.categories=category;
 	// $scope.isCollapsed=true;
-	function getRandomColor() {
-	    var letters = '0123456789ABCDEF'.split('');
-	    var color = '#';
-	    for (var i = 0; i < 6; i++ ) {
-	        color += letters[Math.floor(Math.random() * 16)];
-	    }
-	    return color;
-	};
+	
 	$scope.formData={};
 	$scope.formData.content='';
 	$scope.formData.description= '';
-	// $scope.$apply(function() {
-
-		$scope.d= new Date();
-	// })
 	$scope.formData.date= new Date();
-	console.log($scope.formData.date);
 	$scope.formData.status= 'draft';
 	$scope.formData.tags= [];
+	$scope.formData.images=[]
 
-	console.log($scope.formData.color);
+
+  $scope.openImages = function (size) {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'templates/backoffice/media/modalImages.html',
+      controller: 'ModalInstanceImagesCtrl',
+      size: size,
+      // resolve: {
+      //   imageService: function () {
+      //     return imageService;
+      //   }
+      // }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.formData.images.push(selectedItem);
+      // console.log($scope.img);
+    }, function () {
+      // $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+  	$scope.sortableOptions = {
+  		// containment: "parent" ,
+  		containment: "#page-wrapper" ,
+  		'ui-floating':true,
+	    update: function(e, ui) {
+	     	// startIndex = ui.item.sortable.index;
+	     	// dropIndex = ui.item.sortable.dropindex;
+	     	// if(dropIndex<startIndex)
+	     	// {
+	     	// 	for(var i in $scope.galery.images)
+	     	// 	{
+	     			
+	     	// 		if($scope.galery.images[i].index < startIndex && $scope.galery.images[i].index >=dropIndex)
+	     	// 		{
+	     	// 			$scope.galery.images[i].index = $scope.galery.images[i].index +1;
+	     	// 			galeryService.updateImgIndex($scope.galery.images[i],$scope.galery);
+	     	// 		}
+	     	// 		else if($scope.galery.images[i].index == startIndex )
+	     	// 		{
+	     	// 			$scope.galery.images[i].index = dropIndex;
+	     	// 			galeryService.updateImgIndex($scope.galery.images[i],$scope.galery);
+	     	// 		}
+	     			
+	     	// 	}
+
+	     	// }
+	     	// if(dropIndex>startIndex)
+	     	// {
+	     	// 	for(var i in $scope.galery.images)
+	     	// 	{
+	     			
+	     			
+	     	// 		if($scope.galery.images[i].index >startIndex && $scope.galery.images[i].index <=dropIndex)
+	     	// 		{
+	     	// 			$scope.galery.images[i].index = $scope.galery.images[i].index -1;
+	     	// 			galeryService.updateImgIndex($scope.galery.images[i],$scope.galery);
+	     	// 		}
+	     	// 		else if($scope.galery.images[i].index == startIndex)
+	     	// 		{
+	     	// 			$scope.galery.images[i].index = dropIndex;
+	     	// 			galeryService.updateImgIndex($scope.galery.images[i],$scope.galery);
+	     	// 		}
+	     			
+	     	// 	}
+
+	     	// }
+	     	
+
+		},
+		sort:function() {
+		},
+		out:function() {
+		},
+		start:function(e,ui) {
+		}
+  	};
 
 	$scope.setFormScope= function(scope){
        $scope.formScope = scope;
@@ -169,12 +288,14 @@ app.controller('addArticleCtrl',['tagService','$scope', 'filterFilter', '$filter
         console.log('submit');
        
     };
-	$scope.addArticle=function() {
+	$scope.addArticle=function(stay) {
 		console.log('ADDNEW Article');
 		var rep = articleService.add($scope.formData).then(function(data) { 
 				// $state.go('/.categoriesBlog');
 				$scope.reload();
 				messageCenterService.add('success', 'Article ajouté', { status: messageCenterService.status.next ,timeout: 3000});
+				if(stay=='close')
+					$state.go("/.articles")
 				document.body.scrollTop=0;
 		},function(data) {
 				console.log('Error');

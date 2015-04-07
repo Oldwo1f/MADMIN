@@ -14,12 +14,14 @@ module.exports = {
   		size:{type:'int'},
   		type:{type:'string'},
   		index:{type:'float'},
-  // 		articlecategory: {
-		// 	model: 'categoryArticle',
+  		
+        articles: {
+            collection: 'imagearticle',
+            via:'image'
+        },
+  // 		user: {
+		// 	model: 'user',
 		// },
-  		user: {
-			model: 'user',
-		},
   // 		article: {
 		// 	model: 'article',
 		// },

@@ -9,13 +9,13 @@ module.exports = {
 
   	schema: true,
     attributes: {
-  		lang : {type:'string',defaultTo:'fr'},
+  		lang : {type:'string',defaultsTo:'fr'},
   		title : {type:'string',required:true},
-      	content : {type:'text',defaultTo:null},
-      	shortcontent : {type:'text',defaultTo:null},
-      	description : {type:'text',defaultTo:null},
-      	rewriteurl : {type:'string',defaultTo:null},
-      	keyword : {type:'string',defaultTo:null},
+      	content : {type:'text',defaultsTo:null},
+      	shortcontent : {type:'text',defaultsTo:null},
+      	description : {type:'text',defaultTso:null},
+      	rewriteurl : {type:'string',defaultsTo:null},
+      	keyword : {type:'string',defaultsTo:null},
   		date : {type:'datetime',required:true},
   		nbView : {type:'int',defaultsTo:0},
   		status : {type:'string',required:true},
@@ -27,7 +27,8 @@ module.exports = {
 			model: 'user'
 		},
         images: {
-            collection: 'image',
+            collection: 'imagearticle',
+            via:'article'
         }
     },
 };
