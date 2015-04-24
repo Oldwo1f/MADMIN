@@ -270,6 +270,24 @@ module.exports = {
 			},1000)
 		});
 	},
+	getauthorlist:function(req,res,next) {
+		console.log("HERE fetchUsers");
+
+		
+		
+				User.find({role:'admin'}).sort("pseudo DESC").exec(function (err,users){
+					console.log('FINDUSER');
+					if(err){
+						res.status(401).send(err);
+					}
+					else{
+						res.status(200).send(users)
+					}
+						
+				});
+		   
+
+	},
 	fetchUsers:function(req,res,next) {
 		console.log("HERE fetchUsers");
 

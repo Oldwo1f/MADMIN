@@ -1,6 +1,6 @@
 
 
-var app = angular.module('app', ['ui.sortable','ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','minicolors','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
+var app = angular.module('app', ['videosharing-embed','monospaced.elastic','ui.sortable','ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','minicolors','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
 
 app.run(['amMoment', function(amMoment) {
     amMoment.changeLocale('fr');
@@ -18,6 +18,15 @@ function clearSelection() {
     } else if(window.getSelection) {
         var sel = window.getSelection();
         sel.removeAllRanges();
+    }
+}
+function findPos(obj) {
+    var curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    return [curtop];
     }
 }
 app.run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
@@ -182,12 +191,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
 
 // BLOG            
             .state('/.categoriesBlog', {
-                url: "categories",
+                url: "categoriesblog",
 
                 views: {
                     '':{
                         controller:'categoryBlogCtrl',
-                      templateUrl:"/templates/backoffice/blog/category.html"
+                        templateUrl:"/templates/backoffice/blog/category.html"
                     }
                 }
             })            
@@ -247,11 +256,133 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                         }
                     })            
                     .state('/.articles.edit', {
-                        url: "/edit",
+                        url: "/edit/:id/:tabstate",
                         views: {
                           '':{
                             controller:'editArticleCtrl',
-                            templateUrl:"/templates/backoffice/blog/editarticle.html"
+                            templateUrl:"/templates/backoffice/blog/editarticle.html",
+                            resolve:{
+                                category : ['categoryBlogService', '$stateParams', function(categoryBlogService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return categoryBlogService.list($stateParams.id);
+                                  }],
+                                authorlist : ['userService', '$stateParams', function(userService,$stateParams) {
+
+                                    console.log('resolve authorlist');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return userService.getauthorlist($stateParams.id);
+                                  }],
+                                article:['articleService', '$stateParams',  function(articleService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return articleService.fetch($stateParams.id);
+                                  }],
+                            }
+                          }
+                        }
+                    })
+
+// PROJECTs            
+            .state('/.categoriesProject', {
+                url: "categoriesproject",
+
+                views: {
+                    '':{
+                        controller:'categoryProjectCtrl',
+                        templateUrl:"/templates/backoffice/projects/category.html"
+                    }
+                }
+            })            
+                    .state('/.categoriesProject.add', {
+                        url: "/add",
+                        views: {
+                          '':{
+                            controller:"addCategoryProjectCtrl",
+                            templateUrl:"/templates/backoffice/projects/addcategory.html"
+                            }
+                        }
+                    })            
+                    .state('/.categoriesProject.edit', {
+                        url: "/edit:id",
+                        views: {
+                          '':{
+                            controller:'editCategoryProjectCtrl',
+                            templateUrl:"/templates/backoffice/projects/editcategory.html",
+                            resolve:{
+                                  item : ['categoryProjectService', '$stateParams', function(categoryProjectService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return categoryProjectService.fetch($stateParams.id);
+                                  }]
+                                }
+                          }
+                        }
+                    })
+            .state('/.projects', {
+                url: "projects",
+
+                views: {
+                    '':{
+                        controller:'projectCtrl',
+                        templateUrl:"/templates/backoffice/projects/projects.html"
+                    }
+                }
+            })    
+                    .state('/.projects.add', {
+                        url: "/add",
+                        views: {
+                          '':{
+                                controller:'addProjectCtrl',
+                                templateUrl:"/templates/backoffice/projects/addproject.html",
+                                resolve:{
+                                  category : ['categoryProjectService', '$stateParams', function(categoryProjectService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return categoryProjectService.list($stateParams.id);
+                                  }]
+                                }
+                            }
+                        }
+                    })            
+                    .state('/.projects.edit', {
+                        url: "/edit/:id/:tabstate",
+                        views: {
+                          '':{
+                            controller:'editProjectCtrl',
+                            templateUrl:"/templates/backoffice/projects/editproject.html",
+                            resolve:{
+                                category : ['categoryProjectService', '$stateParams', function(categoryProjectService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return categoryProjectService.list($stateParams.id);
+                                  }],
+                                authorlist : ['userService', '$stateParams', function(userService,$stateParams) {
+
+                                    console.log('resolve authorlist');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return userService.getauthorlist($stateParams.id);
+                                  }],
+                                project:['projectService', '$stateParams',  function(projectService,$stateParams) {
+
+                                    console.log('resolve');
+                                    console.log($stateParams);
+                                    // return true;
+                                    return projectService.fetch($stateParams.id);
+                                  }],
+                            }
                           }
                         }
                     })
@@ -270,14 +401,50 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                 }
             }) 
         .state('/.documents', {
-                url: "media/documents",
+            url: "media/documents",
 
-                views: {
-                    '':{
-                        controller : 'documentsCtrl',
-                        templateUrl:"/templates/backoffice/media/documents.html"
+            views: {
+                '':{
+                    controller : 'documentsCtrl',
+                    templateUrl:"/templates/backoffice/media/documents.html"
+                }
+            }
+        })  
+        .state('/.i18n', {
+            url: "params/internationalisation/:lang",
+
+            views: {
+                '':{
+                    controller : 'i18nCtrl',
+                    templateUrl:"/templates/backoffice/params/i18n.html",
+                    resolve:{traduction:['paramsService', '$stateParams',  function(paramsService,$stateParams) {
+
+                        console.log('resolve');
+                        console.log($stateParams);
+                        // return true;
+                        return paramsService.getTraductions($stateParams.lang);
+                      }]
                     }
                 }
-            })  
+            }
+        })  
+        .state('/.administration', {
+            url: "params/administration",
+
+            views: {
+                '':{
+                    controller : 'administrationCtrl',
+                    templateUrl:"/templates/backoffice/params/administration.html",
+                    resolve:{stockage:['paramsService', '$stateParams',  function(paramsService,$stateParams) {
+
+                        console.log('resolve');
+                        console.log($stateParams);
+                        // return true;
+                        return paramsService.getUploadsSize();
+                      }]
+                    }
+                }
+            }
+        })  
 
 }]);

@@ -4,4 +4,5 @@ module.exports = {
   MAIN_EMAIL: 'alexismomcilovic@gmail.com',
   CAMPANY_NAME:'ARBATOU',
   CAMPANY_DOMAIN:'arbatou.fr',
+  PATH_TO_WEBSITE:'../nutrimarketing/',
 };

@@ -7,16 +7,13 @@ app.controller('categoryBlogCtrl',['messageCenterService', '$scope', 'filterFilt
 	console.log('categoryBlogController');
 	document.body.scrollTop=0;
 	$scope.list=categoryBlogService.categoryBlogs;
+	console.log($scope.list);
 	$scope.loading=false;
 	$scope.filter = categoryBlogService.filter;
 	 $scope.selected={};
 	 $scope.selectedFinishLoading=false;
     $scope.selected.description='';
-
-
-
-
-
+    
     $scope.select=function (argument) {
         console.log(argument);
         $scope.selected=null;
@@ -79,7 +76,7 @@ app.controller('categoryBlogCtrl',['messageCenterService', '$scope', 'filterFilt
 	$scope.reload();
 
 	$scope.edit = function(id) {
-    	$state.go(".edit",{ id: id })
+    	$state.go("/.categoriesBlog.edit",{ id: id})
     	clearSelection()
   	};
 	$scope.pageChanged = function() {
@@ -180,8 +177,37 @@ app.controller('addCategoryBlogCtrl',['$scope', 'filterFilter', '$filter', '$sta
 
 
 }]);
-app.controller('editCategoryBlogCtrl',['$scope', 'filterFilter', '$filter', '$state', 'categoryBlogService', '$rootScope', 'messageCenterService','item', function addCategoryBlogCtrl($scope,filterFilter,$filter,$state,categoryBlogService,$rootScope,messageCenterService,item) {
+app.controller('editCategoryBlogCtrl',['$scope', 'filterFilter', '$filter', '$state', 'categoryBlogService', '$rootScope', 'messageCenterService','item','configService', function addCategoryBlogCtrl($scope,filterFilter,$filter,$state,categoryBlogService,$rootScope,messageCenterService,item,configService) {
 	document.body.scrollTop=0;
+
+
+	$scope.articlelangues={}
+	$scope.langs = angular.copy(configService.languages)
+	$scope.articlelangues =  _.remove($scope.langs,function(n) {return n.lang != configService.defaultLanguage})
+	_.map(item.translations,function(transla) {
+		var index = _.findIndex($scope.articlelangues,function(n) {return n.lang == transla.lang})
+		if(index>=0){
+			$scope.articlelangues[index].exist=true;
+			$scope.articlelangues[index].item=transla;
+		}
+	})
+
+
+
+	$scope.addTrad=function(langage) {
+	  langage.exist = true;
+	  var newtrad ={};
+	  newtrad.lang=langage.lang;
+	  newtrad.content='';
+	  langage.item=newtrad
+	  // $scope.formData.traductions.push(newtrad)
+
+	};
+	$scope.removeTrad=function(langage) {
+	  langage.exist = false;
+	  delete langage.item;
+	  $scope.$apply();
+	};
 	// $scope.isCollapsed=true;
 	function getRandomColor() {
 	    var letters = '0123456789ABCDEF'.split('');
@@ -202,6 +228,7 @@ app.controller('editCategoryBlogCtrl',['$scope', 'filterFilter', '$filter', '$st
 
 	$scope.edit=function() {
 		console.log('ADDNEW Ctrl');
+		$scope.formData.translations=_.compact(_.pluck($scope.articlelangues,'item'))
 		categoryBlogService.edit($scope.formData).then(function(data) { 
 				$state.go('/.categoriesBlog');
 				$scope.reload();

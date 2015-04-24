@@ -47,6 +47,18 @@ app.factory('userService', ['$http', '$q', function ($http,$q) {
 
         return deferred.promise;
     };
+    service.getauthorlist= function() {
+        var deferred = $q.defer();
+
+        $http.get('/user/getauthorlist').success(function (data,status) {
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            // messageCenterService.add('danger', 'Erreur dans la récupération de l\'utilisateur', { status: messageCenterService.status.unseen, timeout: 4000 });
+            deferred.reject('error perso');
+        })
+
+        return deferred.promise;
+    };
 
     service.fetchUser= function(id) {
         var deferred = $q.defer();

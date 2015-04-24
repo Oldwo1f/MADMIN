@@ -62,6 +62,7 @@ module.exports.routes = {
   'get /user/graph/:period':'UserController.graphUsers',
   'get /user/graph2/:role':'UserController.graphUsers2',
   'get /user/fetchMe':'UserController.fetchMe',
+  'get /user/getauthorlist':'UserController.getauthorlist',
   'put /editProfile':'UserController.editProfile',
 
 //IMAGES
@@ -94,11 +95,36 @@ module.exports.routes = {
   'DELETE /categoryBlog/:id':'CategoryBlogController.delete',
   'PUT /categoryBlog':'CategoryBlogController.update',  
 
-//Article BLOG
+//Article 
   'GET /article/fetch':'ArticleController.fetchAll',
+  'GET /article/:id':'ArticleController.fetch',
   'POST /article/add':'ArticleController.add',
   'DELETE /article/:id':'ArticleController.delete',
   'PUT /article':'ArticleController.update',
+
+//CATEGORY BLOG
+  'GET /categoryProject/fetch':'CategoryProjectController.fetchAll',
+  'GET /categoryProject/list':'CategoryProjectController.list',
+  'POST /categoryProject/add':'CategoryProjectController.add',
+  'DELETE /categoryProject/:id':'CategoryProjectController.delete',
+  'PUT /categoryProject':'CategoryProjectController.update',  
+  
+//Project 
+  'GET /project/fetch':'ProjectController.fetchAll',
+  'GET /project/:id':'ProjectController.fetch',
+  'POST /project/add':'ProjectController.add',
+  'DELETE /project/:id':'ProjectController.delete',
+  'PUT /project':'ProjectController.update',
+
+//Params 
+  'GET /getTraductions/:lang':'ParamsController.getTraductions',
+  'PUT /saveTraduction/:lang':'ParamsController.saveTraduction',
+  'GET /getUploadsSize':'ParamsController.getUploadsSize',
+  'GET /backupFiles':'ParamsController.backupFiles',
+  'GET /backupDb':'ParamsController.backupDb',
+  'GET /restoreDb':'ParamsController.restoreDb',
+  'GET /gitCheckout':'ParamsController.gitCheckout',
+ 
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

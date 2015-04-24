@@ -8,10 +8,12 @@
 module.exports = {
 
   	schema: true,
+  	migrate: 'alter',
     attributes: {
-  		rank : {type:'int'},
+  		rank : {type:'string'},
   		image:{model:'image'},
   		article:{model:'article'},
+  		project:{model:'project'},
   		
     },
 };

@@ -60,6 +60,8 @@ var jsFilesToInject = [
   'bower_components/ng-tags-input/ng-tags-input.min.js',
   'bower_components/jquery-minicolors/jquery.minicolors.js',
   'bower_components/angular-minicolors/angular-minicolors.js',
+  'bower_components/ng-videosharing-embed/build/ng-videosharing-embed.min.js',
+  'bower_components/angular-elastic/elastic.js',
   // 'bower_components/ng-load/ng-load.js',
   // 'bower_components/sb-admin-v2/demo/js/dashboard-demo.js',
   // 'js/plugin/jquery.js',

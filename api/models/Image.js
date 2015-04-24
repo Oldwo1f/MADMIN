@@ -50,40 +50,31 @@ module.exports = {
 				function(callback){
 			        
 			        
-			        // if(img.ingredient) 
-			        // {
+			        
 
-			    //     	console.log('-------------------------------------------------img.user');
-			    //     	console.log(img.ingredient);
-			    //     	console.log(img.ingredient.id);
-				   //      Ingredient.findOne(img.ingredient.id).populate('images').exec(function(err,res) {
-				   //      	console.log(res);
-				   //      	console.log(err);
-				   //      	async.each(res.images, function(image, cb2) {
+			        	console.log('-------------------------------------------------img.user');
+			        	
+				        Imagearticle.find({image:img.id}).exec(function(err,res) {
+				        	console.log(res);
+				        	console.log(err);
+				        	async.each(res, function(imagearticle, cb2) {
 
-				   //      		if(Number(image.index) > Number(img.index))
-				   //      		{
-				   //      			image.index = Number(image.index)-1;
-				   //      			Image.update(image.id,image,function() {
-				   //      				cb2(null);
-				   //      			})
-
-				   //      		}else{
-							//     	cb2(null);
-				   //      		}
+				        		Imagearticle.destroy(imagearticle.id).then(function() {
+				        			cb2(null);
+				        		})
+				        		
 							  
-							// }, function(err){
-							//     if( err ) {
-							//       console.log('A file failed to process');
-							//     } else {
-							//       	console.log('All files have been processed successfully');
+							}, function(err){
+							    // if( err ) {
+							    //   console.log('A file failed to process');
+							    // } else {
+							    //   	console.log('All files have been processed successfully');
 				        			callback(null)
 
-							//     }
-							// });
-				   //      });
+							    // }
+							});
+				        });
 
-			        // }
 
 
 

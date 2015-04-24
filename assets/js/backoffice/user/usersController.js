@@ -47,7 +47,7 @@ console.log('userController');
     	$scope.reloadUsers()
   	};
 	$scope.editUser = function(id) {
-    	$state.go(".edit",{ id: id })
+    	$state.go("/.users.edit",{ id: id})
     	clearSelection()
   	};
 	$scope.remove = function(id) {

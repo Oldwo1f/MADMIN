@@ -25,6 +25,7 @@ tr:hover .tablebtn{margin-left:5px;.opacity(1);}
 .fa-user-plus:before {
   content: "\f234";
 }
+ul{padding-left:0px;list-style:none;}
 .page-header {padding-bottom: 9px;margin: 20px 0 20px;  position: relative;}
 .messageflash{  margin: 0px 0 0px 250px;background:white;padding:15px 15px 0px 15px;border-left: 1px solid #e7e7e7;}
 .panel-heading-table .label{font-size:12px; line-height:0px;padding-top:0px;padding-bottom:5px;margin-left:5px;}
@@ -478,6 +479,12 @@ form button.btn:not(.btn-default) {
 .imageslist.imageslistSmall ul li{margin:5px 1%; display:inline-block;position:relative;width:14%;}
 .imageslist ul li img{position:relative;width:100%;}
 .selectedimg{border:red 5px solid;}
+
+.documentslist ul {display:inline;position:relative;list-style:none; padding-left:0px;}
+.documentslist li {  height: auto;padding: 5px;padding-left:40px;display: block;position: relative;list-style: none;margin-left: 3px;border: 2px solid #EAEAEA;margin-bottom: 5px;}
+.documentslist li.selecteddoc { border: 2px solid red;}
+.documentslist li .fileicons{position:absolute;left: 15px; top : 5px; }
+
 .imageOptions img{width:100%;}
 .miniaturespinner{width:100%;text-align:center;font-size:30px;padding:30px 0px;}
 .bigminiaturespinner{width:100%;text-align:center;font-size:70px;padding:100px 0px;background:#EEE;}
@@ -527,8 +534,36 @@ input:focus + .inlinecountdown{display:block;}
 textarea:focus + .inlinecountdown{display:block;}
 /*.btn-group .btn{display:inline-block;}*/
 .listbigimages{margin:0;padding:0;z-index:1000;min-height:210px;}
+.listDocs{margin:0;padding:0;z-index:1000;min-height:150px;}
+.listDocs li{list-style:none;cursor: move;border:1px solid #EAEAEA;}
 .listbigimages li {cursor: move;display:inline-block;list-style:none; margin-left:10px; margin-bottom:10px;position:relative;border:4px solid #EAEAEA;}
-.btnremoveimg {position:absolute;bottom:10px;right:10px;}
+.btnremoveimg {position:absolute;bottom:10px;right:10px;padding-left:9px;}
 .listimages{margin:0;padding:0;height:30px;}
 .listimages li {display:inline-block;position:relative;list-style:none; margin-left:3px;}
 .listimages li .badge{position:absolute;top:-14px; left:0px;background-color: #777;}
+.listbigimages li.not-sortable{cursor:default;}
+
+.listDocs {display:block;position:relative;list-style:none; padding-top:30px; padding-left:0px;}
+.listDocs li {  height: auto;padding: 5px 10px;padding-left:40px;padding-right:60px;display: inline-block;position: relative;list-style: none;margin-left: 3px;border: 2px solid #EAEAEA;margin-bottom: 5px;}
+.listDocs li .fileicons{position:absolute;left: 15px; top : 5px; }
+.listDocs li.not-sortable{cursor:default;}
+.listDocs .tablebtn{.opacity(1)}
+.listDocs .bntdocumentsremove {position: absolute;top: 4px;right: 10px;padding-left:9px;}
+.rank{position:absolute;z-index:4000000; top:0px;left:0px;background:red;color:white;font-size : 30px;}
+
+.timeline {padding-bottom:0px;}
+.timeline.minitimeline > li > .timeline-panel {width:90%;}
+.timeline.minitimeline:before {left:auto;right:24px;}
+.timeline.minitimeline> li > .timeline-badge {left:auto;right:0%;}
+.timeline  .timeline-title {display:inline-block;}
+.voirplus{cursor:pointer;}
+.voirplus:hover{text-decoration:underline;}
+.tradList{padding:0px;list-style: none;}
+.tradList li{margin-bottom:5px;}
+.tradList li textarea{height:34px; overflow:hidden;}
+.tradList .flech{color:#ccc;position:absolute;top:5px;right:-5px;}
+.tradListArticle{padding:0px;list-style: none;}
+.tradListArticle > li{padding-bottom:10px; min-height:35px;}
+.tradListArticle .btn.btn-danger {margin-top:5px;}
+.tradListArticle .flech{color:#ccc;position:absolute;top:5px;right:-5px;}
+.tradListArticle .btn.btn-danger {.opacity(1);position: absolute;right:25px;top:1px;}

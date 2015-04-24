@@ -37,6 +37,34 @@
 	                </div>
 	        		
 	        		
+                </div>
+                <div class="row">
+	        		
+	        		<div class="form-group col-xs-12">
+	                    <label>Traductions</label>
+	                   	<ul class="tradListArticle">
+		            		<li ng-repeat="trad in articlelangues" class="row">
+		            			<div class="col-xs-2">
+					                <input  type="text"   disabled class="form-control" ng-value="trad.langfull" />
+					                <div class="flech"><i class="fa fa-long-arrow-right"></i></div>
+					                <removeremovetable ng-if="trad.exist" action="removeTrad" itemid="trad" style="z-index:1000"></removeremovetable>
+		            			</div>
+		            			<div class="col-xs-10" ng-if="trad.exist">
+		            			 	
+	                    				<input class="form-control" name="name" ng-model="trad.item.name"  required placeholder="Traduction du nom de catégorie">
+		            			</div>
+
+		            			<div class="col-xs-10" ng-if="!trad.exist">
+		            				<div  style='margin-bottom:4px; width : 250px'>
+										<a class="btn  btn-primary col-sm-12"   ng-click="addTrad(trad)"><i class="fa fa-floppy-o fa-fw"></i> Ajouter une traduction</a>
+									</div>
+		            			</div>
+						    </li>
+						    
+		            	</ul>
+	                </div>
+	        		
+	        		
                 </div> 
                
 

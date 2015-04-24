@@ -113,30 +113,81 @@
 	            			<div class="col col-xs-12">
 		            			<h3>Images de l'article <button class="btn btn-primary pull-right" ng-click="openImages()">Ajouter une image</button></h3>
 			            		<ul class="listbigimages" ui-sortable="sortableOptions" ng-model="formData.images">
-			            			<li ng-if="formData.images.length==0" style="border:none;width:100%"><p style="text-align:center;padding-top:90px;color:grey;">Aucune image</p></li>
+			            			<li ng-if="formData.images.length==0" style="border:none;width:100%" class="not-sortable"><p style="text-align:center;padding-top:90px;color:grey;">Aucune image</p></li>
 									<li ng-repeat="image in formData.images  | orderBy:'index':false" class="pull-left">
 										<img ng-src="file/image/adminThumbs/{{image.filename}}" alt="{{image.filename}}" width="200" height="200" >
-										<removeremove class="btnremoveimg " action="removeimage" image="image"></removeremove>
+										<div class="btn btn-xs btn-danger btnremoveimg" ng-click="removeimage($index)"><i  class="fa fa-times"></i></div>
 									</li>
 								</ul>
 								<hr>
 	            			</div>
 	            			
 	            			<div class="col col-xs-12">
-	            				<hr>
+	            				<h3>Video</h3>
+	            				<div class="form-group col-sm-6 ">
+	            					<div class="form-group">
+				                        <label tooltip-placement="right" tooltip="Préférer la vidéo aux images en tant que contenu principale.">Faire de la video le media principale</label>
+				                        <div class="btn-group">
+									        <label class="btn "  ng-class="{'btn-success':formData.publishVideo==true,'btn-danger':formData.publishVideo==false}"  ng-model="formData.publishVideo" btn-radio="true">Oui</label>
+									        <label class="btn "  ng-class="{'btn-success':formData.publishVideo==true,'btn-danger':formData.publishVideo==false}"  ng-model="formData.publishVideo" btn-radio="false">Non</label>
+									    </div>
+	            					</div>
+								    <div class="form-group">
+									    <label>Url de la video</label>
+				            			<input type="text" ng-model="formData.video" placeholder="http://youtube.com/watch?v=LOKyEt36Kjc" name="video" class="form-control">
+								    </div>
+				            		
+				                </div>
+	            				<div class="form-group col-sm-6">
+	            					<embed-video iframe-id="video"   ng-href="formData.video" controls=1></embed-video>
+	            				</div>
+	            				
 	            			</div>
-	            			<div class="col col-xs-12">
-	            				<h3>Images de l'article <button class="btn btn-primary pull-right" ng-click="openImages()">Ajouter une image</button></h3>
+	            			<div class="col col-xs-12" id="divDocument">
+	            				<hr>
+	            				
+	            			</div>
+	            			<div class="col col-xs-12" >
+	            				<h3>Pièces jointes <button class="btn btn-primary pull-right" ng-click="openDocuments()">Ajouter un fichier</button></h3>
 			            		<ul class="listDocs" ui-sortable="sortableOptions2" ng-model="formData.documents">
-			            			<li ng-if="formData.documents.length==0" style="border:none;width:100%"><p style="text-align:center;padding-top:90px;color:grey;">Aucune document</p></li>
-									<!-- <li ng-repeat="document in formData.documents  | orderBy:'index':false">
-										{{document.filename}}
-										<removeremovetable class="btnremoveimg " action="removedocument" ></removeremovetable>
-									</li> -->
+			            			<li ng-if="formData.documents.length==0" style="border:none;width:100%"><p style="text-align:center;padding-top:0px;color:grey;">Aucun document</p></li>
+									<li ng-repeat="document in formData.documents  | orderBy:'index':false" class="pull-left">
+										<div class="btn btn-xs btn-danger bntdocumentsremove" ng-click="removedocument($index)"><i  class="fa fa-times"></i></div>
+										<div> {{document.name}}</div>
+										
+										
+										<!-- <removeremovetable class="btnremoveimg " action="removedocument" ></removeremovetable> -->
+
+										<div   ng-switch="name.type" class="fileicons" >
+
+
+								            <div ng-if="document.type | regex:'image':false" class="text-center" tooltip='image' tooltip-placement="bottom"><i  class="fa fa-file-image-o"></i></div>
+								            <div ng-if="document.type | regex:'video':false" class="text-center" tooltip='video' tooltip-placement="bottom"><i  class="fa fa-file-video-o"></i></div>
+								            <div ng-if="document.type | regex:'pdf':false" class="text-center" tooltip='pdf' tooltip-placement="bottom"><i  class="fa fa-file-pdf-o"></i></div>
+								            <div ng-if="document.type | regex:'zip':false" class="text-center" tooltip='zip' tooltip-placement="bottom"><i  class="fa fa-file-zip-o"></i></div>
+								            <div ng-if="document.type | regex:'rar':false" class="text-center" tooltip='rar' tooltip-placement="bottom"><i  class="fa fa-file-rar-o"></i></div>
+								            <div ng-if="document.type | regex:'audio':false" class="text-center" tooltip='audio' tooltip-placement="bottom"><i  class="fa fa-file-sound-o"></i></div>
+								            <div ng-if="document.type | regex:'spreadsheet':false" class="text-center" tooltip='feuille de calcule' tooltip-placement="bottom"><i  class="fa fa-file-excel-o"></i></div>
+								            <div ng-if="document.type | regex:'excel':false" class="text-center" tooltip='feuille de calcule' tooltip-placement="bottom"><i  class="fa fa-file-excel-o"></i></div>
+								            <div ng-if="(document.type | regex:'text':false) " class="text-center" tooltip='text' tooltip-placement="bottom"><i  class="fa fa-file-text-o"></i></div>
+								            <div ng-if="(document.type | regex:'word':false) " class="text-center" tooltip='word' tooltip-placement="bottom"><i  class="fa fa-file-text-o"></i></div>
+
+								            <div ng-if="
+								            !(document.type | regex:'image':false)
+								             &&
+								            !(document.type | regex:'video':false) &&
+								            !(document.type | regex:'pdf':false) &&
+								            !(document.type | regex:'zip':false) &&
+								            !(document.type | regex:'rar':false) &&
+								            !(document.type | regex:'audio':false) &&
+								            !(document.type | regex:'spreadsheet':false) &&
+								            !(document.type | regex:'excel':false) &&
+								            !(document.type | regex:'text':false) &&
+								            !(document.type | regex:'word':false)" 
+								            class="text-center" tooltip='{{item.type}}' tooltip-placement="bottom"><i  class="fa fa-file-o"></i></div>
+									</li>
 								</ul>
-		            			<h3>Video</h3>
-			            		<textarea>
-			            		</textarea>
+		            			
 	            				<hr>
 	            			</div>
 	            		</div>
@@ -154,70 +205,40 @@
 							</div>
 						</div>
 					</div>
-                <!-- /.table-responsive -->
-
-			<!-- <div class="col-md-4 col-lg-6">
-
-				<div class="panel panel-default">
-			        <div class="panel-heading">
-			            <i class="fa fa-gears fa-fw"></i> Options de l'image
-
-			            <div class="pull-right"><removeremove action="remove" itemid="selectedImage.id"></removeremove></div>
-			        </div>
-			       
-			        <div class="panel-body imageOptions">
-			           <img ng-show="selectedImageFinishLoading" imageonload action="loadBigImage"  ng-src="file/image/originalsize/{{selectedImage.filename}}">
-			           <div  ng-show="!selectedImageFinishLoading" class="bigminiaturespinner"><i class="fa fa-user sorter fa-spinner fa-spin"></i></div>
-			           <hr>
-			           <form novalidate name="FORMaddNewUser" role="form" ng-fab-form-options="customFormOptions" ng-init="setFormScope(this)">
-						
-				                <div class="row">	        		
-					        		<div class="form-group col-lg-12 ">
-					                    <label tooltip-placement="right" tooltip="Le nom sert a rertouver l'image plus facilement">Nom</label>
-					                    <input class="form-control" placeholder="Nom de l'image" name="name"  required ng-model="selectedImage.name" ng-minlength="5">
-					                </div>
-				                </div> <div class="row">	        		
-					        		<div class="form-group col-lg-12 ">
-					                    <label tooltip-placement="right" tooltip="La description sert au référencement de vos images. Remplissez la avec des mots clefs">Description</label>
-					                    <input class="form-control" placeholder="Description" name="alt" type="text" ng-model="selectedImage.alt">
-					                </div>
-				                </div> 
-				                <div class="row">	        		
-					        		<div class="form-group col-xs-4 col-md-3 col-lg-2 ">
-					                    <label >Poid</label>
-					                    <input class="form-control" value="{{selectedImage.size | bytes}}" disabled type="text"> </input>
-					                </div>	        		
-					        		<div class="form-group col-xs-8 col-md-9 col-lg-10 ">
-					                    <label >Url</label>
-					                    <input class="form-control" value="{{url}}/file/image/originalsize/{{selectedImage.filename}}" disabled type="text"> </input>
-					                </div>
-				                </div> 
-				        		
-				        	 
-					
-						<div class="panel-footer" style="text-align:center">
-							<div class="row">
-								<div class="col-sm-4" style='margin-bottom:4px;'>
-								</div>
-								<div class="col-sm-4" style='margin-bottom:4px;'>
-								</div>
-								<div class="col-sm-4" style='margin-bottom:4px;'>
-									<button type="submit" ng-click="saveImage()" class="btn  btn-success col-sm-12"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer</button>
-								</div>
-							</div>
-						</div>
-					</form>
-			        </div>
-
-
-			    </div>
-    		</div> -->
 	</tab>
 	<tab heading="Commentaires">
-image
+		<div class="panel-body" >
+		<div class="row">
+			<div class="col col-xs-12">
+				
+				<div class="form-group col-sm-6 ">
+					<div class="form-group">
+                        <label tooltip-placement="right" tooltip="Préférer la vidéo aux images en tant que contenu principale.">Activer les commentaires</label>
+                        <div class="btn-group">
+					        <label class="btn "  ng-class="{'btn-success':formData.activeComent==true,'btn-danger':formData.activeComent==false}"  ng-model="formData.activeComent" btn-radio="true">Oui</label>
+					        <label class="btn "  ng-class="{'btn-success':formData.activeComent==true,'btn-danger':formData.activeComent==false}"  ng-model="formData.activeComent" btn-radio="false">Non</label>
+					    </div>
+					</div>
+                </div>
+			</div>
+		</div>
+		</div>
+		<div class="panel-footer" style="text-align:center">
+						<div class="row">
+							<div class="col-sm-4" style='margin-bottom:4px;'>
+								<a class="btn  btn-default col-sm-12"   ng-click="addArticle('stay')"><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et rester</a>
+							</div>
+							<div class="col-sm-4" style='margin-bottom:4px;'>
+								<a class="btn  btn-success col-sm-12" ng-click="addArticle('close')" ><i class="fa fa-floppy-o fa-fw"></i> Enregistrer et fermer</a>
+							</div>
+							<div class="col-sm-4" style='margin-bottom:4px;'>
+				    			<a ui-sref="^"><div class="btn  btn-danger col-sm-12"><i class="fa fa-times fa-fw"></i> Annuler</div></a>
+							</div>
+						</div>
+					</div>
 	</tab>
 		   
 	</tabset>
-    
+
 <!-- </div> -->
 </div>

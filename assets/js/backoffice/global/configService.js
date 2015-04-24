@@ -111,8 +111,14 @@ app.factory('configService', ['$http', '$q', function ($http,$q) {
     // {'title':'Envoie de mail','name' :'envoi','active':false},
     // ];
 
-    service.languages=['fr'];
-    // service.languages=['fr','en'];
+    service.sizequota=3200000000;
+    service.defaultLanguage=['fr'];
+    service.languages=[
+    {lang:'fr',langfull:'Francais',langcap:'FR'},
+    {lang:'en',langfull:'Anglais',langcap:'EN'},
+    {lang:'de',langfull:'Allemand',langcap:'DE'},
+    {lang:'es',langfull:'Espagnole',langcap:'ES'}
+    ];
 
 
     return service;

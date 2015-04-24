@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing categoryblogs
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-
+ var Promise = require('bluebird');
 module.exports = {
 	fetchAll:function(req,res,next) {
 		var filter = {}
@@ -21,7 +21,7 @@ module.exports = {
 		    		console.log('filterPage========================>' +filter.page);
 		    		// {filename:{'contains':filter.slug}}
 		    		// .sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage)
-				CategoryBlog.find({name:{'contains':filter.slug}}).sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).exec(function (err,users){
+				CategoryBlog.find({name:{'contains':filter.slug}}).sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).populateAll().exec(function (err,users){
 					
 					console.log('err==',err);
 						if(err)
@@ -91,14 +91,100 @@ module.exports = {
 	},
 	update:function (req,res,next) {
 		
-		
-			CategoryBlog.update(req.body.id,req.body).exec(function (err,user2){
-				console.log('update');
-				if(err) res.status(400).send({error:err})
-				user = user2[0]
-				
-					res.status(200).send(user)
+		if(req.body)
+		{
+			// var tags = req.body.tags;
+			// var imagesTab = req.body.images;
+			// var documentsTab = req.body.documents;
+			// var commentsTab = req.body.comments;
+			var translations = req.body.translations;
+			// var oldcategory = '';
+			// console.log(req.body);
+			console.log(translations);
+
+			return Promise.bind({})
+			.then(function find_article(){
+			    return CategoryBlog.findOne(req.body.id).populateAll()
+			})
+			.then(function save_article(cat){
+				this.cat = cat
+			    // oldcategory=cat.category.id
+			    cat.name= req.body.name;
+			    cat.color= req.body.color;
+			    cat.textColor= req.body.textColor;
+			    
+			    return cat.save()
+			    
+			})
+			
+			.then(function() {
+				var oldtrans = this.cat.translations
+				return Promise.map(translations,function(translation) {
+					// console.log(translation.id);
+					// console.log(translation);
+					if(translation.id){
+						return CategoryBlogTraduction.findOne(translation.id).then(function(founded) {
+							return CategoryBlogTraduction.update(translation.id,translation)
+						})
+					}else{
+						translation.article = req.body.id;
+						// console.log('translation = this.article.id;',req.body.id);
+						return CategoryBlogTraduction.create(translation).then(function(founded) {
+							// console.log('founded',founded);
+							founded.categoryblog = req.body.id
+							return founded.save().then(function(toto) {
+								// console.log('toto',toto);
+							})
+
+						})
+					}
+					
+				}).then(function() {
+					return Promise.map(oldtrans,function(trans) {
+						console.log('trans',trans);
+					if(!_.contains(_.pluck(translations,'id'),trans.id))
+					{
+						// console.log('NOT CONTAINT reponse');
+						return CategoryBlogTraduction.destroy(trans.id)
+					}else
+					{
+						return true
+					}
+					})
+					
+				})
+			})
+			.then(function (thisArticle){
+				return CategoryBlog.findOne(req.body.id).populateAll()
+			})
+			.done(function(cat) {
+				console.log('DONE');
+				// console.log(this.article);
+				res.status(200).send(cat)
+				// this.article.save(function(err,data) {
+				// 	console.log('SAVED');
+				// })
+			},function(e) {
+				console.log('ERROR FUNCTION');
+				console.log(e);
+				res.status(400).send(e)
 			});
+			
+
+
+		}
+		else{
+			return res.status(400).send('no body');
+		}
+	
+		
+			// CategoryBlog.update(req.body.id,req.body).exec(function (err,user2){
+			// 	console.log('update');
+			// 	if(err) res.status(400).send({error:err})
+			// 	user = user2[0]
+				
+			// 		res.status(200).send(user)
+			// });
 	},
 	delete:function  (req,res,next) {
 		sails.log('delete');

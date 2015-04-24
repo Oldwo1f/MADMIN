@@ -72,6 +72,30 @@ module.exports.policies = {
   },
   ArticleController: {
     '*': [true],
+  },
+  CategoryProjectController: {
+    '*': [true],
+    'add': ['ensureUniqueProjBlogName'],
+  },
+  ProjectController: {
+    '*': [true],
+  },
+  ImageArticleController: {
+    '*': [true],
+  },
+  CommentController: {
+    '*': [true],
+  }
+  ,
+  ReponseController: {
+    '*': [true],
+  }
+  ,
+  ParamsController: {
+    '*': [true],
+  },
+  ArticleTraductionController: {
+    '*': [true],
   }
 
   

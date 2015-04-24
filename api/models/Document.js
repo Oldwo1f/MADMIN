@@ -17,6 +17,10 @@ module.exports = {
   		size:{type:'int'},
   		type:{type:'string'},
   		tags:{collection:'tag'},
+  		articles: {
+            collection: 'documentarticle',
+            via:'document'
+        },
   		
 	},
   	beforeDestroy: function (values, cb) {
@@ -28,56 +32,63 @@ module.exports = {
 
 
 			async.parallel([
+
 				function(callback){
 			        
 			        
-			        // if(img.ingredient) 
-			        // {
+			     	Documentarticle.find({document:item.id}).exec(function(err,res) {
+			        	console.log(res);
+			        	console.log(err);
+			        	async.each(res, function(docarticle, cb2) {
 
-			    //     	console.log('-------------------------------------------------img.user');
-			    //     	console.log(img.ingredient);
-			    //     	console.log(img.ingredient.id);
-				   //      Ingredient.findOne(img.ingredient.id).populate('images').exec(function(err,res) {
-				   //      	console.log(res);
-				   //      	console.log(err);
-				   //      	async.each(res.images, function(image, cb2) {
+			        		Documentarticle.destroy(docarticle.id).then(function() {
+			        			cb2(null);
+			        		})
+			        		
+						  
+						}, function(err){
+						    // if( err ) {
+						    //   console.log('A file failed to process');
+						    // } else {
+						    //   	console.log('All files have been processed successfully');
+			        			callback(null)
 
-				   //      		if(Number(image.index) > Number(img.index))
-				   //      		{
-				   //      			image.index = Number(image.index)-1;
-				   //      			Image.update(image.id,image,function() {
-				   //      				cb2(null);
-				   //      			})
+						    // }
+						});
+			        });
 
-				   //      		}else{
-							//     	cb2(null);
-				   //      		}
-							  
-							// }, function(err){
-							//     if( err ) {
-							//       console.log('A file failed to process');
-							//     } else {
-							//       	console.log('All files have been processed successfully');
-				        			callback(null)
+				},function(callback2){
+			        
+			        
+			     	async.map(item.tags,function(rep, callback){
+					      if(rep){
+					        Tag.findOne(rep.id,function(err,data) {
+					          if(data){
+					            data.nbDocuments=Number(data.nbDocuments)-1
+					            data.save(function() {
+					              callback(null)
+					            })
+					          }
+					        })
+					      }
+					      else{
+					        callback(null)
+					      }
 
-							//     }
-							// });
-				   //      });
+					},function() {
+						callback2(null)
 
-			        // }
+					})
 
-
-
-			    },
-		
-			    function(callback){
+				},
+				function(callback){
 					try{
-			            fs.unlink('uploads/files/'+item.filename)
-			        }catch(e){
+				        fs.unlink('uploads/files/'+item.filename)
+				    }catch(e){
 
-			        }
-			        callback(null)
-			    }
+				    }
+				    callback(null)
+				}
 			],
 			// optional callback
 			function(err, results){
