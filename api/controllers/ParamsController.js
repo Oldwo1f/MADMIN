@@ -150,7 +150,7 @@ console.log('BACKUP');
 
 		var repo = git("")
 		console.log(repo);
-		repo.pull(function (err,argument) {
+		repo.checkout(function (err,argument) {
 			console.log('err',err);
 			console.log(argument);
 			console.log('-----------------');
