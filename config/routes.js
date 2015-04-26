@@ -124,6 +124,7 @@ module.exports.routes = {
   'GET /backupDb':'ParamsController.backupDb',
   'GET /restoreDb':'ParamsController.restoreDb',
   'GET /gitCheckout':'ParamsController.gitCheckout',
+  'GET /getVersion':'ParamsController.getVersion',
  
   /***************************************************************************
   *                                                                          *

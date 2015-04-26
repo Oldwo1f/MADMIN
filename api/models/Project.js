@@ -169,6 +169,23 @@ module.exports = {
                   return callb(null)
                 }
               });
+          },
+          cat:function(callb) {
+              
+                      if(item.category){
+                        console.log(item.category);
+                        CategoryProject.findOne(item.category.id).exec(function(err,data) {
+                          console.log(data);
+                          data.nbProjects= data.nbProjects-1;
+                          data.save().then(function (err,res) {
+                             callb(null)
+                          })
+                        })
+                      }
+                      else{
+                        callb(null)
+                      }
+              
           }
         },function(err,results) {
           return cb();

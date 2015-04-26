@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"madmin.user"},{"v":1,"unique":true,"key":{"pseudo":1},"name":"pseudo_1","ns":"madmin.user","sparse":true},{"v":1,"unique":true,"key":{"email":1},"name":"email_1","ns":"madmin.user","sparse":true}]}

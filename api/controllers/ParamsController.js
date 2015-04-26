@@ -156,5 +156,14 @@ console.log('BACKUP');
 			console.log('-----------------');
 		})
 	},
+	getVersion:function(req,res) {
+		console.log('version ');
+		console.log(sails.config.PATH_TO_WEBSITE);
+		json = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+		version = json.version
+		sitejson = JSON.parse(fs.readFileSync(sails.config.PATH_TO_WEBSITE+'package.json', 'utf8'))
+		siteversion = sitejson.version
+		res.send({version:version,siteversion:siteversion})
+	},
 	
 }

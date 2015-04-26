@@ -56,7 +56,7 @@ app.controller('categoryProjectCtrl',['messageCenterService', '$scope', 'filterF
             //     $scope.list[0].selected=true;
             //     $scope.selected = $scope.list[0];
             // }
-            $scope.data2 = _.pluck($scope.list,'nbArticles')
+            $scope.data2 = _.pluck($scope.list,'nbProjects')
             $scope.labels2 = _.pluck($scope.list,'name')
             $scope.colors2 = _.pluck($scope.list,'color')
             
