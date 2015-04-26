@@ -448,6 +448,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                         console.log($stateParams);
                         // return true;
                         return paramsService.getVersion();
+                      }],
+                      dbstats:['paramsService', '$stateParams',  function(paramsService,$stateParams) {
+
+                        console.log('resolve');
+                        console.log($stateParams);
+                        // return true;
+                        return paramsService.getDbStats();
                       }]
                     }
                 }

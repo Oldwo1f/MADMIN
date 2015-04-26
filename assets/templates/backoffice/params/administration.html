@@ -87,9 +87,10 @@
             <div class="row">
                 <div  style="padding-left:15px">
                     <ul>
-                        <li><label tooltip-placement="right" tooltip="Contactez l'agence pour auguementer le quota">Poid de la base</label>: <span >{{sizequota | bytes}}</span></li>
-                        <li><label>Nb enregistrement</label>: <span >{{(imageSize+fileSize) | bytes}}</span></li>
-                        <li ng-if="depassement > 0"><small>Quota dépasser de {{ depassement | bytes}}. Contacter l'agence pour auguementer le quota.</small></li>
+                        <li><label>Poid de la base</label>: <span >{{(dbstats.dataSize) | bytes}}</span></li>
+                        <li><label >Collections</label>: <span >{{dbstats.collections}}</span></li>
+                        <li><label >Enregistrements</label>: <span >{{dbstats.objects}}</span></li>
+                        <li><label >Indexes</label>: <span >{{dbstats.indexes}}</span></li>
                         
 
                         
@@ -97,11 +98,11 @@
                 </div>
                
                 <div style="padding-left:15px;margin-bottom:5px">
-                    <a class="btn btn-primary btn-xs" href="/backupFiles" target="_BLANK">Faire une sauvegarde</a>
-                </div>
+                    <a class="btn btn-primary btn-xs" href="/backupDb" target="_BLANK">Faire une sauvegarde</a>
+                </div><!-- 
                 <div  style="padding-left:15px">
                     <a class="btn btn-primary btn-xs" href="/backupFiles" target="_BLANK">Importer une sauvegarde</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

@@ -15,6 +15,19 @@ app.factory('paramsService', ['$http', '$q', function ($http,$q) {
 
         return deferred.promise;
     }; 
+    service.getDbStats= function(lang) {
+        var deferred = $q.defer();
+        // console.log(stateParams);
+        // console.log(service.filter);
+        $http({method:'get',url:'/getDbStats'}).success(function (data,status) {
+            console.log(data);
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            deferred.reject('error perso');
+        })
+
+        return deferred.promise;
+    }; 
     service.getUploadsSize= function(lang) {
         var deferred = $q.defer();
         // console.log(stateParams);

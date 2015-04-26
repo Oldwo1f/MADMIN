@@ -1,10 +1,12 @@
-app.controller('administrationCtrl', ['$scope', '$auth','stockage','version','$state','$stateParams','configService','paramsService','messageCenterService','$filter', function($scope, $auth,stockage,version,$state,$stateParams,configService,paramsService,messageCenterService,$filter) {
+app.controller('administrationCtrl', ['$scope', '$auth','stockage','version','dbstats','$state','$stateParams','configService','paramsService','messageCenterService','$filter', function($scope, $auth,stockage,version,dbstats,$state,$stateParams,configService,paramsService,messageCenterService,$filter) {
 	console.log('administrationCtrl');
    
    	// $scope.languages = configService.languages;
 	// console.log(traduction);
 	$scope.sizequota=configService.sizequota;
 	$scope.myversion=version;
+	console.log(dbstats);
+	$scope.dbstats=dbstats;
 	$scope.imageSize=stockage.totalImage;
 	$scope.fileSize=stockage.totalFile;
 	$scope.depassement= Number(($scope.imageSize+$scope.fileSize)-$scope.sizequota)

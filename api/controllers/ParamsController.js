@@ -1,6 +1,7 @@
 var nodemailer = require('nodemailer');
 var moment = require('moment');
 var git  = require ('gift');
+var MongoClient = require('mongodb').MongoClient
 // var fs = require('fs');
 var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require("fs"));
@@ -11,11 +12,32 @@ module.exports={
 	backupDb:function(req,res) {
 
 		console.log('backupDB');
-		// var fs = require('fs');
-		// var out = fs.createReadWriteStream('test/mydb.db');
-		return mds.dump('mongodb://localhost:27017/madmin', res, function(err) {
-		  if (!err) { // Everything was sent 
-		  } 
+		// console.log( moment().format('dd/mm/yyy') );
+		var out = fs.createWriteStream('test/tt.db');
+			out.on('end', function() {
+			  console.log('there will be no more data.');
+			});
+		return mds.dump('mongodb://localhost:27017/madmin', out, function(err) {
+
+			// this.unpipe(out)
+			out.close();
+		  console.log('Finish');
+		  console.log(err);
+		  if (err) { // Everything was sent 
+		  }else
+		  {
+		  	console.log('else');
+		  	setTimeout(function  (argument) {
+		  		var rs = fs.createReadStream('test/tt.db')
+		  		rs.pipe(res)
+		  	},3000)
+		  	var stat = fs.statSync('test/tt.db');
+		  	console.log(stat.size);
+			// res.setHeader('Content-length', stat.size);
+			// res.setHeader('Content-disposition', 'attachment; filename=' + 'bdd-'+sails.config.CAMPANY_NAME+'-'+ moment().format('LL')+'.db');
+
+		  	
+		  }
 		});
 		// res.pipe(out);
     // When the file is done streaming, finish the Javascript string
@@ -24,10 +46,10 @@ module.exports={
 	restoreDb:function(req,res) {
 
 		console.log('restoreDB');
-		var backup = fs.createReadStream('test/file.db');
+		var backup = fs.createReadStream('test/database-01042014.db');
 		// var fs = require('fs');
 		// var out = fs.createReadWriteStream('test/mydb.db');
-		return mds.load('mongodb://localhost:27017/madmin', backup, function(err) {
+		return mds.load('mongodb://localhost:27017/madmin', backup, function(err,d) {
 		  if (!err) { // Everything was sent 
 		  } 
 		});
@@ -116,7 +138,7 @@ module.exports={
 		
 	},
 	backupFiles:function(req,res) {
-console.log('BACKUP');
+		console.log('BACKUP');
 		var archive = archiver('zip');
 
 		// var output = fs.createWriteStream('target.zip');
@@ -127,7 +149,7 @@ console.log('BACKUP');
 		// 	res.send(output)
 
 		// });
-
+		res.setHeader('Content-disposition', 'attachment; filename=' + 'Files-'+sails.config.CAMPANY_NAME+'-'+ moment().format('LL')+'.zip');
 		archive.on('error', function(err){
 		    throw err;
 		});
@@ -165,5 +187,18 @@ console.log('BACKUP');
 		siteversion = sitejson.version
 		res.send({version:version,siteversion:siteversion})
 	},
+	getDbStats:function(req,res) {
+		console.log('here');
+		var url = 'mongodb://localhost:27017/madmin';
+		// Use connect method to connect to the Server
+		MongoClient.connect(url, function(err, db) {
+		  console.log("Connected correctly to server");
+		  db.stats(function(err, stats) {
+			res.send(stats)		
+		    db.close();
+		  })
+		});
+	},
+	
 	
 }
