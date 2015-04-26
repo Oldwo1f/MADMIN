@@ -146,10 +146,15 @@ console.log('BACKUP');
 	},
 	gitCheckout:function(req,res) {
 		console.log('git');
-		
+		console.log( 'ffffffff');
 
 		var repo = git("")
 		console.log(repo);
+		repo.pull(function (err,argument) {
+			console.log('err',err);
+			console.log(argument);
+			console.log('-----------------');
+		})
 	},
 	
 }
