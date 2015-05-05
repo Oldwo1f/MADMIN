@@ -8,8 +8,8 @@ var jwt = require('jwt-simple');
 // var moment = require('moment');
 // var bcrypt = require('bcryptjs');
 var passgen = require('password-generator');
-var nodemailer = require('nodemailer');
 var moment = require('moment');
+var directTransport = require('nodemailer-direct-transport');
 moment.locale('fr', {
     months : "janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre".split("_"),
     monthsShort : "janv._févr._mars_avr._mai_juin_juil._août_sept._oct._nov._déc.".split("_"),
@@ -93,7 +93,7 @@ module.exports = {
 		        return res.status(401).send({ message: errormes});
 		      }
 		      var d={};
-		      if(user.role=='admin' || user.role=='user')
+		      if(user.role=='admin')
 		      		d.intern=true;
 
 		      d.role=user.role;
@@ -106,7 +106,7 @@ module.exports = {
 		var user=req.body;
 	    var salt = passgen();
 	    sails.log('salt='+salt)
-	    user.password = 'a';
+	    user.password = salt;
 		// });
 				if(user.role=="member")
 					user.dateMember= new Date();
@@ -116,63 +116,104 @@ module.exports = {
 				User.create(user).exec(function (err,created){
 
 			    	console.log(created);
-				  if(err)
-				  {
-				  	console.log('create err -->');
-				  	console.log(err);
-				  	res.status(400).send({error:err})
-				  }else{
+					if(err)
+					{
+						console.log('create err -->');
+						console.log(err);
+						res.status(400).send({error:err})
+					}else{
 
 				  	//ENVOI DU MDP PAR EMAIL
+						var transporter = nodemailer.createTransport({
+							    service: 'Gmail',
+							    auth: {
+							        user: sails.config.MAIN_EMAIL_GOOGLE,
+							        pass: sails.config.MAIN_EMAIL_GOOGLE_PWD
+							    }
+						})
 
-				  	
-				 //  	var transporter = nodemailer.createTransport(directTransport());
-				 // //  	var transporter = nodemailer.createTransport({
-					// //     service: 'Mailgun',
-					// //     auth: {
-					// //         user: sails.config.MG_LOGIN,
-					// //         pass: sails.config.MG_PASS
-					// //     },
-					// // });
+					
 
-					// // NB! No need to recreate the transporter object. You can use
-					// // the same transporter object for all e-mails
+						var mailOptions = {
+						    from: sails.config.COMPANY_NAME+' <'+sails.config.MAIN_EMAIL+'>', // sender address
+						    to: created.email, // list of receivers
+						    subject: 'Votre mot de passe est arrivé', // Subject line
+						    text: 'Voici le mot de passe qui vous servira pour vots premières connexions.Pensez à le changer rapidement \n \nMot de passe: '+ salt+'\n \nCordialement, l\'équipe '+sails.config.COMPANY_NAME+' \n'// html body
+						};
 
-					// // setup e-mail data with unicode symbols
-					// var mailOptions = {
-					//     from: sails.config.CAMPANY_NAME+' <'+sails.config.MAIN_EMAIL+'>', // sender address
-					//     to: created.email, // list of receivers
-					//     subject: 'Votre mot de passe est arrivé', // Subject line
-					//     text: 'Voici le mot de passe qui vous servira pour vots premières connexions.Pensez à le changer rapidement \n \nMot de passe: '+ salt+'\n \nCordialement, votre nouvel outil web'// html body
-					// };
-
-					// // send mail with defined transport object
-					// transporter.sendMail(mailOptions, function(error, info){
-					//     if(error){
-					//         res.status(200).send(created);
-					//     }else{
+						// send mail with defined transport object
+						transporter.sendMail(mailOptions, function(error, info){
+						    if(error){
+						        res.status(200).send(created);
+						    }else{
 
 
 
-							Notification.create({type:'usercreated',content:'Nouvel utilisateur'}).exec(function (err,notif){
-								Notification.publishCreate(notif,req)
-					    		res.status(200).send(created);
-					    	
-					    	});
-					//     }
-					// });
+								Notification.create({type:'usercreated',status:'ok',info1:created.name,info2:created.email}).exec(function (err,notif){
+									
+									console.log('Notification created',notif);
+									Notification.publishCreate(notif,req)
+						    		res.status(200).send(created);
+						    	
+						    	});
+						    }
+						});
 
-				  	
-				  }
+					  	
+					  }
 				});
 
+	}, 
+	testmail:function (req,res) {
+
+		console.log("testMAIl");
+		  			// var transporter = nodemailer.createTransport(directTransport());
+						var transporter = nodemailer.createTransport({
+						    service: 'Gmail',
+						    auth: {
+						        user: 'alexismomcilovic@gmail.com',
+						        pass: 'Alexis09'
+						    }
+						})
+					// NB! No need to recreate the transporter object. You can use
+					// the same transporter object for all e-mails
+					salt = 'toto'
+					// // setup e-mail data with unicode symbols
+					// var mailOptions = {
+					//     from: ' <toto@toto.fr>', // sender address
+					//     to: 'alexismomcilovic@gmail.com', // list of receivers
+					//     subject: 'Votre mot de passe est arrivé', // Subject line
+					//     text: 'Voici'// html body
+					// };
+					var mailOptions = {
+					    from: sails.config.COMPANY_NAME+' <'+sails.config.MAIN_EMAIL+'>', // sender address
+					    to: 'alexismomcilovic@outlook.com', // list of receivers
+					    subject: 'Votre mot de passe est arrivé', // Subject line
+					    text: 'Voici le mot de passe qui vous servira pour vos premières connexions. Pensez à le changer rapidement \n \nMot de passe: '+ salt+'\n \nCordialement, l\'équipe '+sails.config.COMPANY_NAME+' \n'// html body
+					};
+					console.log(salt);
+					// send mail with defined transport object
+					transporter.sendMail(mailOptions, function(error, info){
+
+						console.log('here');
+						console.log(error);
+						console.log(info);
+					    if(error){
+					        res.status(200).send('mail error');
+					    }else{
+
+							res.status(200).send('mail sended');
+
+					    }
+					});
 	},
 	fetchMe:function(req,res) {
 		console.log('fetchMe');
+		console.log(req.user);
 		User.findOne({id:req.user}).exec(function (err, user) {
 			if(err)
 			console.log(err);
-
+			console.log('founded',user);
 		    res.send(user);
 		});
 	},
@@ -223,6 +264,162 @@ module.exports = {
 				user = user2[0]
 					res.status(200).send(user)
 			});
+	},
+	changePass:function (req,res,next) {
+
+		console.log('changePass');
+		console.log(req.body);
+
+		if(req.body.newpwd != req.body.comfirm){
+			console.log('this');
+			res.status(400).send({err:'comfirm'});
+		}else{
+
+
+		User.findOne(req.user).exec(function(err,user) {
+
+			
+			if(err)
+				res.status(200).send(err);
+
+			user.comparePassword(req.body.pwd, function(err, isMatch) {
+		      	if (!isMatch) {
+		        	return res.status(400).send({ message: 'password'});
+		      	}else{
+			      	user.comfirmpassword = req.body.comfirm
+			      	user.password = req.body.comfirm
+			      	user.save(function(err,u) {
+			      		console.log(err);
+			      		res.send({message:'ok'})
+			      	})
+		      	}
+		     	
+		    });
+
+		})
+		}
+			// delete req.body.role;
+			// if(!req.body.image)
+			// delete req.body.image;
+
+			// User.update(req.body.id,req.body).exec(function (err,user2){
+			// 	if(err) res.status(400).send({error:err})
+			// 	user = user2[0]
+			// 		res.status(200).send(user)
+			// });
+	},
+	recupPassword: function(req,res) {
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (!re.test(req.params.email))
+		{
+			return res.status(400).send({error:'Invalid mail'})
+		}
+			// var transporter = nodemailer.createTransport({
+			//     service: 'Mailgun',
+			//     auth: {
+			//         user: sails.config.MG_LOGIN,
+			//         pass: sails.config.MG_PASS
+			//     },
+			// });
+		var salt = passgen();
+
+		User.findOne({email:req.params.email}).exec(function(err,user) {
+			if (err || typeof(user)!='object')
+			{
+				return res.status(400).send({error:'Invalid mail'})
+			}
+			console.log(user);
+			console.log('-------------');
+			console.log(sails.config.COMPANY_DOMAIN);
+			var link = sails.config.COMPANY_DOMAIN+'/changepassword/'+salt
+			var transporter = nodemailer.createTransport({
+						    service: 'Gmail',
+						    auth: {
+						        user: sails.config.MAIN_EMAIL_GOOGLE,
+						        pass: sails.config.MAIN_EMAIL_GOOGLE_PWD
+						    }
+			})
+			console.log(link);
+			console.log(salt);
+			user.changepasswordcomfirm = salt;
+			
+			user.save(function() {
+				if (err)
+					return res.status(400).send({error:'erreur'})
+
+				var mailOptions = {
+				    from: sails.config.COMPANY_NAME+' <'+sails.config.MAIN_EMAIL+'>', // sender address
+				    to: req.params.email, // list of receivers
+				    subject: 'Demande de récupération de mot de passe', // Subject line
+				    html: 'Vous avez demander un récupération de mot de passe. \n'+
+				    '<br>Pour recevoir un nouveau mots de passe par email, veuillez cliquer sur le lien suivant: <a href="'+link+'">'+link+'</a> \n'+ 
+				    '<br>Si vous n\'êtes pas à l\'origine de cette demande de récupération, ignorez simplement cet email \n\n\n'+
+				    '<br>Cordialement, l\'équipe '+sails.config.COMPANY_NAME+' \n'
+				};
+
+				// send mail with defined transport object
+				transporter.sendMail(mailOptions, function(error, info){
+					console.log(error);
+					console.log(info);
+				    if(error){
+				        res.status(400).send(error);
+				    }else{
+				    	res.status(200).send(info);
+				    }
+				});
+			})
+			// NB! No need to recreate the transporter object. You can use
+			// the same transporter object for all e-mails
+
+			// setup e-mail data with unicode symbols
+			
+		})
+		  	
+	},
+	changepassword: function(req,res) {
+
+		User.findOne({changepasswordcomfirm:req.params.comfirm}).exec(function(err,user) {
+			
+			console.log(user);
+
+			var salt = passgen();
+	    	sails.log(salt)
+	    	user.changepasswordcomfirm='';
+	    	user.password = salt;
+	    	user.comfirmpassword = salt;
+
+	    	user.save(function() {
+	    		console.log('errSaveuser');
+
+
+			  	//ENVOI DU MDP PAR EMAIL
+			  	var transporter = nodemailer.createTransport({
+						    service: 'Gmail',
+						    auth: {
+						        user: sails.config.MAIN_EMAIL_GOOGLE,
+						        pass: sails.config.MAIN_EMAIL_GOOGLE_PWD
+						    }
+				})
+			 
+				var mailOptions = {
+				    from: sails.config.COMPANY_NAME+' <'+sails.config.MAIN_EMAIL+'>', // sender address
+				    to: user.email, // list of receivers
+				    subject: 'Votre nouveau mot de passe est arrivé', // Subject line
+				    text: '\n \nMot de passe: '+ salt+'\n \nCordialement, l\'équipe '+sails.config.COMPANY_NAME// html body
+				};
+
+				// send mail with defined transport object
+				transporter.sendMail(mailOptions, function(error, info){
+				    if(error){
+				        res.status(400).send('Veuillez contacter l\'administrateur');
+				    }else{
+				    	res.status(200).send('Votre nouveau mots de passe va arriver par email');
+				    }
+				});
+		
+	    	})
+		})
+		  	
 	},
 	verifyUniqueEmail:function(req,res,next) {
 

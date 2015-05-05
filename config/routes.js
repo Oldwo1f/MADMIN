@@ -50,13 +50,18 @@ module.exports.routes = {
   'POST /validateNotifications': 'NotificationController.validateNotifications',
   // 'post /emailme' : 'frontController.emailme',
   'get /createNotif':'NotificationController.createNotif',
+  'get /createComment':'NotificationController.createComment',
 
 //USER
   'POST /user/add':'UserController.add',
+  'get /recupPassword/:email': 'UserController.recupPassword',
+  'get /changepassword/:comfirm': 'UserController.changepassword',
+  'get /testmail':'UserController.testmail',
   'GET /user/verifyUniqueEmail/:email':'UserController.verifyUniqueEmail',
   'GET /user/verifyUniquePseudo/:pseudo':'UserController.verifyUniquePseudo',
   'GET /fetchUsers':'UserController.fetchUsers',
   'put /user':'UserController.update',
+  'POST /changePass':'UserController.changePass',
   // 'get /graphUsers':'UserController.graphUsers',
   'get /fixtureUser':'UserController.fixtureUser',
   'get /user/graph/:period':'UserController.graphUsers',
@@ -126,6 +131,14 @@ module.exports.routes = {
   'GET /gitCheckout':'ParamsController.gitCheckout',
   'GET /getVersion':'ParamsController.getVersion',
   'GET /getDbStats':'ParamsController.getDbStats',
+
+//DASHBOARD
+  'GET /analytics/:period/:metrics':'DashboardController.analytics',
+  'GET /getBestBlogger':'DashboardController.getBestBlogger',
+  'GET /countAll':'DashboardController.countAll',
+  'GET /getNewComments':'DashboardController.getNewComments',
+  'GET /getNotifications/:page':'DashboardController.getNotifications',
+  'GET /getSocials':'DashboardController.getSocials',
  
   /***************************************************************************
   *                                                                          *

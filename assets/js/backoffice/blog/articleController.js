@@ -1,4 +1,4 @@
-app.controller('articleCtrl',['messageCenterService', '$scope', 'filterFilter', '$filter', '$state', '$stateParams', 'articleService', function articlesCtrl(messageCenterService,$scope,filterFilter,$filter,$state,$stateParams,articleService) {
+app.controller('articleCtrl',['messageCenterService', '$scope', 'filterFilter', '$filter', '$state', '$stateParams', 'articleService','BestBlogger', function articlesCtrl(messageCenterService,$scope,filterFilter,$filter,$state,$stateParams,articleService,BestBlogger) {
 
 	$scope.loading=true;
 	$scope.loadingGraph2=true;
@@ -6,6 +6,8 @@ app.controller('articleCtrl',['messageCenterService', '$scope', 'filterFilter', 
 	$scope.newItem={};
 	console.log('articleController');
 	document.body.scrollTop=0;
+$scope.BestBlogger=BestBlogger;
+
 	$scope.list=articleService.articles;
 	$scope.filter = articleService.filter;
 	 $scope.selected={};

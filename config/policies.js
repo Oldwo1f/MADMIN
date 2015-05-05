@@ -44,14 +44,15 @@ module.exports.policies = {
     // get: true,
   },
   userController: {
+    testmail : true,
     add : 'usercredentials',
-    fetchUsers  : true,
     '*': [true],
+    changePass: 'ensureAuth',
     editMe: 'ensureAuth',
     editpassword: 'ensureAuth',
     fetchMe: 'ensureAuth',
-    recupPassword:true,
-    changepassword:true,
+    'recupPassword':true,
+    'changepassword':true,
     login: true,
     // add: 'isAdmin'
   },
@@ -71,14 +72,14 @@ module.exports.policies = {
     'add': ['ensureUniqueCatBlogName'],
   },
   ArticleController: {
-    '*': [true],
+    '*': ['ensureAuth'],
   },
   CategoryProjectController: {
     '*': [true],
     'add': ['ensureUniqueProjBlogName'],
   },
   ProjectController: {
-    '*': [true],
+    '*': ["ensureAuth"],
   },
   ImageArticleController: {
     '*': [true],
@@ -95,6 +96,9 @@ module.exports.policies = {
     '*': [true],
   },
   ArticleTraductionController: {
+    '*': [true],
+  },
+  DashboardController: {
     '*': [true],
   }
 

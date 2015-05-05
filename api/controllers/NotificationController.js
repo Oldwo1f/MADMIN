@@ -9,10 +9,10 @@ module.exports = {
 	subscribeNotif:function(req,res,next) {
 		// 
 
-		// console.log('home');
+		console.log('NOTIF');
 		Notification.watch(req);
 // console.log(req.user);
-		Notification.find().populate('users').sort('createdAt DESC').limit(10).exec(function (err,notifications) {
+		Notification.find().populate('users').sort('createdAt DESC').exec(function (err,notifications) {
 			
 
 			// console.log(notifications);
@@ -24,7 +24,7 @@ module.exports = {
 				// console.log('n',val);
 				for(var i in val.users){
 					if(val.users[i].id == req.user){
-						return true;
+						return true; 
 						// // delete notifications[key]
 						// notifications.splice(key,1)
 					}
@@ -32,7 +32,8 @@ module.exports = {
 				return false;
 			});
 
-
+			
+			Notification.subscribe(req.socket,notifications);
 
 
 
@@ -68,20 +69,28 @@ module.exports = {
 			}
 			else{
 				async.map(results,function (item,callback) {
-					item.users.add(req.user);
-					item.save(function (err,res) {
-						if(err)
-						{
-							callback(err)
-						}else{
-							callback(null,'cool')
-						}
-					})
+					if(item.status=='ok'){
+						item.users.add(req.user);
+						item.save(function (err,r) {
+							console.log(err);
+							if(err)
+							{
+								callback(null,false)
+							}else{
+								callback(null,false)
+							}
+						})
+					}else{
+						callback(null,true)
+					}
+					
 					
 				},function cb (err, results) {
 					console.log('MAP CB FINAL');
 					console.log(err);
 					console.log(results);
+					console.log(_.compact(results).length);
+					res.status(200).send({count:_.compact(results).length})
 				})
 			}
 		})
@@ -89,32 +98,39 @@ module.exports = {
 
 	},
 	createNotif:function (req,res,next) {
-		// console.log(req.body);
-		// console.log('-----------------');
-		// User.findOne(req.body.id).exec(function (err,user){
-		// 	if(err) res.status(400).send({error:err})
-		// 	var prevuser = user;
-
-		// 	User.update(req.body.id,req.body).exec(function (err,user){
-		// 		console.log('update');
-		// 		if(err) res.status(400).send({error:err})
-				
-		// 		// if(prevuser.role == 'user' && user.role == 'admin')
-		// 		// {
-					Notification.create({type:'newmember',content:'bililototo est devenu membre'}).exec(function (err,notif){
-								// console.log(notif)
+		
+					Notification.create({type:'usercreated',status:'ok',info1:"Alexis Momcilovic",info2:'alexismomcilovic@gmail.com'}).exec(function (err,notif){
+								console.log(err)
+								console.log(notif)
 								 // Notification.publishCreate(notif);
 					    		// res.status(200).send(created);
 					    	res.status(200).send(notif)
 					});
-		// 		// }	
+		
 
-				
-
-				
-		// 	});
-			
-		// });
+	},
+	createComment:function (req,res,next) {
+		console.log('createComment');
+		Project.findOne('55396769b9cec35674fbe5fd').exec(function (err,article) {
+			Comment.create({author:'nom de l auteur',
+	  		email:'totot@tttt.fr',
+	  		content:'ceci est un commentaire',
+	  		status:'new',
+	  		project:'55396769b9cec35674fbe5fd'
+	  		}).exec(function (err,coment){
+									console.log(err)
+									console.log(coment)
+				Notification.create({type:'projectcomment',status:'todo',info1:article.title,info2:'par '+coment.author,item:'project',itemid:'55396769b9cec35674fbe5fd'}).exec(function (err,notif){
+						console.log(err)
+						console.log(notif)
+						 // Notification.publishCreate(notif);
+			    		// res.status(200).send(created);
+			    	res.status(200).send(notif)
+				});
+			});
+		})
+		
+		
 
 	}
 };

@@ -15,17 +15,24 @@ app.config(['datepickerConfig', 'datepickerPopupConfig', function(datepickerConf
     datepickerPopupConfig.datepickerPopup = "dd/MM/yyyy";
     
 }]);
-
-app.config(function(tagsInputConfigProvider) {
+app.config(function (minicolorsProvider) {
+    angular.extend(minicolorsProvider.defaults, {
+      control: 'hue',
+      position: 'bottom left',
+      theme: 'bootstrap'
+    });
+  });
+app.config(['tagsInputConfigProvider', function(tagsInputConfigProvider) {
   tagsInputConfigProvider
     .setDefaults('tagsInput', {
-      placeholder: 'Nouveau tag',
+      placeholder: 'Ajouter un tag',
       minLength: 2,
-      addOnEnter: true
+      addOnEnter: false
     })
     .setDefaults('autoComplete', {
       debounceDelay: 200,
       loadOnDownArrow: true,
-      loadOnEmpty: true
+      loadOnEmpty: true,
+      minLength:2
     })
-});
+}]);

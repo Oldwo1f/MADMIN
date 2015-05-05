@@ -12,10 +12,10 @@
 
             <ul class="nav navbar-top-links navbar-right">
 
-                <li>
-                                    <span ng-if="!me.usename">{{me.pseudo}}</span>
-                                    <span ng-if="me.usename">{{me.name}}</span>
-                    </li> 
+                <li style="padding: 10px;">
+                   <span ng-if="!me.usename">{{me.pseudo}}</span>
+                   <span ng-if="me.usename">{{me.name}}</span>
+                </li> 
                 <!-- <li class="dropdown">
                     
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" ng-click="addMessage(0)">
@@ -75,44 +75,62 @@
                     </ul>
                 </li> -->
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <li class="dropdown notificationsdropdowwn">
                     <a class="dropdown-toggle dropdown-toggle-withbadge" data-toggle="dropdown" ng-click="validNotification();" >
 
                         <span class="badge" ng-if="nbNotifications!=0">{{nbNotifications}}</span> <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                        <li ng-repeat-start="notif in notifications">
+                        <li ng-repeat-start="notif in notifications" ng-class="{notifOk:(notif.status=='ok')}" ng-click="goTo(notif.item,notif.itemid)">
                                 <div>
-                                    <i ng-if="notif.type=='usercreated'" class="fa fa-user fa-fw"></i>
-                                    <i ng-if="notif.type=='newmember'" class="fa fa-user-plus fa-fw"></i>
-
-                                     {{notif.content}}
-                                    <span class="pull-right text-muted small">{{notif.createdAt | amCalendar}}</span>
+                                    <span ng-switch="notif.type">
+                                        <i ng-switch-when="usercreated" class="fa fa-user fa-fw" ></i>
+                                        <i ng-switch-when="newmember" class="fa fa-user-plus fa-fw"></i>
+                                        <i ng-switch-when="articlecreated" class="fa fa-edit fa-fw"></i>
+                                        <i ng-switch-when="projectcreated" class="fa fa-cube fa-fw"></i>
+                                        <i ng-switch-when="articlecomment" class="fa fa-comment fa-fw"></i>
+                                        <i ng-switch-when="projectcomment" class="fa fa-comment fa-fw"></i>
+                                    </span>
+                                    <span ng-switch="notif.type">
+                                        <span ng-switch-when="usercreated">Nouveau utilisateur</span>
+                                        <span ng-switch-when="newmember">Nouveau membre</span>
+                                        <span ng-switch-when="articlecomment">Article commenté</span>
+                                        <span ng-switch-when="projectcomment">Projet commenté</span>
+                                        <span ng-switch-when="articlecreated">Article créé</span>
+                                        <span ng-switch-when="projectcreated">Projet créé</span>
+                                    </span>
+                                    <p><small>{{ notif.info1 }}</small></p>
+                                    <p ng-if="notif.info2"><small>{{ notif.info2 }}</small> </p>
+                                    <span class="pull-right text-muted small date">{{notif.createdAt | amCalendar}}</span>
                                 </div>
                         </li>
                         <li class="divider" ng-repeat-end></li>
-                       
-                        <li  style="height: 28px;">
+                        
+                        <li ng-if="notifications.length == 0">
+                                <div class="text-center small">
+                                   Aucunes notifications
+                                </div>
+                        </li>
+                        <li style="height: 28px;" ng-click="clearNotif()" ng-if="notifications.length > 0">
                             <div class="text-center">
-                                <strong>Toutes les notifications</strong>
-                                <i class="fa fa-angle-right"></i>
+                                <strong>Effacer les notifications vertes</strong>
                             </div>
                         </li>
                     </ul>
                     <!-- /.dropdown-alerts -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <li class="dropdown notificationsdropdowwn">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a ui-sref="/.profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a ui-sref="/.profile"><i class="fa fa-user fa-fw"></i> Profile</a>
                         </li>
-                       <!--  <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li> -->
+                        <li><a ui-sref="/.changepassword"><i class="fa fa-exchange fa-fw"></i> Changer de mot de passe</a>
+                        </li>
                         <li class="divider"></li>
-                        <li><a ui-sref="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a ui-sref="logout"><i class="fa fa-sign-out fa-fw"></i> Déconnexion</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

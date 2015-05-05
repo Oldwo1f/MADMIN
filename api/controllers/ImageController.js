@@ -210,17 +210,15 @@ console.log('.tmp/uploads/'+files[0].filename);
 		var filePath = 'uploads/'+req.params.size+'/'+req.params.name;
 		// sails.log(filePath);
 	    var stat = fs.statSync(filePath);
-	    setTimeout(function (argument) {
+	    // setTimeout(function (argument) {
 	    	res.writeHead(200, {
 		        // 'Content-Type': 'image/',
 		        'Content-Length': stat.size
 		    });
 
 		    var readStream = fs.createReadStream(filePath);
-		    // We replaced all the event handlers with a simple call to readStream.pipe()
 		    readStream.pipe(res);
-	    },500)
-	    // console.log(stat);
+	    // },500)
 	    
 	},
 	update:function  (req,res,next) {

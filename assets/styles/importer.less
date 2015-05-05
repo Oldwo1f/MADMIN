@@ -28,6 +28,7 @@ tr:hover .tablebtn{margin-left:5px;.opacity(1);}
 ul{padding-left:0px;list-style:none;}
 .page-header {padding-bottom: 9px;margin: 20px 0 20px;  position: relative;}
 .messageflash{  margin: 0px 0 0px 250px;background:white;padding:15px 15px 0px 15px;border-left: 1px solid #e7e7e7;}
+.messageflashLogin{  margin: 0px 0 0px 0px;background:transparent;padding:15px 15px 0px 15px;}
 .panel-heading-table .label{font-size:12px; line-height:0px;padding-top:0px;padding-bottom:5px;margin-left:5px;}
 .panel-heading-table .label .labelcheckbox{position: relative;top: 2px;margin-left:4px;}
 .panel-heading-table .FilterBox{margin-bottom:0px;padding-top:5px;padding-right:5px;}
@@ -58,12 +59,22 @@ border-bottom-right-radius:5px;
 .table .chargement td{text-align: center;padding:50px 8px;}
 .table .chargement .fa{ font-size:50px;}
 .chargement.chargementGraph {position:absolute;left:50%; top:50%; margin-top: -22px;margin-left: -18px;font-size:40px; z-index:10;}
+.chargement.chargementLabel {position:relative;padding:0px;margin-top: 0px;margin-left: 0px;font-size:28px; z-index:10;}
 .chargement.chargementGraph i.fa{color:#555;}
-.dropdown-menu>li>a{text-transform: none;}
-.dropdown-alerts li span {position: absolute;bottom: 2px;right: 8px;float: none;}
-.dropdown-alerts li {height: 40px;position: relative;cursor:pointer;}
-.dropdown-alerts li:hover{background:#eee;}
-.dropdown-alerts li > div{padding:5px 20px 20px 20px;}
+.chargement.chargementGraph.graphAnali i.fa{color:#CCC;}
+.chargement.chargementLabel.graphAnali i.fa{color:#CCC;}
+.notificationsdropdowwn .dropdown-menu{padding:0;max-height: 500px;overflow-y: auto;  padding: 2px 0px;}
+.notificationsdropdowwn .dropdown-menu>li>a{text-transform: none;}
+.notificationsdropdowwn .dropdown-alerts li span.date {position: absolute;top: 7px;right: 8px;float: none;}
+.notificationsdropdowwn p {margin-bottom:0px;}
+.notificationsdropdowwn .dropdown-alerts li i.fa {color:#AF002A;}
+.notificationsdropdowwn li.notifOk{cursor:default;}
+.notificationsdropdowwn li.notifOk i.fa {color:#568203;}
+ .dropdown-alerts li {height: auto;position: relative;cursor:pointer;}
+.notificationsdropdowwn  li.divider {margin:0px;}
+.notificationsdropdowwn  li:hover{background:#eee;}
+.notificationsdropdowwn  li.notifOk:hover{background:#fff;}
+.notificationsdropdowwn  li > div{padding:5px 12px 5px 12px;}
 
 .totalTable{display: inline-block;margin: 20px 0;color: grey;padding-left: 15px;padding-top: 4px;}
 .badge {top: 9px;left: 3px;position: absolute;background: #d9534f;z-index: 10;}
@@ -173,7 +184,7 @@ form button.btn:not(.btn-default) {
 }
 
 .center-form {
-  width: 330px;
+  width: 420px;
   margin:  auto;
 }
 
@@ -567,3 +578,12 @@ textarea:focus + .inlinecountdown{display:block;}
 .tradListArticle .btn.btn-danger {margin-top:5px;}
 .tradListArticle .flech{color:#ccc;position:absolute;top:5px;right:-5px;}
 .tradListArticle .btn.btn-danger {.opacity(1);position: absolute;right:25px;top:1px;}
+.list-group-item{color:#555}
+.panel-autosize{display:inline-block;}
+.panel-autosize .panel-body span{font-size:2em;cursor:pointer;}
+.huge {font-size: 3em;}
+.socials {display:inline-block;}
+.socials .panel-primary{display:inline-block;max-width:100px;margin-bottom:0px;margin-left:5px;}
+.socials .panel-primary .panel-heading{  padding: 20px 30px;}
+.changepassword .form-group{margin-bottom:5px;}
+.nopadding{padding-left:0px;padding-right:0px;}

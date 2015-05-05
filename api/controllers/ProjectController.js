@@ -239,7 +239,7 @@ module.exports = {
 						console.log(documentsId);
 						delete req.body.documents;
 			}
-			
+			req.body.author = req.user;
 			Project.create(req.body).exec(function (err,project) {
 				if(err)
 					res.status(400).send(err)
@@ -437,6 +437,13 @@ module.exports = {
 				    	if(err)res.status(200).send(err)
 
 				    		console.log(data);
+				    	Notification.create({type:'projectcreated',status:'ok',info1:req.body.title,info2:'par '+data[0].author.pseudo}).exec(function (err,notif){
+				    		if(err)
+				    			console.log(err);
+				    		notif.users.add(req.user);
+				    		notif.save()
+				    		console.log('notif',notif);
+				    	})
 				    	res.status(200).send(data)
 				    })
 				});
@@ -877,6 +884,20 @@ console.log(projectsaved.category.id);
 					}
 					})
 					
+				})
+			})
+			
+			.then(function (){
+				return Notification.find({'item':'project','itemid':req.body.id,'status':{'!' :['ok']}}).then(function (arguments) {
+					
+					console.log(arguments);
+					return Promise.map(arguments,function (item) {
+						item.status='ok';
+
+						return item.save().then(function function_name (item) {
+							Notification.publishUpdate(item.id,item)
+						});
+					})
 				})
 			})
 			.then(function (thisProject){

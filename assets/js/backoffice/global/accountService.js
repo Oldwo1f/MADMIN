@@ -1,4 +1,4 @@
-app.factory('accountService',['$http', '$q', function($http,$q) {
+app.factory('accountService',['$http', '$q','messageCenterService', function($http,$q,messageCenterService) {
     var service = {};
     service.me={};
 
@@ -25,6 +25,20 @@ app.factory('accountService',['$http', '$q', function($http,$q) {
             // })
         }).error(function (data,status) {
             messageCenterService.add('danger', 'Erreur d\'enregistrement du profile', { status: messageCenterService.status.unseen, timeout: 4000 });
+            deferred.reject(data);
+        })
+        return deferred.promise;
+      }
+      service.changePass= function(profileData) {
+        var deferred = $q.defer();
+        $http.post('/changePass',profileData).success(function (data,status) {
+            // $http.get('/api/me').success(function (data,status) {
+            service.me = data[0]
+            messageCenterService.add('success', 'Mot de passe enregistré', { status: messageCenterService.status.unseen, timeout: 4000 });
+            deferred.resolve(data[0]);
+            // })
+        }).error(function (data,status) {
+            messageCenterService.add('danger', 'Erreur d\'enregistrement du mot de passe', { status: messageCenterService.status.unseen, timeout: 4000 });
             deferred.reject(data);
         })
         return deferred.promise;

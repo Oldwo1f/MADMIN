@@ -12,7 +12,7 @@ app.directive('auditref', function(){
         '</li>'+
         '<li>'+
         '<span class="label label-lg label-success" ng-show="countContentLength()> 200"><label for="">Parfait! Votre contenu est bien garni ({{ countContentLength() }} / 200 mots)</label></span>'+
-        '<span class="label label-lg label-danger" ng-show="countContentLength()< 100"><label for="">Votre contenu n\'est assez long ({{ countContentLength() }} / 200 mots)</label></span>'+
+        '<span class="label label-lg label-danger" ng-show="countContentLength()< 100"><label for="">Votre contenu n\'est pas assez long ({{ countContentLength() }} / 200 mots)</label></span>'+
         '<span class="label label-lg label-warning" ng-show="countContentLength()< 200 && countContentLength()> 100"><label for="">Votre contenu suffisamment long ({{ countContentLength() }} / 200 mots)</label></span>'+
         '</li>'+
         '<li>'+

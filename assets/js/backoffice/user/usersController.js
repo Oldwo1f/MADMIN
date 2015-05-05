@@ -9,6 +9,7 @@ app.controller('usersCtrl',['$scope', 'filterFilter', '$filter', '$state', '$sta
 // angular.element('.tooltipitem').trigger('click');
 		console.log(elem);
 	}
+
 	$scope.loadingUsers=true;
 console.log('userController');
 	document.body.scrollTop=0;
@@ -83,7 +84,7 @@ console.log('userController');
 			$scope.loadingGraph=false;
 			$scope.data=datas
 			
-			
+			console.log('tttttttttttttttttttttttttttttttttttt',$scope.data);
 		})
 	}
 	$scope.loadGraph('full');

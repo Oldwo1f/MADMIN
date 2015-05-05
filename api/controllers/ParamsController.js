@@ -5,53 +5,48 @@ var MongoClient = require('mongodb').MongoClient
 // var fs = require('fs');
 var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require("fs"));
-		var archiver = require('archiver');
-		var mds = require('mongo-dump-stream');
+var archiver = require('archiver');
+var mds = require('mongo-dump-stream');
+var GA = require('googleanalytics'),
+config = {
+        "user": "alexismomcilovic@gmail.com",
+        "password": "Alexis09"
+    },
+ga = new GA.GA(config);
 
 module.exports={
 	backupDb:function(req,res) {
 
 		console.log('backupDB');
 		// console.log( moment().format('dd/mm/yyy') );
-		var out = fs.createWriteStream('test/tt.db');
-			out.on('end', function() {
-			  console.log('there will be no more data.');
+		var out = fs.createWriteStream('.tmp/tmp.db');
+			out.on('finish', function() {
+			  	var rs = fs.createReadStream('.tmp/tmp.db')
+		  		var stat = fs.statSync('.tmp/tmp.db');
+				res.setHeader('Content-disposition', 'attachment; filename=' + 'bdd-'+sails.config.CAMPANY_NAME+'-'+ moment().format('LL')+'.db');
+				res.setHeader('Content-length', stat.size);
+		  		rs.pipe(res)
+
+		  		try{
+			            fs.unlink(".tmp/tmp.db")
+			        }catch(e){
+
+			        }
 			});
 		return mds.dump('mongodb://localhost:27017/madmin', out, function(err) {
-
-			// this.unpipe(out)
-			out.close();
-		  console.log('Finish');
-		  console.log(err);
-		  if (err) { // Everything was sent 
-		  }else
-		  {
-		  	console.log('else');
-		  	setTimeout(function  (argument) {
-		  		var rs = fs.createReadStream('test/tt.db')
-		  		rs.pipe(res)
-		  	},3000)
-		  	var stat = fs.statSync('test/tt.db');
-		  	console.log(stat.size);
-			// res.setHeader('Content-length', stat.size);
-			// res.setHeader('Content-disposition', 'attachment; filename=' + 'bdd-'+sails.config.CAMPANY_NAME+'-'+ moment().format('LL')+'.db');
-
-		  	
-		  }
+			out.end();
 		});
-		// res.pipe(out);
-    // When the file is done streaming, finish the Javascript string
-	    
 	},
 	restoreDb:function(req,res) {
 
 		console.log('restoreDB');
-		var backup = fs.createReadStream('test/database-01042014.db');
+		var backup = fs.createReadStream('test/bdd-ARBATOU-4 mai 2015.db');
 		// var fs = require('fs');
 		// var out = fs.createReadWriteStream('test/mydb.db');
 		return mds.load('mongodb://localhost:27017/madmin', backup, function(err,d) {
 		  if (!err) { // Everything was sent 
 		  } 
+		  res.send('ok')
 		});
 		// res.pipe(out);
     // When the file is done streaming, finish the Javascript string
@@ -198,7 +193,5 @@ module.exports={
 		    db.close();
 		  })
 		});
-	},
-	
-	
+	},	
 }

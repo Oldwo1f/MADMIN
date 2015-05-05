@@ -239,7 +239,9 @@ module.exports = {
 						console.log(documentsId);
 						delete req.body.documents;
 			}
-			
+			req.body.author = req.user;
+
+			console.log(req.user);
 			Article.create(req.body).exec(function (err,article) {
 				if(err)
 					res.status(400).send(err)
@@ -435,7 +437,29 @@ module.exports = {
 
 				    Article.find(article.id).populateAll().exec(function(err,data) {
 				    	if(err)res.status(200).send(err)
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log('------------------------------------');
+				    		console.log(data);
 
+				    	Notification.create({type:'articlecreated',status:'ok',info1:req.body.title,info2:'par '+data[0].author.pseudo}).exec(function (err,notif){
+				    		if(err)
+				    			console.log(err);
+				    		notif.users.add(req.user);
+				    		notif.save()
+				    		console.log('notif',notif);
+				    		// Notification.publishCreate(notif,req)
+				    	})
+						
+				
 				    		console.log(data);
 				    	res.status(200).send(data)
 				    })
@@ -879,7 +903,28 @@ console.log(articlesaved.category.id);
 					
 				})
 			})
-			.then(function (thisArticle){
+			.then(function (){
+				return Notification.find({'item':'article','itemid':req.body.id,'status':{'!' :['ok']}}).then(function (arguments) {
+					console.log('----------------------------------------------------------------------------------------');
+					console.log('----------------------------------------------------------------------------------------');
+					console.log('----------------------------------------------------------------------------------------');
+					console.log('----------------------------------------------------------------------------------------');
+					console.log('----------------------------------------------------------------------------------------');
+					console.log('----------------------------------------------------------------------------------------');
+					console.log('----------------------------------------------------------------------------------------');
+					console.log('----------------------------------------------------------------------------------------');
+					console.log(arguments);
+					return Promise.map(arguments,function (item) {
+						item.status='ok';
+
+						return item.save().then(function function_name (item) {
+							Notification.publishUpdate(item.id,item)
+						});
+					})
+					// body...
+				})
+			})
+			.then(function (){
 				return Article.findOne(req.body.id).populateAll()
 			})
 			.then(function (article){

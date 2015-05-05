@@ -27,6 +27,7 @@ var jsFilesToInject = [
   // Dependencies like sails.io.js, jQuery, or Angular
   // are brought in here
   'bower_components/jquery/dist/jquery.min.js',
+  'bower_components/sails.io.js/dist/sails.io.js',
   'js/dependencies/**/*.js',
   'bower_components/marked/marked.min.js',
   'bower_components/angular/angular.min.js',
@@ -62,6 +63,8 @@ var jsFilesToInject = [
   'bower_components/angular-minicolors/angular-minicolors.js',
   'bower_components/ng-videosharing-embed/build/ng-videosharing-embed.min.js',
   'bower_components/angular-elastic/elastic.js',
+  'bower_components/angular-morris-chart/src/angular-morris-chart.js',
+  'bower_components/angular-audio/app/angular.audio.js',
   // 'bower_components/ng-load/ng-load.js',
   // 'bower_components/sb-admin-v2/demo/js/dashboard-demo.js',
   // 'js/plugin/jquery.js',

@@ -8,9 +8,12 @@
 module.exports = {
 
   attributes: {
-  		type: {type:'string',required:true},
+      type: {type:'string',required:true},
+      status: {type:'string',required:true},
+      itemid: {type:'string'},
+      info1: {type:'string'},
+  		info2: {type:'string'},
   		forwho: {type:'string',required:true,defaultsTo:'all'},
-	    content: {type:'string',required:true},
 	    users:{
             collection: 'user'
         }

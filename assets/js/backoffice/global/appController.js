@@ -8,44 +8,51 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
   
 
   // console.log('$scope.languagesToTranslate',$scope.languagesToTranslate);
-  accountService.getProfile().then(function (data) {
-    $scope.me = data;
-  })
+
 
 
   $scope.$on("$stateChangeStart", function (event, toState, toParams,fromState, fromParams) {
-
-      $scope.navbarOff=false;
-    if(toState.name === "/login"){
-      $scope.navbarOff=true;
-    }
-    if($auth.isAuthenticated())
-    {
-      if(toState.name === "/")
-          $location.path('/dashboard')
+    console.log('stateChangeStart');
+    console.log($auth.isAuthenticated());
+    console.log('-------------------------');
+    console.log(toState.name);
+    console.log('-------------------------');
+    if(toState.name === "login"){
+        console.log('here login');
       return true;
-    }else
-    {
-      $scope.navbarOff=true;
-      // $state.go('/login');
-      $location.path('/login')
-      return false
+    }else{
+        console.log('else');
+      if($auth.isAuthenticated())
+      {
+        if(toState.name === "/")
+            $state.go('/.dashboard')
+        return true;
+      }else
+      {
+        $state.go('login')
+        return true
+      }
     }
     
   });
   $scope.$on('$stateChangeSuccess',function (event, toState, toParams, fromState, fromParams){
     $scope.$previousState = fromState;
     console.log('STATECHANGE SUCCESS');
-    // $scope.navbarOff=false;
-    console.log(toState);
+    if($auth.isAuthenticated())
+    {
+        if(toState.name === "/")
+            $state.go('/.dashboard')
+        return true;
+    }else
+    {
+        $state.go('login')
+        return true
+    }
     if(toState.name === "/.articles.edit"){
-      console.log("changeState goodname");
-      console.log(toParams.tabstate);
       $rootScope.currenttabs=toParams.tabstate
       return true;
     }
     $(window).resize();
-    // console.log($(window).height());
     
   });
 
@@ -54,7 +61,6 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
 }]);
 $(window).resize(function() {
   console.log('resize');
-  // $('#wrapper').css({'min-height':$(window).height()+'px'})
   height = $(window).height()-67
-  $('#page-wrapper').css({'min-height':height+'px'})
+  $('#page-wrapper').css({'min-height':$(window).height()+'px'})
 }).resize()
