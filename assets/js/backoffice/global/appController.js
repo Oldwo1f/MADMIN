@@ -4,24 +4,12 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
   $scope.url = configService.url;
   $scope.languages = _.clone(configService.languages);
   $scope.defaultLanguage = configService.defaultLanguage;
-  // console.log($scope.languages);
   
 
-  // console.log('$scope.languagesToTranslate',$scope.languagesToTranslate);
-
-
-
   $scope.$on("$stateChangeStart", function (event, toState, toParams,fromState, fromParams) {
-    console.log('stateChangeStart');
-    console.log($auth.isAuthenticated());
-    console.log('-------------------------');
-    console.log(toState.name);
-    console.log('-------------------------');
     if(toState.name === "login"){
-        console.log('here login');
       return true;
     }else{
-        console.log('else');
       if($auth.isAuthenticated())
       {
         if(toState.name === "/")
@@ -37,7 +25,6 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
   });
   $scope.$on('$stateChangeSuccess',function (event, toState, toParams, fromState, fromParams){
     $scope.$previousState = fromState;
-    console.log('STATECHANGE SUCCESS');
     if($auth.isAuthenticated())
     {
         if(toState.name === "/")
@@ -52,6 +39,11 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
       $rootScope.currenttabs=toParams.tabstate
       return true;
     }
+    
+    
+  });
+  $scope.$on('$viewContentLoaded',function (event, toState, toParams, fromState, fromParams){
+    
     $(window).resize();
     
   });
@@ -60,7 +52,6 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
 
 }]);
 $(window).resize(function() {
-  console.log('resize');
   height = $(window).height()-67
-  $('#page-wrapper').css({'min-height':$(window).height()+'px'})
+  document.getElementById('page-wrapper').style.minHeight = height+'px';
 }).resize()
