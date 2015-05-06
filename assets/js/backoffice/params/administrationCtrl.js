@@ -7,26 +7,20 @@ app.controller('administrationCtrl', ['$scope', '$auth','stockage','version','db
 	$scope.myversion=version;
 	console.log(dbstats);
 	$scope.dbstats=dbstats;
-	$scope.imageSize=stockage.totalImage;
-	$scope.fileSize=stockage.totalFile;
+	console.log(stockage);
+	$scope.imageSize=Number(stockage.totalImage);
+	$scope.fileSize=Number(stockage.totalFile);
 	$scope.depassement= Number(($scope.imageSize+$scope.fileSize)-$scope.sizequota)
 	$scope.freespace= Number($scope.sizequota-($scope.imageSize+$scope.fileSize))
 	console.log('depassement',$scope.depassement);
-	// $scope.lang=$stateParams.lang;
-	console.log($scope.lang);
-	$scope.save=function() {
-		console.log('$scope.traduction',$scope.traduction);
-		paramsService.saveTraduction($scope.lang,$scope.traduction).then(function() {
-			messageCenterService.add('success', 'Article enregisté', { status: messageCenterService.status.next ,timeout: 3000});
-		},function() {
-			messageCenterService.add('danger', 'Une erreur s\'est produite', { status: messageCenterService.status.next ,timeout: 3000});
-		})
-	};
+	console.log('depassement',$scope.freespace);
+	console.log('imageSize',$scope.imageSize);
+	
 
-	var freespace = $filter('bytes')($scope.freespace)
-	var fileSize = $filter('bytes')($scope.fileSize)
-	var imageSize = $filter('bytes')($scope.imageSize)
-	console.log();
+	var freespace = $filter('bytes')(Number($scope.freespace))
+	var fileSize = $filter('bytes')(Number($scope.fileSize))
+	var imageSize = $filter('bytes')(Number($scope.imageSize))
+	console.log(fileSize);
 	$scope.data2 = [$scope.imageSize,$scope.fileSize,$scope.freespace]
     $scope.colors =  ['#2364ba','#f27d1d','#5cb85c'];
 // console.log($filter('bytes')($scope.imageSize));

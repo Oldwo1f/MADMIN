@@ -480,6 +480,9 @@ module.exports = {
 			    return Project.findOne(req.body.id).populateAll()
 			})
 			.then(function save_project(oldproject){
+				this.oldcategory=false;
+				if(typeof(oldproject.category)=='object')
+					this.oldcategory = oldproject.category.id
 			    this.project = oldproject;
 			    oldproject.title= req.body.title;
 			    oldproject.content= req.body.content;
@@ -501,31 +504,32 @@ module.exports = {
 			    
 			})
 			.then(function(projectsaved) {
+				var oldCat = this.oldcategory
 				this.project = projectsaved;
-				// console.log('oldcategory',oldcategory);
-				console.log('projectsaved',projectsaved.category);
-				if(projectsaved.category){
-
-console.log(projectsaved.category.id);
-					return CategoryProject.findOne(projectsaved.category.id).then(function(category) {
-						// console.log('------>',category.nbProjects);
+				return new Promise(function(resolve,rej){
+					if(oldCat){
+						return CategoryProject.findOne(oldCat).then(function(category) {
+							category.nbProjects= Number(category.nbProjects)-1;
+							return category.save(function() {resolve(true)})
+						})
+					}else{
+			        	resolve(true)
+						
+					}
+			    });
+				
+			}).then(function() {
+				if(this.project.category){
+					return CategoryProject.findOne(this.project.category.id).then(function(category) {
 						category.nbProjects= Number(category.nbProjects)+1;
-						return category.save(function() {return true;})
-					}).then(function() {
-						if(oldcategory){
-							return CategoryProject.findOne(oldcategory).then(function(category) {
-								// console.log('Old------>',category.nbProjects);
-								category.nbProjects= Number(category.nbProjects)-1;
-								return category.save(function() {return true;})
-							})
-						}else{
-							return true;
-						}
+						return category.save(function(saved) { console.log('saved :',saved);
+							return true;})
 					})
 				}else{
 					return true;
 				}
 			})
+			
 			.then(function find_or_create_tags(savedproject) {
 				// console.log('savedproject',savedproject);
 				

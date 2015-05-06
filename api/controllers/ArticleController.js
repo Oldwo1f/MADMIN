@@ -497,6 +497,11 @@ module.exports = {
 			    return Article.findOne(req.body.id).populateAll()
 			})
 			.then(function save_article(oldarticle){
+				this.oldcategory=false;
+				if(typeof(oldarticle.category)=='object')
+					this.oldcategory = oldarticle.category.id
+
+				console.log('this.oldcategory',this.oldcategory);
 			    this.article = oldarticle;
 			    oldarticle.title= req.body.title;
 			    oldarticle.content= req.body.content;
@@ -518,26 +523,39 @@ module.exports = {
 			    
 			})
 			.then(function(articlesaved) {
+				console.log(this.oldcategory);
+				var oldCat = this.oldcategory
 				this.article = articlesaved;
+				console.log(this.oldcategory);
+				return new Promise(function(resolve,rej){
+					if(oldCat){
+						console.log('OLD CATEGORY');
+						console.log(' ADD -1');
+						return CategoryBlog.findOne(oldCat).then(function(category) {
+							// console.log('------>',category.nbArticles);
+							console.log(category.nbArticles);
+							category.nbArticles= Number(category.nbArticles)-1;
+							console.log(category.nbArticles);
+							return category.save(function() {resolve(true)})
+						})
+					}else{
+			        	resolve(true)
+						
+					}
+			    });
 				// console.log('oldcategory',oldcategory);
-				console.log('articlesaved',articlesaved.category);
-				if(articlesaved.category){
-
-console.log(articlesaved.category.id);
-					return CategoryBlog.findOne(articlesaved.category.id).then(function(category) {
-						// console.log('------>',category.nbArticles);
+				
+			}).then(function() {
+				// console.log('oldcategory',oldcategory);
+				console.log('articlesaved',this.article.category);
+				if(this.article.category){
+					console.log(' ADD +1');
+					return CategoryBlog.findOne(this.article.category.id).then(function(category) {
+						console.log('------>',category.nbArticles);
 						category.nbArticles= Number(category.nbArticles)+1;
-						return category.save(function() {return true;})
-					}).then(function() {
-						if(oldcategory){
-							return CategoryBlog.findOne(oldcategory).then(function(category) {
-								// console.log('Old------>',category.nbArticles);
-								category.nbArticles= Number(category.nbArticles)-1;
-								return category.save(function() {return true;})
-							})
-						}else{
-							return true;
-						}
+						console.log('------>',category.nbArticles);
+						return category.save(function(saved) { console.log('saved :',saved);
+							return true;})
 					})
 				}else{
 					return true;
@@ -795,7 +813,7 @@ console.log(articlesaved.category.id);
 			})
 
 			.then(function (comments,index){
-				console.log('HERE3');
+				// console.log('HERE3');
 				// imgarticle.rank=
 				// console.log(comments);
 				// console.log('------' );
@@ -822,7 +840,7 @@ console.log(articlesaved.category.id);
 							// console.log('commentsTab',commentsTab);
 							// console.log(_.pluck(commentsTab,'id'));
 							var foundedInTabs = _.find(commentsTab,function(c) {
-								console.log('c',c);
+								// console.log('c',c);
 								if(c.nouvo==true)
 									return true
 								else
@@ -831,7 +849,7 @@ console.log(articlesaved.category.id);
 							// console.log('foundedInTabs',foundedInTabs);
 
 							return Promise.map(foundedCom.reponses,function(rep) {
-								console.log('rep',rep);
+								// console.log('rep',rep);
 								if(!_.contains(_.pluck(foundedInTabs.reponses,'content'),rep.content))
 								{
 									// console.log('NOT CONTAINT reponse');
@@ -866,7 +884,6 @@ console.log(articlesaved.category.id);
 			})
 
 			.then(function() {
-				console.log('this.article',this.article);
 				var oldtrans = this.article.translations
 				return Promise.map(translations,function(translation) {
 					// console.log(translation.id);
@@ -890,7 +907,7 @@ console.log(articlesaved.category.id);
 					
 				}).then(function() {
 					return Promise.map(oldtrans,function(trans) {
-						console.log('trans',trans);
+						// console.log('trans',trans);
 					if(!_.contains(_.pluck(translations,'id'),trans.id))
 					{
 						// console.log('NOT CONTAINT reponse');
@@ -905,15 +922,6 @@ console.log(articlesaved.category.id);
 			})
 			.then(function (){
 				return Notification.find({'item':'article','itemid':req.body.id,'status':{'!' :['ok']}}).then(function (arguments) {
-					console.log('----------------------------------------------------------------------------------------');
-					console.log('----------------------------------------------------------------------------------------');
-					console.log('----------------------------------------------------------------------------------------');
-					console.log('----------------------------------------------------------------------------------------');
-					console.log('----------------------------------------------------------------------------------------');
-					console.log('----------------------------------------------------------------------------------------');
-					console.log('----------------------------------------------------------------------------------------');
-					console.log('----------------------------------------------------------------------------------------');
-					console.log(arguments);
 					return Promise.map(arguments,function (item) {
 						item.status='ok';
 
@@ -935,8 +943,6 @@ console.log(articlesaved.category.id);
 				})
 			})
 			.then(function (allimage){
-				// console.log('allimage',allimage);
-				// console.log('one image',one image);
 				this.article.images = allimage
 				if(this.article.category)
 				this.article.category = this.article.category.id

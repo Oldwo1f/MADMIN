@@ -15,74 +15,81 @@ module.exports={
 
 	analytics:function(req,res) {
 
-		var dateStart = '',dateEnd='';
-		switch(req.params.period){
-			case 'month':
-				dateStart= moment().startOf(req.params.period).format('YYYY-MM-DD')
-				dateEnd= moment().format('YYYY-MM-DD')
-			break;
-			case 'lastmonth':
-			console.log('HEHEHEHEHEHEHEHEHEhe');
-				dateStart= moment().subtract(1,'M').startOf('month').format('YYYY-MM-DD')
-				dateEnd= moment().subtract(1,'month').endOf('month').format('YYYY-MM-DD')
+		console.log(req.params.metrics);
+		if(!req.params.metrics || !sails.config.GOOGLE_ANALYTICS_ID)
+		{
+			return res.status(400).send('error')
+		}else{
 
-			break;
-			case 'year':
-				dateStart= moment().startOf(req.params.period).format('YYYY-MM-DD')
-				dateEnd= moment().format('YYYY-MM-DD')
-			break;
-			case 'week':
-				dateStart= moment().startOf(req.params.period).format('YYYY-MM-DD')
-				dateEnd= moment().format('YYYY-MM-DD')
-			break;
-			case 'lastweek':
-				dateStart= moment().subtract(1,'weeks').startOf('week').format('YYYY-MM-DD')
-				dateEnd= moment().subtract(1,'weeks').endOf('week').format('YYYY-MM-DD')
+			var dateStart = '',dateEnd='';
+			switch(req.params.period){
+				case 'month':
+					dateStart= moment().startOf(req.params.period).format('YYYY-MM-DD')
+					dateEnd= moment().format('YYYY-MM-DD')
+				break;
+				case 'lastmonth':
+				console.log('HEHEHEHEHEHEHEHEHEhe');
+					dateStart= moment().subtract(1,'M').startOf('month').format('YYYY-MM-DD')
+					dateEnd= moment().subtract(1,'month').endOf('month').format('YYYY-MM-DD')
 
-			break;
-		}
+				break;
+				case 'year':
+					dateStart= moment().startOf(req.params.period).format('YYYY-MM-DD')
+					dateEnd= moment().format('YYYY-MM-DD')
+				break;
+				case 'week':
+					dateStart= moment().startOf(req.params.period).format('YYYY-MM-DD')
+					dateEnd= moment().format('YYYY-MM-DD')
+				break;
+				case 'lastweek':
+					dateStart= moment().subtract(1,'weeks').startOf('week').format('YYYY-MM-DD')
+					dateEnd= moment().subtract(1,'weeks').endOf('week').format('YYYY-MM-DD')
 
-		console.log(dateStart);
-		console.log(dateEnd);
-		ga.login(function(err, token) {
+				break;
+			}
 
-			async.parallel({
-				count:function (cb) {
-					ga.login(function(err, token) {
-					    var options = {
-					        'ids': 'ga:'+sails.config.GOOGLE_ANALYTICS_ID,
-					        'start-date': dateStart,
-					        'end-date': dateEnd,
-					        'metrics': 'ga:sessions,ga:pageviews,ga:users,ga:percentNewSessions,ga:avgSessionDuration,ga:bounceRate,ga:pageviewsPerSession',
-					    };
+			console.log(dateStart);
+			console.log(dateEnd);
+			ga.login(function(err, token) {
 
-					    ga.get(options, function(err, entries) {
-					       cb(null,entries[0].metrics[0])
-					    });
-					});
-				},
-				graph:function (cb) {
-						var	dimention = 'ga:date';
-						if(req.params.period=='year')
-							dimention = 'ga:month';
-					    var options = {
-					        'ids': 'ga:'+sails.config.GOOGLE_ANALYTICS_ID,
-					        'start-date': dateStart,
-					        'end-date': dateEnd,
-					        'metrics': req.params.metrics,
-					        'dimensions': dimention,
-					    };
+				async.parallel({
+					count:function (cb) {
+						ga.login(function(err, token) {
+						    var options = {
+						        'ids': 'ga:'+sails.config.GOOGLE_ANALYTICS_ID,
+						        'start-date': dateStart,
+						        'end-date': dateEnd,
+						        'metrics': 'ga:sessions,ga:pageviews,ga:users,ga:percentNewSessions,ga:avgSessionDuration,ga:bounceRate,ga:pageviewsPerSession',
+						    };
 
-					    ga.get(options, function(err, entries) {
-					       cb(null,entries)
-					    });
-				}
-			},function  (err, results) {
-				res.send(results)
-			})
+						    ga.get(options, function(err, entries) {
+						       cb(null,entries[0].metrics[0])
+						    });
+						});
+					},
+					graph:function (cb) {
+							var	dimention = 'ga:date';
+							if(req.params.period=='year')
+								dimention = 'ga:month';
+						    var options = {
+						        'ids': 'ga:'+sails.config.GOOGLE_ANALYTICS_ID,
+						        'start-date': dateStart,
+						        'end-date': dateEnd,
+						        'metrics': req.params.metrics,
+						        'dimensions': dimention,
+						    };
 
-		});
+						    ga.get(options, function(err, entries) {
+						       cb(null,entries)
+						    });
+					}
+				},function  (err, results) {
+					res.send(results)
+				})
+
+			});
 	
+		}
 		
 	},
 	countAll:function(req,res) {

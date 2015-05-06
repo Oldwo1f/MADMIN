@@ -1,6 +1,7 @@
 app.controller('dashboardCtrl',['$scope', 'filterFilter', '$filter', '$state', '$stateParams', 'userService','chiffres','dashboardService','NewComments','notifications','socials',function usersCtrl($scope,filterFilter,$filter,$state,$stateParams,userService,chiffres,dashboardService,NewComments,notifications,socials) {
 console.log('dashboardCtrl');
 $scope.loadingGraph=true;
+$scope.analytics=true;
 $scope.loadingLabels=true;
 	$scope.chiffres = chiffres;
 $scope.count={};
@@ -65,6 +66,7 @@ $scope.goTolastComment =function () {
 		$scope.series.push(serie)
 	}
 	$scope.loadGraph=function () {
+		$scope.analytics=true;
 		$scope.loadingGraph=true;
 		if($scope.previousperiod!=$scope.period)
 			$scope.loadingLabels=true;
@@ -102,6 +104,8 @@ $scope.goTolastComment =function () {
 			}
 			$scope.loadingGraph=false;
 			$scope.loadingLabels=false;
+		},function (err) {
+			$scope.analytics=false;
 		})
 	}
 	$scope.loadGraph();

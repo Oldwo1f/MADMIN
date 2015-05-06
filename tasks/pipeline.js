@@ -35,7 +35,7 @@ var jsFilesToInject = [
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'bower_components/metisMenu/dist/jquery.metisMenu.min.js',
   'bower_components/raphael/raphael-min.js',
-  'bower_components/morrisjs/morris.min.js',
+  'bower_components/morrisjs/morris.js',
   'bower_components/sb-admin-v2/js/sb-admin.js',
   'bower_components/tinycolor/tinycolor.js',
   'bower_components/angular-bootstrap/ui-bootstrap.min.js',

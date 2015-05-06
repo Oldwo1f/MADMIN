@@ -184,7 +184,7 @@ module.exports={
 	},
 	getDbStats:function(req,res) {
 		console.log('here');
-		var url = 'mongodb://localhost:27017/madmin';
+		var url = 'mongodb://localhost:27017/'+sails.config.DB_NAME;
 		// Use connect method to connect to the Server
 		MongoClient.connect(url, function(err, db) {
 		  console.log("Connected correctly to server");

@@ -53,5 +53,5 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
 }]);
 $(window).resize(function() {
   height = $(window).height()-67
-  document.getElementById('page-wrapper').style.minHeight = height+'px';
+  $('#page-wrapper').css({'min-height':height+'px'});
 }).resize()
