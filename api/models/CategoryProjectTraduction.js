@@ -11,8 +11,8 @@ module.exports = {
     attributes: {
   		lang : {type:'string',required:true},
   		name : {type:'string',required:true},
-      categoryblog: {
-          model: 'categoryblog'
+      categoryproject: {
+          model: 'categoryproject'
       },
        
     },

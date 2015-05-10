@@ -14,8 +14,8 @@ module.exports = {
   		color:{type:'string',required:true},
   		nbProjects:{type:'int',defaultsTo:0},
         translations: {
-          collection: 'categoryblogtraduction',
-          via:'categoryblog'
+          collection: 'categoryprojecttraduction',
+          via:'categoryproject'
         }
 	},
     beforeDestroy: function (values, cb) {

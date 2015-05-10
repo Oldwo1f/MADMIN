@@ -333,13 +333,15 @@ module.exports = {
 										project.images.add(imageproject);
 										project.save(function(err,result) {
 											if(err)
-												console.log('error save project',err);
-											img.projects.add(imageproject);
-											img.save(function(err,result) {
-												if(err)
-													console.log('error save img',err);
-												callback(null,img)
-											})
+												callback(err)
+											else{
+												img.projects.add(imageproject);
+												img.save(function(err,result) {
+													if(err)
+														console.log('error save img',err);
+													callback(null,img)
+												})
+											}
 										})
 
 									})

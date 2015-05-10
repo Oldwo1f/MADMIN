@@ -80,7 +80,7 @@ module.exports={
 		// // console.log(sails.config.i18n);
 
 		// var file = fs.writeFileSync('config/locales/'+req.params.lang+'.json',json)
-		fs.writeFile('config/locales/'+req.params.lang+'.json', json, function (err) {
+		fs.writeFile(sails.config.PATH_TO_WEBSITE+'config/locales/'+req.params.lang+'.json', json, function (err) {
 		  if (err){
 			res.status(400).send('error')
 

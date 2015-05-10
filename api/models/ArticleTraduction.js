@@ -16,6 +16,7 @@ module.exports = {
       	rewriteurl : {type:'string',defaultsTo:null},
       	keyword : {type:'string',defaultsTo:null},
   		  video:{type:'text',defaultsTo:null},
+        description : {type:'text',defaultTso:null},
         article: {
             model: 'article'
         },

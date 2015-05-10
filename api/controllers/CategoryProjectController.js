@@ -18,7 +18,7 @@ module.exports = {
 		async.parallel({
 		    data:function(callback){
 		    	// callback(null, 'emailOk');
-		    		console.log('filterPage========================>' +filter.page);
+		    		// console.log('filterPage========================>' +filter.page);
 		    		// {filename:{'contains':filter.slug}}
 		    		// .sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage)
 				CategoryProject.find({name:{'contains':filter.slug}}).sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).populateAll().exec(function (err,users){
@@ -33,7 +33,7 @@ module.exports = {
 		    },
 		    count:function(callback){
 
-		    	console.log('FIND DOCUMENTS');
+		    	// console.log('FIND DOCUMENTS');
 		            CategoryProject.count({name:{'contains':filter.slug}}).exec(function (err,count){
 						if(err)
 							callback(err)
@@ -121,7 +121,7 @@ module.exports = {
 				var oldtrans = this.cat.translations
 				return Promise.map(translations,function(translation) {
 					// console.log(translation.id);
-					// console.log(translation);
+					console.log(translation);
 					if(translation.id){
 						return CategoryProjectTraduction.findOne(translation.id).then(function(founded) {
 							return CategoryProjectTraduction.update(translation.id,translation)
@@ -130,8 +130,8 @@ module.exports = {
 						translation.article = req.body.id;
 						// console.log('translation = this.article.id;',req.body.id);
 						return CategoryProjectTraduction.create(translation).then(function(founded) {
-							// console.log('founded',founded);
-							founded.categoryblog = req.body.id
+							console.log('created',founded);
+							founded.categoryproject = req.body.id
 							return founded.save().then(function(toto) {
 								// console.log('toto',toto);
 							})
@@ -141,7 +141,7 @@ module.exports = {
 					
 				}).then(function() {
 					return Promise.map(oldtrans,function(trans) {
-						console.log('trans',trans);
+						// console.log('trans',trans);
 					if(!_.contains(_.pluck(translations,'id'),trans.id))
 					{
 						// console.log('NOT CONTAINT reponse');
