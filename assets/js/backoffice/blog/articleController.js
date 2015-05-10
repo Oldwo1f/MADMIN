@@ -410,6 +410,7 @@ app.controller('editArticleCtrl',['$location','imageService','tagService','$scop
 	$scope.formData.tags= $scope.formData.tags || [];
 	// $scope.formData.images= [];
 	// $scope.formData.documents= [];
+  $scope.formData.video= $scope.formData.video || '' ;
 	$scope.formData.publishVideo= $scope.formData.publishVideo || false;
 	$scope.formData.activeComent= $scope.formData.activeComent 
 	$scope.formData.status= $scope.formData.status || 'draft';
@@ -608,6 +609,7 @@ app.controller('editArticleCtrl',['$location','imageService','tagService','$scop
 				else{
 					$scope.formData=data;
 					// $scope.formData.category='551d3d28b916988729a976af'
+          $scope.formData.video= $scope.formData.video || '';
 					$scope.formData.content= $scope.formData.content || '';
 					$scope.formData.description= $scope.formData.description || '';
 					$scope.formData.tags= $scope.formData.tags || [];

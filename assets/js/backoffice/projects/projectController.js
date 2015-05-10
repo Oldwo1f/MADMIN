@@ -403,6 +403,7 @@ app.controller('editProjectCtrl',['$location','imageService','tagService','$scop
 	$scope.formData=project;
 	 
 	// $scope.formData.category='551d3d28b916988729a976af'
+  $scope.formData.video= $scope.formData.video || '';
 	$scope.formData.content= $scope.formData.content || '';
 	$scope.formData.description= $scope.formData.description || '';
 	$scope.formData.tags= $scope.formData.tags || [];
@@ -606,6 +607,7 @@ app.controller('editProjectCtrl',['$location','imageService','tagService','$scop
 				else{
 					$scope.formData=data;
 					// $scope.formData.category='551d3d28b916988729a976af'
+          $scope.formData.video= $scope.formData.video || '';
 					$scope.formData.content= $scope.formData.content || '';
 					$scope.formData.description= $scope.formData.description || '';
 					$scope.formData.tags= $scope.formData.tags || [];
