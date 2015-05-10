@@ -189,6 +189,8 @@ module.exports={
 		MongoClient.connect(url, function(err, db) {
 		  console.log("Connected correctly to server");
 		  db.stats(function(err, stats) {
+
+		  	console.log('err stats',err);
 			res.send(stats)		
 		    db.close();
 		  })
