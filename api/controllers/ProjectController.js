@@ -335,7 +335,7 @@ module.exports = {
 											if(err)
 												callback(err)
 											else{
-												img.projects.add(imageproject);
+												img.articles.add(imageproject);
 												img.save(function(err,result) {
 													if(err)
 														console.log('error save img',err);
