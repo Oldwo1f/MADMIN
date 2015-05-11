@@ -2,8 +2,13 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
 	
   $scope.h1 = configService.h1;
   $scope.url = configService.url;
-  $scope.languages = _.clone(configService.languages);
-  $scope.defaultLanguage = configService.defaultLanguage;
+  
+   configService.getLangs().then(function(data) {
+    $scope.defaultLanguage=[]
+    $scope.languages = data.locales;
+    $scope.defaultLanguage.push(data.defaults)
+  })
+
   
 
   $scope.$on("$stateChangeStart", function (event, toState, toParams,fromState, fromParams) {

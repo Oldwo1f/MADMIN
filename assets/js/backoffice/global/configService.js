@@ -120,6 +120,19 @@ app.factory('configService', ['$http', '$q', function ($http,$q) {
     {lang:'es',langfull:'Espagnole',langcap:'ES'}
     ];
 
+    service.getLangs = function () {
+        var deferred = $q.defer();
+        $http.get('/getLangs').success(function (data,status) {
+            service.defaultLanguage.push(data.defaults)
+            service.languages=data.locales;
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            // messageCenterService.add('danger', 'Erreur de récupération du profile', { status: messageCenterService.status.unseen, timeout: 4000 });
+
+            deferred.reject('error perso');
+        })
+        return deferred.promise;
+    };
 
     return service;
 }]);

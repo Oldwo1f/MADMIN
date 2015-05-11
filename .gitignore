@@ -40,6 +40,8 @@
 ################################################
 
 config
+!config/routes.js
+!config/policies.js
 
 
 
