@@ -49,6 +49,7 @@ module.exports.routes = {
   // 'post /emailme' : 'frontController.emailme',
   'get /createNotif':'NotificationController.createNotif',
   'get /createComment':'NotificationController.createComment',
+  'post /project/:itemid/addComment':'NotificationController.addCommentProj',
 
 //USER
   'POST /user/add':'UserController.add',

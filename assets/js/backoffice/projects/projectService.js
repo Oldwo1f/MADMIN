@@ -1,4 +1,4 @@
-app.factory('projectService', ['$http', '$q', function ($http,$q) {
+app.factory('projectService', ['$http', '$q','$sailsSocket', function ($http,$q,$sailsSocket) {
     var service = {};
     service.items=[];
 
@@ -82,7 +82,7 @@ app.factory('projectService', ['$http', '$q', function ($http,$q) {
         console.log('ADDNEW Service');
         var deferred = $q.defer();
         // project.role = 'project'
-        $http.post('/project/add',project).success(function (data2,status2) {
+        $sailsSocket.post('/project/add',project).success(function (data2,status2) {
             console.log('SUCCESS');
             console.log(data2);
             deferred.resolve(data2);

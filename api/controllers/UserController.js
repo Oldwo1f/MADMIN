@@ -73,6 +73,7 @@ var nodemailer = require('nodemailer');
 // var directTransport = require('nodemailer-direct-transport');
 module.exports = {
 	login:function(req,res) {
+		console.log('login');
 		function createToken(req, user,data) {
 		  var payload = {
 		    iss: req.hostname,
@@ -85,6 +86,9 @@ module.exports = {
 		}
 		var errormes = res.__('Erreur d\'email ou de mots de passe');
  		User.findOne({ email: req.body.email }).exec(function(err, user) {
+
+ 			console.log(err);
+ 			console.log(user);
 		    if (!user) {
 		      return res.status(401).send({ message: errormes});
 		    }

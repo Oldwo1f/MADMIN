@@ -456,7 +456,7 @@ module.exports = {
 				    		notif.users.add(req.user);
 				    		notif.save()
 				    		console.log('notif',notif);
-				    		// Notification.publishCreate(notif,req)
+				    		Notification.publishCreate(notif,req)
 				    	})
 						
 				

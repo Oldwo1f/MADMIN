@@ -219,7 +219,7 @@ module.exports = {
 		
 	},
 	add:function  (req,res,next) {
-		console.log('ADD ARTICLE');
+		console.log('ADD PROJECT');
 		
 
 		if(req.body)
@@ -443,7 +443,9 @@ module.exports = {
 				    		if(err)
 				    			console.log(err);
 				    		notif.users.add(req.user);
-				    		notif.save()
+				    		notif.save(function(err) {
+				    				Notification.publishCreate(notif,req)
+				    		})
 				    		console.log('notif',notif);
 				    	})
 				    	res.status(200).send(data)

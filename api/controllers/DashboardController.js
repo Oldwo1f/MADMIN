@@ -152,7 +152,7 @@ module.exports={
 			        			console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 			        			console.log(err);
 			        			console.log(data);
-			        			if(err){
+			        			if(err || typeof(data)==="undefined"){
 
 			        				cb(err)
 			        			}

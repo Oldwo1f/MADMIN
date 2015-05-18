@@ -52,7 +52,9 @@ app.factory('notificationService', ['$http', '$q', '$rootScope', '$auth','$sails
                     // service.nbNotifications++;
                     service.notifications.splice(indexNotif,1,message.data);
                     if(message.data.status=='ok' && prevstatus=="todo"){
-                        console.log('moin moins');   
+                        console.log('moin moins');  
+                        console.log(message.data);  
+                         
                         service.nbNotifications--;
                     }
                     trigger('notification',{sound:message.data.status})

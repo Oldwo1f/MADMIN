@@ -10,6 +10,8 @@ app.controller('LoginCtrl', ['$scope', '$auth','$state','messageCenterService','
         })
         .catch(function(response) {
           console.log('LOGIN error');
+          console.log(response);
+          messageCenterService.add('danger', 'Veuillez vérifier votre saisie', { status: messageCenterService.status.unseen, timeout: 4000 });
         });
     };
     $scope.authenticate = function(provider) {

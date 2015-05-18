@@ -39,6 +39,8 @@ module.exports.policies = {
   NotificationController:{
     '*':'isAdmin',
     createNotif: true,
+    createComment: true,
+    addCommentProj: true,
     validateNotifications: 'isAdmin',
     subscribeNotif: 'isAdmin',
     // get: true,

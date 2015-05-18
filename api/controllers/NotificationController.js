@@ -102,7 +102,7 @@ module.exports = {
 					Notification.create({type:'usercreated',status:'ok',info1:"Alexis Momcilovic",info2:'alexismomcilovic@gmail.com'}).exec(function (err,notif){
 								console.log(err)
 								console.log(notif)
-								 // Notification.publishCreate(notif);
+								 Notification.publishCreate(notif);
 					    		// res.status(200).send(created);
 					    	res.status(200).send(notif)
 					});
@@ -111,19 +111,19 @@ module.exports = {
 	},
 	createComment:function (req,res,next) {
 		console.log('createComment');
-		Project.findOne('55396769b9cec35674fbe5fd').exec(function (err,article) {
+		Project.findOne('554ff1a86fbeced51064a33a').exec(function (err,article) {
 			Comment.create({author:'nom de l auteur',
 	  		email:'totot@tttt.fr',
 	  		content:'ceci est un commentaire',
 	  		status:'new',
-	  		project:'55396769b9cec35674fbe5fd'
+	  		project:'554ff1a86fbeced51064a33a'
 	  		}).exec(function (err,coment){
 									console.log(err)
 									console.log(coment)
-				Notification.create({type:'projectcomment',status:'todo',info1:article.title,info2:'par '+coment.author,item:'project',itemid:'55396769b9cec35674fbe5fd'}).exec(function (err,notif){
+				Notification.create({type:'projectcomment',status:'todo',info1:article.title,info2:'par '+coment.author,item:'project',itemid:'554ff1a86fbeced51064a33a'}).exec(function (err,notif){
 						console.log(err)
 						console.log(notif)
-						 // Notification.publishCreate(notif);
+						 Notification.publishCreate(notif);
 			    		// res.status(200).send(created);
 			    	res.status(200).send(notif)
 				});
@@ -132,6 +132,39 @@ module.exports = {
 		
 		
 
-	}
+	},
+	addCommentProj:function(req,res,next) {
+
+		console.log('addCommentProj');
+		console.log(req.params.itemid);
+		
+
+		Project.findOne(req.params.itemid).exec(function (err,article) {
+			console.log(article);
+			Comment.create({author:req.body.name,
+	  		email:req.body.email,
+	  		content:req.body.message,
+	  		status:'new',
+	  		project:req.params.itemid
+	  		}).exec(function (err,coment){
+									console.log(err)
+				if(err)
+					res.status(400).send(err)
+				else{
+
+				Notification.create({type:'projectcomment',status:'todo',info1:article.title,info2:'par '+coment.author,item:'project',itemid:req.params.itemid}).exec(function (err,notif){
+						console.log(err)
+						console.log(notif)
+						 Notification.publishCreate(notif);
+			    		// res.status(200).send(created);
+			    	res.status(200).send(coment)
+				});
+				}
+			});
+		})
+		
+		
+
+	},
 };
 
