@@ -36,3 +36,6 @@ app.config(['tagsInputConfigProvider', function(tagsInputConfigProvider) {
       minLength:2
     })
 }]);
+app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
+  }])

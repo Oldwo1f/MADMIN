@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngAudio','stpa.morris','videosharing-embed','monospaced.elastic','ui.sortable','ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','minicolors','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
+var app = angular.module('app', ['angular-loading-bar','ngAudio','stpa.morris','videosharing-embed','monospaced.elastic','ui.sortable','ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','minicolors','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
 
 app.run(['amMoment', function(amMoment) {
     amMoment.changeLocale('fr');
@@ -42,7 +42,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
       }
     })
     .state('login', {
-        url: "login",
+        url: "/login",
         views: {
           'rootView':{
             templateUrl:"/templates/backoffice/global/login.html",

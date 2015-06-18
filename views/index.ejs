@@ -9,11 +9,12 @@
     <title>madmin</title>
 
     <!--STYLES-->
+    <link rel="stylesheet" href="/bower_components/angular-loading-bar/build/loading-bar.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
 </head>
 
-  <body ng-app="app" ng-controller="appCtrl">
+  <body ng-app="app" ng-controller="appCtrl" ng-cloak>
   
          
         <div ui-view=""></div>
@@ -112,6 +113,7 @@
     <script src="/bower_components/angular-elastic/elastic.js"></script>
     <script src="/bower_components/angular-morris-chart/src/angular-morris-chart.js"></script>
     <script src="/bower_components/angular-audio/app/angular.audio.js"></script>
+    <script src="/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="/js/backoffice/app.js"></script>
     <script src="/js/backoffice/appconfig.js"></script>
     <script src="/js/backoffice/blog/articleController.js"></script>
