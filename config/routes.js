@@ -55,6 +55,7 @@ module.exports.routes = {
   'POST /user/add':'UserController.add',
   'get /recupPassword/:email': 'UserController.recupPassword',
   'get /changepassword/:comfirm': 'UserController.changepassword',
+  'get /addfirstadmin': 'UserController.addFirstAdmin',
   'get /testmail':'UserController.testmail',
   'GET /user/verifyUniqueEmail/:email':'UserController.verifyUniqueEmail',
   'GET /user/verifyUniquePseudo/:pseudo':'UserController.verifyUniquePseudo',

@@ -38,9 +38,9 @@ module.exports.policies = {
   },
   NotificationController:{
     '*':'isAdmin',
-    createNotif: true,
-    createComment: true,
-    addCommentProj: true,
+    // createNotif: true,
+    // createComment: true,
+    // addCommentProj: true,
     validateNotifications: 'isAdmin',
     subscribeNotif: 'isAdmin',
     // get: true,
@@ -49,7 +49,8 @@ module.exports.policies = {
     '*': 'isAdmin',
     'recupPassword':true,
     'changepassword':true,
-    'fixtureUser':true,
+    // 'fixtureUser':true,
+    'addFirstAdmin':true,
     login: true,
   },
   imageController: {
@@ -91,8 +92,8 @@ module.exports.policies = {
   ,
   ParamsController: {
     '*': 'isAdmin',
-    'getLangs': true,
-    'getConfig': true,
+    'getLangs': 'isAdmin',
+    'getConfig': 'isAdmin',
   },
   ArticleTraductionController: {
     '*': 'isAdmin',

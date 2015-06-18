@@ -830,6 +830,29 @@ module.exports = {
 		// 	console.log(user);
 		//     res.send(user);
 		// });
+	},
+	addFirstAdmin:function(req,res) {
+		console.log('addFirstAdmin');
+		var data=[];
+			var thisdata = {};
+			thisdata.name = 'Alexis Momcilovic';
+			thisdata.pseudo = 'Alexis';
+			thisdata.email = 'alexismomcilovic@gmail.com';
+			thisdata.phone = '0637089871';
+			thisdata.company = 'MOMCREATION';
+			thisdata.role = 'admin';
+			thisdata.publishEmail = true;
+			thisdata.publishPhone = true;
+			thisdata.usename = true;
+			thisdata.password = 'a';
+			thisdata.comfirmpassword = 'a';
+			thisdata.createdAt = new Date();
+			thisdata.lastActivity = new Date();
+		User.create(thisdata).exec(function (err,data2) {
+				if(err)
+				console.log(err);
+			res.send(data2)
+		})
 	}
 };
 
