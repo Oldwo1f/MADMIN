@@ -577,6 +577,8 @@ module.exports = {
 		User.find().sort('createdAt ASC').limit(1).exec(function(err, data) {
 			if(err)
 				res.send(err)
+			else{
+
 			console.log(data);
 			var dateStart = moment(data[0].createdAt);
 			
@@ -704,6 +706,7 @@ module.exports = {
 			
 
 
+			}
 
 		});
 		
@@ -846,6 +849,7 @@ module.exports = {
 			thisdata.usename = true;
 			thisdata.password = 'a';
 			thisdata.comfirmpassword = 'a';
+			thisdata.civ = 'M.';
 			thisdata.createdAt = new Date();
 			thisdata.lastActivity = new Date();
 		User.create(thisdata).exec(function (err,data2) {
