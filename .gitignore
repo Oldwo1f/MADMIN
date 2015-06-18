@@ -39,9 +39,9 @@
 # 
 ################################################
 
-config
-!config/routes.js
-!config/policies.js
+
+/config/locales
+!config/config.js
 
 
 
@@ -70,7 +70,12 @@ config
 
 node_modules
 bower_components
-uploads
+uploads/adminThumbs/*
+uploads/files/*
+uploads/originalsize/*
+!uploads/adminThumbs/sample.text
+!uploads/files/sample
+!uploads/originalsize/sample
 test
 dump
 
