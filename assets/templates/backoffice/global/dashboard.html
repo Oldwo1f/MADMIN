@@ -422,6 +422,8 @@
                                                 <i ng-switch-when="projectcreated" class="fa fa-cube fa-fw"></i>
                                                 <i ng-switch-when="articlecomment" class="fa fa-comment fa-fw"></i>
                                                 <i ng-switch-when="projectcomment" class="fa fa-comment fa-fw"></i>
+                                                <i ng-switch-when="serverrestart" class="fa fa-flash fa-fw"></i>
+                                                <i ng-switch-when="siterestart" class="fa fa-flash fa-fw"></i>
                                             </span>
                                             <span ng-switch="notif.type">
                                                 <span ng-switch-when="usercreated">Nouveau utilisateur</span>
@@ -430,6 +432,8 @@
                                                 <span ng-switch-when="projectcomment">Projet commenté</span>
                                                 <span ng-switch-when="articlecreated">Article créé</span>
                                                 <span ng-switch-when="projectcreated">Projet créé</span>
+                                                <span ng-switch-when="serverrestart">Server reboot</span>
+                                                <span ng-switch-when="siterestart">Site reboot</span>
                                             </span>
                                             <span class="pull-right text-muted small ">{{notif.createdAt | amCalendar}}</span>
                                     <!-- </span> -->

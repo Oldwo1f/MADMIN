@@ -92,6 +92,7 @@ module.exports.policies = {
   ParamsController: {
     '*': 'isAdmin',
     'getLangs': true,
+    'getConfig': true,
   },
   ArticleTraductionController: {
     '*': 'isAdmin',

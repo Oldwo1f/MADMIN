@@ -47,6 +47,7 @@
   },
   "resolutions": {
     "angularSails": "~0.11.2",
-    "angular": "1.3.x"
+    "angular": "1.3.x",
+    "font-awesome": "4.3.0"
   }
 }

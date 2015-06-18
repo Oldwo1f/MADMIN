@@ -1,4 +1,5 @@
 // var browserSync = require("browser-sync");
+var config = require('../../config/config')
 module.exports = function(grunt) {
 
 	grunt.config.set('browserSync', {
@@ -7,7 +8,7 @@ module.exports = function(grunt) {
                     src : ['.tmp/styles/**/*.css','.rebooted','views/**/*.ejs']
                 }, 
                 options: {
-                    proxy: "localhost:1337",
+                    proxy: "localhost:"+config.PORT,
                     // socket: {
                     //     path: '/socket.io',
                     //     namespace: function (namespace) {

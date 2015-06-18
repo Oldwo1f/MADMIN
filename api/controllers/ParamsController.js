@@ -202,5 +202,11 @@ module.exports={
 		console.log(sails.config.i18n.defaultLocale);
 			res.send({defaults: sails.config.i18n.defaultLocale,locales:sails.config.i18n.localesfull})		
 		 
-	},	
+	},		
+	getConfig:function(req,res) {
+		
+		console.log(sails.config.sizequota);
+			res.send({quota: sails.config.sizequota,url:sails.config.URL_HOME,name:sails.config.COMPANY_NAME})		
+		 
+	},
 }

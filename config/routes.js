@@ -131,6 +131,7 @@ module.exports.routes = {
   'GET /getVersion':'ParamsController.getVersion',
   'GET /getDbStats':'ParamsController.getDbStats',
   'GET /getLangs':'ParamsController.getLangs',
+  'GET /getConfig':'ParamsController.getConfig',
 
 //DASHBOARD
   'GET /analytics/:period/:metrics':'DashboardController.analytics',

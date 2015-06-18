@@ -6,7 +6,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">{{h1}}</a>
+                <a class="navbar-brand" href="index.html">Administration - {{h1}}</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -90,6 +90,8 @@
                                         <i ng-switch-when="projectcreated" class="fa fa-cube fa-fw"></i>
                                         <i ng-switch-when="articlecomment" class="fa fa-comment fa-fw"></i>
                                         <i ng-switch-when="projectcomment" class="fa fa-comment fa-fw"></i>
+                                        <i ng-switch-when="serverrestart" class="fa fa-flash fa-fw"></i>
+                                        <i ng-switch-when="siterestart" class="fa fa-flash fa-fw"></i>
                                     </span>
                                     <span ng-switch="notif.type">
                                         <span ng-switch-when="usercreated">Nouveau utilisateur</span>
@@ -98,6 +100,8 @@
                                         <span ng-switch-when="projectcomment">Projet commenté</span>
                                         <span ng-switch-when="articlecreated">Article créé</span>
                                         <span ng-switch-when="projectcreated">Projet créé</span>
+                                        <span ng-switch-when="serverrestart">Server reboot</span>
+                                        <span ng-switch-when="siterestart">Site reboot</span>
                                     </span>
                                     <p><small>{{ notif.info1 }}</small></p>
                                     <p ng-if="notif.info2"><small>{{ notif.info2 }}</small> </p>

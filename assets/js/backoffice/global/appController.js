@@ -8,7 +8,11 @@ app.controller('appCtrl',['$auth', '$location', '$scope', '$rootScope', 'configS
     $scope.languages = data.locales;
     $scope.defaultLanguage.push(data.defaults)
   })
-
+  configService.getConfig().then(function(data) {
+      console.log('configService.h1',configService.h1);
+      $scope.h1 = configService.h1;
+      $scope.url = configService.url;
+  })
   
 
   $scope.$on("$stateChangeStart", function (event, toState, toParams,fromState, fromParams) {
