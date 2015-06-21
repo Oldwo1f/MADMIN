@@ -38,6 +38,12 @@ module.exports={
       			}
 
 			    try{
+	      			fs.mkdirSync('uploads/tibophoto');
+      			}
+      			catch(e){
+      			}
+
+			    try{
 	      			fs.mkdirSync('uploads/originalsize');
       			}
       			catch(e){
@@ -57,33 +63,72 @@ console.log('.tmp/uploads/'+files[0].filename);
 				        // gravity: 'NorthWest',fill:true
 				    }).then(
 				    function success(image) {
-				        	
-
-				        	console.log('THEN THIUMNAIL');
-			    		var img = files[0];
-			    		
-			    		
-			    		img.name = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
-			    		img.alt = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
-			    		
-			    		console.log(img.nbDowload);
-			    		
-			    			console.log(req.body);
+				        	easyimg.info('.tmp/uploads/'+files[0].filename).then(function(info) {
 
 
+				        		console.log('INFO');
+				        		console.log('INFO');
+				        		console.log('INFO');
+				        		console.log('INFO');
+				        		console.log('INFO');
+				        		console.log(info);
 
-				    		// console.log(results[0]);
-			    		Image.create(img).exec(function(err,img) {
-					   					
-					   					
-			    			return res.json({
-								message: files.length + ' file(s) uploaded successfully!',
-								files: img
-							});
-			    		});
+				        		var finalwidth = info.width*212/info.height;
 
-				    	fs.unlinkSync('.tmp/uploads/'+files[0].filename)
-						
+						        	console.log('THEN THIUMNAIL');
+					    		var img = files[0];
+					    		
+					    		
+					    		img.name = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
+					    		img.alt = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
+					    		
+					    		console.log(img.nbDowload);
+					    		
+					    			console.log(req.body);
+
+					    			easyimg.resize(
+								    {
+								        src:'.tmp/uploads/'+files[0].filename,
+								        dst:'uploads/tibophoto/'+files[0].filename,
+								        width:finalwidth,height:212
+								        // cropwidth:item.cropWidth, cropheight:item.cropHeight,
+								        // x:item.x, y:item.y,
+								        // gravity: 'NorthWest',fill:true
+								    }).then(
+								    function success(image) {
+								        	
+
+								        	console.log('THEN THIUMNAIL');
+							    		var img = files[0];
+							    		
+							    		
+							    		img.name = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
+							    		img.alt = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
+							    		
+
+							    		Image.create(img).exec(function(err,img) {
+									   					
+									   					
+								    		fs.unlinkSync('.tmp/uploads/'+files[0].filename)
+							    			return res.json({
+												message: files.length + ' file(s) uploaded successfully!',
+												files: img
+											});
+							    		});
+
+										
+
+								    },
+								    function error(err){
+								    	console.log('err');
+								    	console.log(err);
+								    }
+								);
+
+
+				        	},function(err){console.log('erreur',err);})
+
+
 
 				    },
 				    function error(err){
