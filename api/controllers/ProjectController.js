@@ -221,7 +221,7 @@ module.exports = {
 	add:function  (req,res,next) {
 		console.log('ADD PROJECT');
 		
-
+		console.log(req.body);
 		if(req.body)
 		{
 			var tags = req.body.tags;
@@ -462,6 +462,333 @@ module.exports = {
 
 				// res.status(200).send(data);
 			})
+		}
+	},
+	add3:function  (req,res,next) {
+		console.log('ADD PROJECT');
+			console.log(req.body);
+		// req.body.title = 'faketitle'
+
+		if(req.body)
+		{
+			var tags = req.body.tags;
+			delete req.body.tags;
+			console.log('images',req.body.images);
+			if(req.body.images.length>0)
+			{
+						var imagesId = _.pluck(req.body.images,'id');
+						console.log(imagesId);
+						delete req.body.images;
+			}
+			if(req.body.documents.length>0)
+			{
+						var documentsId = _.pluck(req.body.documents,'id');
+						console.log(documentsId);
+						delete req.body.documents;
+			}
+			req.body.author = req.user;
+
+			return Promise.bind({})
+			.then(function create_proj(){
+			    return Project.create(req.body)
+			})
+			.then(function(projcreated) {
+				this.project = projcreated;
+				console.log(this.project);
+			}).then( function(){
+				        if(tags)
+						{
+							async.map(tags,function (item, callback) {
+								console.log('for',item);
+								Tag.find({text:item.text}).exec(function (err,data) {
+									console.log('data1',data);
+									if(data.length==0)
+									{
+										Tag.create(item).exec(function (err,data) {
+											if(err)
+												callback(err)
+
+											console.log('datacreated',data);
+											callback(null,data)
+										})
+									}else{
+										console.log('callbackExist');
+										callback(null,data[0])
+									}
+
+								})
+
+							},function (err,results) {
+								if(err)
+									callback(err)
+
+								for(var i in results)
+								{
+									if(!_.contains(_.pluck(project.tags, 'id'),results[i].id)){
+										project.tags.add(results[i]);
+										results[i].nbProjects= Number(results[i].nbProjects)+1;
+										results[i].save(function (err,data) {
+											console.log(data);
+										})
+									}
+								}
+								console.log('project.tags.length:',project.tags.length);
+								for(var i=0; i< project.tags.length;i++)
+								{
+
+									console.log('data.tags[i].text',project.tags[i].text , 'id:',project.tags[i].id);
+									if(!_.contains(_.pluck(tags,'text'),project.tags[i].text)){
+										project.tags.remove(project.tags[i].id);
+										Tag.find(project.tags[i].id).exec(function (err,tag) {
+											console.log('tag',tag);
+											tag=tag[0]
+											tag.nbProjects= Number(tag.nbProjects)-1;
+											tag.save(function (err,data) {
+												console.log(data);
+											})
+										})
+									}
+								}
+
+								console.log('------------------------');
+								
+								project.save(function (err,data) {
+								if(err)
+									callback(err)
+									// res.status(400).send(err)
+									// res.status(200).send(project)
+									callback(null,project)
+								});
+							})
+							
+							
+						}else{
+							callback(null,[])
+						}
+				    }
+			)
+			// Project.create(req.body).exec(function (err,project) {
+			// 	if(err)
+			// 		res.status(400).send(err)
+
+			// 	async.parallel({
+			// 	    tags: function(callback){
+			// 	        if(tags)
+			// 			{
+			// 				async.map(tags,function (item, callback) {
+			// 					console.log('for',item);
+			// 					Tag.find({text:item.text}).exec(function (err,data) {
+			// 						console.log('data1',data);
+			// 						if(data.length==0)
+			// 						{
+			// 							Tag.create(item).exec(function (err,data) {
+			// 								if(err)
+			// 									callback(err)
+
+			// 								console.log('datacreated',data);
+			// 								callback(null,data)
+			// 							})
+			// 						}else{
+			// 							console.log('callbackExist');
+			// 							callback(null,data[0])
+			// 						}
+
+			// 					})
+
+			// 				},function (err,results) {
+			// 					if(err)
+			// 						callback(err)
+
+			// 					for(var i in results)
+			// 					{
+			// 						if(!_.contains(_.pluck(project.tags, 'id'),results[i].id)){
+			// 							project.tags.add(results[i]);
+			// 							results[i].nbProjects= Number(results[i].nbProjects)+1;
+			// 							results[i].save(function (err,data) {
+			// 								console.log(data);
+			// 							})
+			// 						}
+			// 					}
+			// 					console.log('project.tags.length:',project.tags.length);
+			// 					for(var i=0; i< project.tags.length;i++)
+			// 					{
+
+			// 						console.log('data.tags[i].text',project.tags[i].text , 'id:',project.tags[i].id);
+			// 						if(!_.contains(_.pluck(tags,'text'),project.tags[i].text)){
+			// 							project.tags.remove(project.tags[i].id);
+			// 							Tag.find(project.tags[i].id).exec(function (err,tag) {
+			// 								console.log('tag',tag);
+			// 								tag=tag[0]
+			// 								tag.nbProjects= Number(tag.nbProjects)-1;
+			// 								tag.save(function (err,data) {
+			// 									console.log(data);
+			// 								})
+			// 							})
+			// 						}
+			// 					}
+
+			// 					console.log('------------------------');
+								
+			// 					project.save(function (err,data) {
+			// 					if(err)
+			// 						callback(err)
+			// 						// res.status(400).send(err)
+			// 						// res.status(200).send(project)
+			// 						callback(null,project)
+			// 					});
+			// 				})
+							
+							
+			// 			}else{
+			// 				callback(null,[])
+			// 			}
+			// 	    },
+			// 	    images: function(callback){
+			// 	        if(imagesId)
+			// 			{
+			// 				async.map(imagesId,function (id, callback) {
+			// 					console.log('for',id);
+			// 					Image.findOne(id).exec(function (err,img) {
+									
+			// 						if(err)
+			// 							console.log('error find img',err);
+
+			// 						Imagearticle.create({rank:Number(imagesId.indexOf(id))}).exec(function(err,imageproject) {
+			// 							if(err)
+			// 							console.log('error create jointable',err);
+			// 							console.log('ImageProjectcreated',img);
+			// 							project.images.add(imageproject);
+			// 							project.save(function(err,result) {
+			// 								if(err)
+			// 									callback(err)
+			// 								else{
+			// 									img.articles.add(imageproject);
+			// 									img.save(function(err,result) {
+			// 										if(err)
+			// 											console.log('error save img',err);
+			// 										callback(null,img)
+			// 									})
+			// 								}
+			// 							})
+
+			// 						})
+
+			// 					})
+
+			// 				},function (err,results) {
+			// 					if(err)
+			// 						callback(err)
+
+			// 					console.log(results);
+			// 					callback(null,[])
+			// 				})
+							
+							
+			// 			}else{
+			// 				callback(null,[])
+			// 			}
+			// 	    },
+			// 	    documents: function(callback){
+			// 	        if(documentsId)
+			// 			{
+			// 				async.map(documentsId,function (id, callback) {
+			// 					console.log('for',id);
+			// 					Document.findOne(id).exec(function (err,doc) {
+									
+			// 						if(err)
+			// 							console.log('error find img',err);
+
+			// 						Documentarticle.create({rank:Number(documentsId.indexOf(id))}).exec(function(err,documentproject) {
+			// 							if(err)
+			// 							console.log('error create jointable',err);
+			// 							console.log('DocumentProjectcreated',doc);
+			// 							project.documents.add(documentproject);
+			// 							project.save(function(err,result) {
+			// 								if(err)
+			// 									console.log('error save project',err);
+			// 								doc.projects.add(documentproject);
+			// 								doc.save(function(err,result) {
+			// 									if(err)
+			// 										console.log('error save img',err);
+			// 									callback(null,doc)
+			// 								})
+			// 							})
+
+			// 						})
+
+			// 					})
+
+			// 				},function (err,results) {
+			// 					if(err)
+			// 						callback(err)
+
+			// 					console.log(results);
+			// 					callback(null,[])
+			// 				})
+							
+							
+			// 			}else{
+			// 				callback(null,[])
+			// 			}
+			// 	    },
+			// 	    category: function(callback){
+			// 	        if(req.body.category)
+			// 			{
+							
+
+			// 						CategoryProject.findOne(req.body.category).exec(function(err,category) {
+										
+			// 							category.nbProjects= Number(category.nbProjects)+1;
+			// 							category.save(function(err,category1) {
+			// 								if(err)
+			// 									console.log('error save project',err);
+									
+			// 									callback(null,category1)
+											
+			// 							})
+
+			// 						})
+
+							
+			// 			}else{
+			// 				callback(null,[])
+			// 			}
+			// 	    }
+			// 	},
+			// 	function(err, results) {
+			// 	    // results is now equals to: {one: 1, two: 2}
+			// 	    if(err)
+			// 	    	console.log('final err',err);
+
+			// 	    console.log(results);
+
+			// 	    Project.find(project.id).populateAll().exec(function(err,data) {
+			// 	    	if(err)res.status(200).send(err)
+
+			// 	    		console.log(data);
+			// 	    	Notification.create({type:'projectcreated',status:'ok',info1:req.body.title,info2:'par '+data[0].author.pseudo}).exec(function (err,notif){
+			// 	    		if(err)
+			// 	    			console.log(err);
+			// 	    		notif.users.add(req.user);
+			// 	    		notif.save(function(err) {
+			// 	    				Notification.publishCreate(notif,req)
+			// 	    		})
+			// 	    		console.log('notif',notif);
+			// 	    	})
+			// 	    	res.status(200).send(data)
+			// 	    })
+			// 	});
+				
+				
+				// else
+				// {
+					
+				// 	res.status(200).send(data)
+					
+				// }
+
+				// res.status(200).send(data);
+			// })
 		}
 	},
 

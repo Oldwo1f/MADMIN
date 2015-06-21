@@ -70,12 +70,7 @@ config/config.js
 
 node_modules
 bower_components
-uploads/adminThumbs/*
-uploads/files/*
-uploads/originalsize/*
-!uploads/adminThumbs/sample.text
-!uploads/files/sample
-!uploads/originalsize/sample
+uploads/**/*
 test
 dump
 
