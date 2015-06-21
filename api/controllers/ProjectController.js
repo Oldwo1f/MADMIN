@@ -495,7 +495,78 @@ module.exports = {
 			.then(function(projcreated) {
 				this.project = projcreated;
 				console.log(this.project);
-			})
+			}).then( function(){
+				        if(tags)
+						{
+							async.map(tags,function (item, callback) {
+								console.log('for',item);
+								Tag.find({text:item.text}).exec(function (err,data) {
+									console.log('data1',data);
+									if(data.length==0)
+									{
+										Tag.create(item).exec(function (err,data) {
+											if(err)
+												callback(err)
+
+											console.log('datacreated',data);
+											callback(null,data)
+										})
+									}else{
+										console.log('callbackExist');
+										callback(null,data[0])
+									}
+
+								})
+
+							},function (err,results) {
+								if(err)
+									callback(err)
+
+								for(var i in results)
+								{
+									if(!_.contains(_.pluck(project.tags, 'id'),results[i].id)){
+										project.tags.add(results[i]);
+										results[i].nbProjects= Number(results[i].nbProjects)+1;
+										results[i].save(function (err,data) {
+											console.log(data);
+										})
+									}
+								}
+								console.log('project.tags.length:',project.tags.length);
+								for(var i=0; i< project.tags.length;i++)
+								{
+
+									console.log('data.tags[i].text',project.tags[i].text , 'id:',project.tags[i].id);
+									if(!_.contains(_.pluck(tags,'text'),project.tags[i].text)){
+										project.tags.remove(project.tags[i].id);
+										Tag.find(project.tags[i].id).exec(function (err,tag) {
+											console.log('tag',tag);
+											tag=tag[0]
+											tag.nbProjects= Number(tag.nbProjects)-1;
+											tag.save(function (err,data) {
+												console.log(data);
+											})
+										})
+									}
+								}
+
+								console.log('------------------------');
+								
+								project.save(function (err,data) {
+								if(err)
+									callback(err)
+									// res.status(400).send(err)
+									// res.status(200).send(project)
+									callback(null,project)
+								});
+							})
+							
+							
+						}else{
+							callback(null,[])
+						}
+				    }
+			)
 			// Project.create(req.body).exec(function (err,project) {
 			// 	if(err)
 			// 		res.status(400).send(err)
