@@ -340,7 +340,8 @@ app.controller('addProjectCtrl',['imageService','tagService','$scope', 'filterFi
         return tagService.autocomplete(query);
     };
 	$scope.addProject=function(stay) {
-		console.log('ADDNEW Project');
+    console.log('ADDNEW Project');
+		console.log('$scope.formData',$scope.formData);
 		var rep = projectService.add($scope.formData).then(function(data) { 
 				// $state.go('/.categoriesBlog');
         console.log('superimportant',data[0].id);

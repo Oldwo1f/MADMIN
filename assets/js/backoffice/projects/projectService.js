@@ -79,7 +79,7 @@ app.factory('projectService', ['$http', '$q','$sailsSocket', function ($http,$q,
 
     service.add=function(project){
 
-        console.log('ADDNEW Service');
+        console.log('ADDNEW Service',project);
         var deferred = $q.defer();
         // project.role = 'project'
         $sailsSocket.post('/project/add',project).success(function (data2,status2) {
