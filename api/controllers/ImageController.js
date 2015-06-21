@@ -81,6 +81,7 @@ console.log('.tmp/uploads/'+files[0].filename);
 					    		
 					    		img.name = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
 					    		img.alt = img.filename.substring(img.filename.indexOf('-')+1,img.filename.lastIndexOf('.'))
+					    		img.finalwidth = finalwidth;
 					    		
 					    		console.log(img.nbDowload);
 					    		

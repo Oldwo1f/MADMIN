@@ -14,6 +14,7 @@ module.exports = {
   		size:{type:'int'},
   		type:{type:'string'},
   		index:{type:'float'},
+  		finalwidth:{type:'integer'},
   		
         articles: {
             collection: 'imagearticle',
