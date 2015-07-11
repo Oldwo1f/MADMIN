@@ -14,8 +14,9 @@ ga = new GA.GA(config);
 module.exports={
 
 	analytics:function(req,res) {
-
+		console.log('ANALITYCS');
 		console.log(req.params.metrics);
+		console.log(sails.config.GOOGLE_ANALYTICS_ID);
 		if(!req.params.metrics || !sails.config.GOOGLE_ANALYTICS_ID)
 		{
 			return res.status(400).send('error')
@@ -61,7 +62,8 @@ module.exports={
 						        'end-date': dateEnd,
 						        'metrics': 'ga:sessions,ga:pageviews,ga:users,ga:percentNewSessions,ga:avgSessionDuration,ga:bounceRate,ga:pageviewsPerSession',
 						    };
-
+						    console.log('options<<<<<<<<<<<<<<<<<<<<<<<<<<');
+						    console.log(options);
 						    ga.get(options, function(err, entries) {
 						       cb(null,entries[0].metrics[0])
 						    });
@@ -78,7 +80,7 @@ module.exports={
 						        'metrics': req.params.metrics,
 						        'dimensions': dimention,
 						    };
-
+						    console.log('options<<<<<<<<<<<<<<<<<<<<<<<<<<2');console.log(options);
 						    ga.get(options, function(err, entries) {
 						       cb(null,entries)
 						    });

@@ -2,23 +2,7 @@ var jwt = require('jwt-simple');
 
 module.exports = function(req, res, next) {
   console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log(req.body);
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
-  console.log('IS ADMIN ?')
+
   if (!req.headers.authorization) {
     return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
   }

@@ -100,6 +100,7 @@ module.exports.policies = {
   },
   DashboardController: {
     '*': 'isAdmin',
+    'analytics': true,
   }
 
   
