@@ -108,7 +108,7 @@ $scope.goTolastComment =function () {
 			$scope.analytics=false;
 		})
 	}
-	$scope.loadGraph();
+	// $scope.loadGraph();
 
 	// $scope.loadGraph=function (mode) {
 	// 	$scope.loadingGraph=true;
