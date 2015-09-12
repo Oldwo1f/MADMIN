@@ -110,11 +110,11 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a  ng-click="period = 'week'; loadGraph()" >Cette semaine</a></li>
-                                        <li><a  ng-click="period = 'lastweek'; loadGraph()" >La semaine dernière</a></li>
-                                        <li><a  ng-click="period = 'month'; loadGraph()">Ce moi</a></li>
-                                        <li><a  ng-click="period = 'lastmonth'; loadGraph()" >La moi dernier</a></li>
-                                        <li><a ng-click="period = 'year'; loadGraph()">Cette année</a></li>
+                                        <li><a  ng-click="choosePeriod('week');" >Cette semaine</a></li>
+                                        <li><a  ng-click="choosePeriod('lastweek');" >La semaine dernière</a></li>
+                                        <li><a  ng-click="choosePeriod('month');">Ce moi</a></li>
+                                        <li><a  ng-click="choosePeriod('lastmonth');" >La moi dernier</a></li>
+                                        <li><a  ng-click="choosePeriod('year');">Cette année</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
-                            <div class="panel panel-default panel-autosize"  ng-click="changeColors('#568203','Sessions');metric = 'ga:sessions'; loadGraph()">
+                            <div class="panel panel-default panel-autosize"  ng-click="changeColors('#568203','Sessions','ga:sessions');">
                                 <div class="panel-heading" tooltip-popup-delay="500" tooltip-placement="bottom" tooltip="Il s'agit du nombre total de sessions sur la période. Une session est la période pendant laquelle un utilisateur est actif sur votre site Web.">
                                     <label class="text-center">Sessions</label>
                                 </div>
@@ -141,7 +141,7 @@
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
-                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#006A4E','Utilisateurs'); metric = 'ga:users'; loadGraph()">
+                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#006A4E','Utilisateurs','ga:users'); ">
                                 <div class="panel-heading" tooltip-popup-delay="500" tooltip-placement="bottom" tooltip="Il s'agit du nombre d'utilisateurs ayant exécuté au moins une session sur la période sélectionnée.">
                                     <label class="text-center">Utilisateurs</label>
                                 </div>
@@ -151,7 +151,7 @@
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
-                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#318CE7','Pages Vues'); metric = 'ga:pageviews'; loadGraph()"> 
+                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#318CE7','Pages Vues','ga:pageviews');"> 
                                 <div class="panel-heading" tooltip-popup-delay="500" tooltip-placement="bottom" tooltip="Il s'agit du nombre total de pages consultées. Les visites répétées d'un internaute sur une même page sont prises en compte.">
                                     <label class="text-center">Pages vues</label>
                                 </div>
@@ -161,7 +161,7 @@
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
-                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#2E5894','Pages/session'); metric = 'ga:pageviewsPerSession'; loadGraph()">
+                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#2E5894','Pages/session','ga:pageviewsPerSession');">
                                 <div class="panel-heading" tooltip-popup-delay="500" tooltip-placement="bottom" tooltip="Il s'agit du nombre total de pages consultées. Les visites répétées d'un internaute sur une même page sont prises en compte.">
                                     <label class="text-center" >Pages/session</label>
                                 </div>
@@ -171,7 +171,7 @@
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
-                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#A52A2A','Taux rebond'); metric = 'ga:bounceRate'; loadGraph()">
+                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#A52A2A','Taux rebond','ga:bounceRate');">
                                 <div class="panel-heading" tooltip-popup-delay="500" tooltip-placement="bottom" tooltip="Le taux de rebond correspond au pourcentage de visites d'une seule page, c'est-à-dire les visites lors desquelles l'internaute a quitté votre site dès la page d'entrée, sans interagir avec la page.">
                                     <label class="text-center">Taux rebond</label>
                                 </div>
@@ -181,7 +181,7 @@
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
-                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#004225','% nouvelles sessions'); metric = 'ga:percentNewSessions'; loadGraph()">
+                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#004225','% nouvelles sessions','ga:percentNewSessions');">
                                 <div class="panel-heading" tooltip-popup-delay="500" tooltip-placement="bottom" tooltip="Il s'agit d'une estimation du pourcentage des premières visites.">
                                     <label class="text-center">% nouvelles sessions</label>
                                 </div>
@@ -191,7 +191,7 @@
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
-                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#A1CAF1','Durée moyenne d\'une session'); metric = 'ga:avgSessionDuration'; loadGraph()">
+                            <div class="panel panel-default panel-autosize" ng-click="changeColors('#A1CAF1','Durée moyenne d\'une session','ga:avgSessionDuration');">
                                 <div class="panel-heading" tooltip-popup-delay="500" tooltip-placement="bottom" tooltip="Il s'agit de la durée moyenne d'une session.">
                                     <label class="text-center">Durée moyenne </label>
                                 </div>

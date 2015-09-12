@@ -53,8 +53,16 @@ $scope.goTolastComment =function () {
 	
 }
 
-	$scope.changeColors=function (color,serie) {
-		
+	$scope.choosePeriod=function (period) {
+		console.log('CHOOSEPERIOD');
+		$scope.period = period;
+		console.log('period',$scope.period); 
+		$scope.loadGraph()
+
+	}
+
+	$scope.changeColors=function (color,serie, metrics) {
+		$scope.metric = metrics;
 		$scope.myoptions.tooltipTemplate= '<%= value %>';
 		if(serie=='Taux rebond' || serie=='% nouvelles sessions')
 			$scope.myoptions.tooltipTemplate= '<%= value %> %';
@@ -64,8 +72,10 @@ $scope.goTolastComment =function () {
 		$scope.colors.push(color)
 		$scope.series = [];
 		$scope.series.push(serie)
+		$scope.loadGraph();
 	}
 	$scope.loadGraph=function () {
+		console.log('LOAD GRAPH');
 		$scope.analytics=true;
 		$scope.loadingGraph=true;
 		if($scope.previousperiod!=$scope.period)
@@ -74,7 +84,10 @@ $scope.goTolastComment =function () {
 		$scope.data=[];
 		$scope.data[0]=[];
 		$scope.labels=[];
+
+		console.log('Period and mertics',$scope.period,$scope.metric);
 		dashboardService.Analitycs($scope.period,$scope.metric).then(function (data) {
+			console.log('data=',data);
 
 			for(var key in data.count)
 			{
@@ -82,15 +95,18 @@ $scope.goTolastComment =function () {
 			}
 			for(var i in data.graph)
 			{
-				for(var key in data.graph[i].dimensions[0])
-				{
-					$scope.labels.push(data.graph[i].dimensions[0][key])
-				}
-				for(var key in data.graph[i].metrics[0])
-				{
-					$scope.data[0].push(Math.round(data.graph[i].metrics[0][key]*100)/100)
-				}	
-			}	
+				// for(var key in data.graph[i])
+				// {
+					$scope.labels.push(data.graph[i][0])
+				// }
+				// for(var key in data.graph[i][1])
+				// {
+					$scope.data[0].push(Math.round(data.graph[i][1]*100)/100)
+				// }	
+			}
+				console.log($scope.data);
+
+			console.log('$scope.labels',$scope.labels);
 			var tmpdate;
 			for(var j in $scope.labels){
 				if($scope.period=='year')
@@ -108,7 +124,7 @@ $scope.goTolastComment =function () {
 			$scope.analytics=false;
 		})
 	}
-	// $scope.loadGraph();
+	$scope.loadGraph();
 
 	// $scope.loadGraph=function (mode) {
 	// 	$scope.loadingGraph=true;
@@ -153,10 +169,9 @@ $scope.goTolastComment =function () {
   	$scope.series = ['Sessions'];
   	$scope.myoptions = {scaleBeginAtZero : true,responsive:true,maintainAspectRatio: true,scaleShowGridLines : false,tooltipTemplate: '<%= value %>'}
   	// $scope.colors = [{fillColor: "rgba(0,0,0,0.2)",pointColor: "#555",pointHighlightFill: "grey",pointHighlightStroke: "#555",pointStrokeColor: "white",strokeColor: "#555"},{fillColor: "lightgreen",pointColor: "green",pointHighlightFill: "lightgreen",pointHighlightStroke: "darkgreen",pointStrokeColor: "white",strokeColor: "green"}];
- //  	$scope.data = [];
-	//   $scope.onClick = function (points, evt) {
-	//     console.log(points, evt);
-	//   };
+	  // $scope.onClick = function (points, evt) {
+	  //   console.log(points, evt);
+	  // };
 
  // 	// $scope.labels2 = [];
  //  	$scope.labels2 = ['Aujourd\'hui','Il y à moins d\'une semaine', 'Il y à moins d\'un mois','Il y à moins de 6 mois','Il y à plus de 6 mois'];

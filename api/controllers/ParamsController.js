@@ -7,12 +7,7 @@ var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require("fs"));
 var archiver = require('archiver');
 var mds = require('mongo-dump-stream');
-var GA = require('googleanalytics'),
-config = {
-        "user": "alexismomcilovic@gmail.com",
-        "password": "Alexis09"
-    },
-ga = new GA.GA(config);
+
 
 module.exports={
 	backupDb:function(req,res) {

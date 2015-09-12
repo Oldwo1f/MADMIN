@@ -4,18 +4,24 @@ var http = require('http');
 var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require("fs"));
 var request = require('request');
-var GA = require('googleanalytics'),
-config = {
-        "user": "alexismomcilovic@gmail.com",
-        "password": "Alexis09"
-    },
-ga = new GA.GA(config);
+var google = require('googleapis'),
+analytics = google.analytics({ version: 'v3'})
+
+
+// var GA = require('googleanalytics'),
+// config = {
+//         "user": "alexismomcilovic@gmail.com",
+//         "password": "Alexis09"
+//     },
+// ga = new GA.GA(config);
 
 module.exports={
 
 	analytics:function(req,res) {
 		console.log('ANALITYCS');
 		console.log(req.params.metrics);
+		console.log(req.params.period);
+		console.log('--------------------------');
 		console.log(sails.config.GOOGLE_ANALYTICS_ID);
 		if(!req.params.metrics || !sails.config.GOOGLE_ANALYTICS_ID)
 		{
@@ -51,45 +57,56 @@ module.exports={
 
 			console.log(dateStart);
 			console.log(dateEnd);
-			ga.login(function(err, token) {
+			var jwtClient = new google.auth.JWT(
+		    sails.config.key.client_email,
+		    null,
+		    sails.config.key.private_key,
+		    ['https://www.googleapis.com/auth/analytics.readonly'],
+		    null)
+
+		
 
 				async.parallel({
 					count:function (cb) {
-						ga.login(function(err, token) {
-						    var options = {
-						        'ids': 'ga:'+sails.config.GOOGLE_ANALYTICS_ID,
-						        'start-date': dateStart,
-						        'end-date': dateEnd,
-						        'metrics': 'ga:sessions,ga:pageviews,ga:users,ga:percentNewSessions,ga:avgSessionDuration,ga:bounceRate,ga:pageviewsPerSession',
-						    };
-						    console.log('options<<<<<<<<<<<<<<<<<<<<<<<<<<');
-						    console.log(options);
-						    ga.get(options, function(err, entries) {
-						       cb(null,entries[0].metrics[0])
-						    });
-						});
+						analytics.data.ga.get({
+						  'ids': 'ga:92199924',
+						  'start-date': dateStart,
+						  'end-date': dateEnd,
+						  'metrics': 'ga:sessions,ga:pageviews,ga:users,ga:percentNewSessions,ga:avgSessionDuration,ga:bounceRate,ga:pageviewsPerSession',
+						  auth: jwtClient
+						}, function (err, resp) {
+
+						  	console.log('FINAL')
+						  	console.log(err)
+						    console.log(resp.rows)
+						    cb(null,resp.totalsForAllResults)
+					    })
+					
 					},
 					graph:function (cb) {
-							var	dimention = 'ga:date';
-							if(req.params.period=='year')
-								dimention = 'ga:month';
-						    var options = {
-						        'ids': 'ga:'+sails.config.GOOGLE_ANALYTICS_ID,
-						        'start-date': dateStart,
-						        'end-date': dateEnd,
-						        'metrics': req.params.metrics,
-						        'dimensions': dimention,
-						    };
-						    console.log('options<<<<<<<<<<<<<<<<<<<<<<<<<<2');console.log(options);
-						    ga.get(options, function(err, entries) {
-						       cb(null,entries)
-						    });
+						var	dimention = 'ga:date';
+						if(req.params.period=='year')
+							dimention = 'ga:month';
+						   
+						analytics.data.ga.get({
+						  'ids': 'ga:92199924',
+						  'start-date': dateStart,
+						  'end-date': dateEnd,
+						  'dimensions': dimention,
+						  'metrics': req.params.metrics,
+						  auth: jwtClient
+						}, function (err, resp) {
+
+						  	console.log('FINAL2')
+						  	console.log(err)
+						    console.log(resp)
+						    cb(null,resp.rows)
+					    })
 					}
 				},function  (err, results) {
 					res.send(results)
 				})
 
-			});
 	
 		}
 		
