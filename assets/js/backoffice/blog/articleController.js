@@ -599,6 +599,10 @@ app.controller('editArticleCtrl',['$location','imageService','tagService','$scop
         return tagService.autocomplete(query);
     };
 	$scope.editArticle=function(stay) {
+
+    console.log('##########################################################');
+    console.log($scope.formData);
+    console.log('##########################################################');
     $scope.formData.translations=_.compact(_.pluck($scope.articlelangues,'item'))
 		var rep = articleService.edit($scope.formData).then(function(data) { 
 				// $state.go('/.categoriesBlog');

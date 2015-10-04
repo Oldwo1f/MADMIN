@@ -501,7 +501,9 @@ module.exports = {
 				if(typeof(oldarticle.category)=='object')
 					this.oldcategory = oldarticle.category.id
 
-				console.log('this.oldcategory',this.oldcategory);
+				console.log('hrerherhergerrgergergergerergergeregrgeergrgergergergehrherere');
+				console.log(req.body.content);
+				console.log(req.body.content);
 			    this.article = oldarticle;
 			    oldarticle.title= req.body.title;
 			    oldarticle.content= req.body.content;

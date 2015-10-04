@@ -29,6 +29,22 @@ app.controller('administrationCtrl', ['$scope', '$auth','stockage','version','db
     $scope.options2 = {
     	showTooltips: false,
     }
+
+    $scope.restartSite = function() {
+
+
+    	console.log('scope restartSite');
+    	paramsService.restartSite().then(function succ(d) {
+    		
+    		messageCenterService.add('success', d, { status: messageCenterService.status.next ,timeout: 3000});
+    	},function err(d) {
+    		console.log('ERR')
+    		console.log(d)
+
+    	})
+
+    };
+
   	// $scope.data2 = [56,89,15,75,23];
 	// $scope.changelang =function () {
 

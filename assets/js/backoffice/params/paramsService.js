@@ -2,6 +2,19 @@ app.factory('paramsService', ['$http', '$q', function ($http,$q) {
     var service = {};
     
 
+    service.restartSite= function(lang) {
+        var deferred = $q.defer();
+        // console.log(stateParams);
+        // console.log(service.filter);
+        $http({method:'get',url:'/restartSite'}).success(function (data,status) {
+            console.log(data);
+            deferred.resolve(data);
+        }).error(function (data,status) {
+            deferred.reject('error perso');
+        })
+
+        return deferred.promise;
+    }; 
     service.getVersion= function(lang) {
         var deferred = $q.defer();
         // console.log(stateParams);

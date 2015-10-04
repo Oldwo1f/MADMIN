@@ -67,8 +67,9 @@
                                 <td><label class="label label-default" style="color:{{item.category.textColor}};background:{{item.category.color}};">{{item.category.name}}</label></td>
                                 <td>{{item.title}}</td>
                                 <td class="text-center" >{{item.nbView}}</td>
-                                <td>
+                                <td class="tags">
                                     <div class=" label label-xs label-primary " ng-repeat="tag in item.tags"><i class="fa fa-tag fa-fw"></i> {{tag.text}}</div>
+                                    <span ng-show="item.tags.length-4 > 0" ><small class="badge">+{{ item.tags.length - 4}}</small></span>
                                 </td>
                                 <td style="padding:4px 8px">
                                     <ul class="listimages">

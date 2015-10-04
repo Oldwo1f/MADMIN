@@ -20,6 +20,7 @@
             <div class="row">
                 <div  style="padding-left:15px">
                     <label>Version de l'administration</label>: <span >{{myversion.version}}</span>
+                    
                 </div>
                 <div style="padding-left:15px">
                     <small>Aucune mise à jour disponible</small>
@@ -29,7 +30,10 @@
                 </div> -->
                 <hr>
                 <div  style="padding-left:15px">
-                    <label>Version du site web</label>: <span >{{myversion.siteversion}}</span>
+                    <label>Version du site web</label>: <span >{{myversion.siteversion}}</span> 
+                    <div class="pull-right" style="padding-right:15px">
+                        <a class="btn btn-danger btn-xs" ng-click="restartSite()" target="_BLANK">Redemarer</a>
+                    </div>
                 </div>
                 <div style="padding-left:15px">
                     <small>Aucune mise à jour disponible</small>

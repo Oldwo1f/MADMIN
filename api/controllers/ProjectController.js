@@ -283,20 +283,22 @@ module.exports = {
 									}
 								}
 								console.log('project.tags.length:',project.tags.length);
-								for(var i=0; i< project.tags.length;i++)
-								{
+								if(project.tags.length){
+									for(var i=0; i< project.tags.length;i++)
+									{
 
-									console.log('data.tags[i].text',project.tags[i].text , 'id:',project.tags[i].id);
-									if(!_.contains(_.pluck(tags,'text'),project.tags[i].text)){
-										project.tags.remove(project.tags[i].id);
-										Tag.find(project.tags[i].id).exec(function (err,tag) {
-											console.log('tag',tag);
-											tag=tag[0]
-											tag.nbProjects= Number(tag.nbProjects)-1;
-											tag.save(function (err,data) {
-												console.log(data);
+										console.log('data.tags[i].text',project.tags[i].text , 'id:',project.tags[i].id);
+										if(!_.contains(_.pluck(tags,'text'),project.tags[i].text)){
+											project.tags.remove(project.tags[i].id);
+											Tag.find(project.tags[i].id).exec(function (err,tag) {
+												console.log('tag',tag);
+												tag=tag[0]
+												tag.nbProjects= Number(tag.nbProjects)-1;
+												tag.save(function (err,data) {
+													console.log(data);
+												})
 											})
-										})
+										}
 									}
 								}
 

@@ -7,7 +7,7 @@ var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require("fs"));
 var archiver = require('archiver');
 var mds = require('mongo-dump-stream');
-
+var spawn = require('child_process').spawn;
 
 module.exports={
 	backupDb:function(req,res) {
@@ -43,6 +43,19 @@ module.exports={
 		  } 
 		  res.send('ok')
 		});
+		// res.pipe(out);
+    // When the file is done streaming, finish the Javascript string
+	    
+	},
+	restartSite:function(req,res) {
+
+		console.log('restartSite');
+		console.log(sails.config.PATH_TO_WEBSITE);
+		var deploySh = spawn('sh', [ 'deploy.sh' ], {
+		  cwd:sails.config.PATH_TO_WEBSITE,
+		}); 
+		res.send('Votre site est entrain de redemarer. Recharger la page d\ici une quelques de secondes')
+		// });
 		// res.pipe(out);
     // When the file is done streaming, finish the Javascript string
 	    
