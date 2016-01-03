@@ -260,19 +260,20 @@ module.exports={
 			async.parallel({
 				tw:function (cb) {
 				   	
-				   	http.get('http://cdn.api.twitter.com/1/urls/count.json?url='+sails.config.URL_HOME, function(resp) {
-					   var str='';
-						resp.on('data', function (chunk) {
-				              str += chunk;
-				        });
-				        resp.on('end', function () {
-				           var obj = JSON.parse(str)
-				        	if(typeof(obj.count!='undefined'))
-				            	cb(null,JSON.parse(str).count)
-				        	else
-				            	cb(null,0)
-				        });
-					})
+				 //   	http.get('http://cdn.api.twitter.com/1/urls/count.json?url='+sails.config.URL_HOME, function(resp) {
+					//    var str='';
+					// 	resp.on('data', function (chunk) {
+				 //              str += chunk;
+				 //        });
+				 //        resp.on('end', function () {
+				 //           var obj = JSON.parse(str)
+				 //        	if(typeof(obj.count!='undefined'))
+				 //            	cb(null,JSON.parse(str).count)
+				 //        	else
+				 //            	cb(null,0)
+				 //        });
+					// })
+cb(null, 111)
 					
 				},
 				fb:function (cb) {
