@@ -824,6 +824,8 @@ module.exports = {
 			    oldproject.rewriteurl= req.body.rewriteurl;
 			    oldproject.keyword= req.body.keyword;
 			    oldproject.date= req.body.date;
+			    oldproject.start= req.body.start;
+			    oldproject.end= req.body.end;
 			    console.log('here');
 			    oldproject.category= req.body.category;
 			        console.log('here2');

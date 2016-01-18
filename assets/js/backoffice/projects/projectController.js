@@ -330,10 +330,22 @@ app.controller('addProjectCtrl',['imageService','tagService','$scope', 'filterFi
        $scope.formScope = scope;
     }
     $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.opened = true;
+    };
+    $scope.open1 = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.opened1 = true;
+    };
+    $scope.open2 = function($event) {
 	    $event.preventDefault();
 	    $event.stopPropagation();
 
-	    $scope.opened = true;
+	    $scope.opened2 = true;
 	  };
   	$scope.autocompleteTag = function(query) {
         console.log('query',query);
@@ -415,7 +427,9 @@ app.controller('editProjectCtrl',['$location','imageService','tagService','$scop
 	$scope.formData.status= $scope.formData.status || 'draft';
 	// $scope.formData.category= $scope.formData.category.id || '';
 	// $scope.formData.description= '';
-	$scope.formData.date= $scope.formData.date || '';
+  $scope.formData.date= $scope.formData.date || '';
+  $scope.formData.start= $scope.formData.start || '';
+	$scope.formData.end= $scope.formData.end || '';
 	// if(project.category)
 	// 	$scope.formData.category= project.category.id || '';
 	// else	
@@ -593,6 +607,20 @@ app.controller('editProjectCtrl',['$location','imageService','tagService','$scop
 
 	    $scope.opened = true;
 	  };
+
+    $scope.open1 = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.opened1 = true;
+    };
+    $scope.open2 = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.opened2 = true;
+    };
+
   	$scope.autocompleteTag = function(query) {
         console.log('query',query);
         return tagService.autocomplete(query);
@@ -621,7 +649,9 @@ app.controller('editProjectCtrl',['$location','imageService','tagService','$scop
 					// $scope.formData.status= $scope.formData.activeComent || true;
 					// $scope.formData.category= $scope.formData.category.id || '';
 					// $scope.formData.description= '';
-					$scope.formData.date= $scope.formData.date || '';
+          $scope.formData.date= $scope.formData.date || '';
+          $scope.formData.start= $scope.formData.start || '';
+					$scope.formData.end= $scope.formData.end || '';
 				}
 				document.body.scrollTop=0;
 		},function(data) {

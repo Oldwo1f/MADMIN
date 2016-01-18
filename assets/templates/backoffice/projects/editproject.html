@@ -49,6 +49,26 @@
 				            </span>
 				        	</p>
 		                </div>
+
+		        		<div class="form-group col-xs-12 col-md-4 col-lg-4 ">
+		                    <label >Date début</label>
+		                    <p class="input-group">
+		                    <input prevent-submit-enter type="text" required ng-date class="form-control" ng-model="formData.start" datepicker-popup="dd/MM/yyyy" name="start" is-open="opened1" close-text="Fermer" />
+		                    <span class="input-group-btn">
+				                <button type="button" class="btn btn-default" ng-click="open1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+				            </span>
+				        	</p>
+		                </div>	        		
+		        		<div class="form-group col-xs-12 col-md-4 col-lg-4 ">
+		                    <label >Date fin (optionel)</label>
+		                    <p class="input-group">
+		                    <input prevent-submit-enter type="text" ng-date class="form-control" ng-model="formData.end" datepicker-popup="dd/MM/yyyy" name="end" is-open="opened2" close-text="Fermer" />
+		                    <span class="input-group-btn">
+				                <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+				            </span>
+				        	</p>
+		                </div>
+
 		        		<div class="form-group col-xs-12 col-md-4 col-lg-4">
 		                    <label>Auteur </label>
 		                    <select prevent-submit-enter class="form-control"  ng-model="formData.author"  name="category" data-ng-options='author.id as author.pseudo for author in authorlist'>
