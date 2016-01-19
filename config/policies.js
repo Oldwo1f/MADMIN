@@ -72,6 +72,9 @@ module.exports.policies = {
   ArticleController: {
     '*': 'isAdmin',
   },
+  HtmlController: {
+    '*': true,
+  },
   CategoryProjectController: {
     '*': 'isAdmin',
     'add': ['ensureUniqueProjBlogName'],

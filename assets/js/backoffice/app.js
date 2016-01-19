@@ -1,4 +1,4 @@
-var app = angular.module('app', ['angular-loading-bar','ngAudio','stpa.morris','videosharing-embed','monospaced.elastic','ui.sortable','ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','minicolors','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop']);
+var app = angular.module('app', ['angular-loading-bar','ngAudio','stpa.morris','videosharing-embed','monospaced.elastic','ui.sortable','ngTagsInput','ui.router','ngLocale','markdownpreview','ui.bootstrap','angularFileUpload','MessageCenterModule','minicolors','ngFabForm','ngAnimate','satellizer','sails.io','angularMoment','chart.js','ngImgCrop','textAngular']);
 
 app.run(['amMoment', function(amMoment) {
     amMoment.changeLocale('fr');
@@ -141,6 +141,18 @@ app.config(['$stateProvider', '$urlRouterProvider', '$authProvider', function($s
                 }
             })  
 // USER            
+            .state('/.html', {
+                url: "html",
+                views: {
+                    '':{
+                        controller:'htmlCtrl',
+                        templateUrl:"/templates/backoffice/html/html.html"
+                    }
+                   
+                }
+            }) 
+
+             // USER            
             .state('/.users', {
                 url: "users?page&user&admin&membre&slug",
                 views: {

@@ -120,6 +120,15 @@ module.exports.routes = {
   'POST /project/add':'ProjectController.add',
   'DELETE /project/:id':'ProjectController.delete',
   'PUT /project':'ProjectController.update',
+  
+//HTML 
+  'GET /html/fetch':'HtmlController.fetchAll',
+  'GET /html/fetchone/:name':'HtmlController.fetch',
+  'POST /html/save':'HtmlController.savepage',
+  // 'GET /project/:id':'ProjectController.fetch',
+  // 'POST /project/add':'ProjectController.add',
+  // 'DELETE /project/:id':'ProjectController.delete',
+  // 'PUT /project':'ProjectController.update',
 
 //Params 
   'GET /getTraductions/:lang':'ParamsController.getTraductions',

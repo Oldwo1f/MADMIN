@@ -6,199 +6,74 @@
  */
  var Q = require('q')
  var Promise = require('bluebird');
+ var fs = require('fs');
+ var walk    = require('walk');
 
 module.exports = {
 		fetchAll:function(req,res,next) {
-		var filter = {}
-		filter.page = req.query.page || 1;
-		filter.perPage = req.query.perPage || 10;
-		filter.order = req.query.order || 'createdAt DESC';
-
 		
-		filter.slug = req.query.slug || '';
-		
-		async.parallel({
-		    data:function(callback){
-				Project.find({title:{'contains':filter.slug}}).populateAll().sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).exec(function (err,items){
-					
-						if(err)
-							callback(err)
-
-						// callback(null,items)
-						if(items.length>0)
-						{
-							async.map(items,
-							function(item,cb) {
-								// console.log('item',item);
-								async.map(item.images,
-								function(item1,cb1) {
-									// console.log('item1',item1);
-									Image.findOne(item1.image).exec(function(err,data) {
-										item1.image=data
-										cb1(null,item1)
-									})
-
-								},function(err, results) {
-									// console.log('results',results);
-									cb(null,results)
-								})
-							},
-							function(err,datas) {
-								callback(null,items);
-							})
-						}else{
-							callback(null)
-						}
-						
-				});
-				// Project.find({title:{'contains':filter.slug}}).populateAll().sort(filter.order).limit(filter.perPage).skip(filter.perPage*filter.page-filter.perPage).then(function(projects) {
-				    
-				// 	console.log('ids images',_.pluck(projects.images, 'image'));
-				//     var images = Image.find({
-				//         id: _.pluck(projects.images, 'image')
-				//       })
-				//       .then(function(images) {
-				//         return images;
-				//       });
-				//     return [projects, images];
-				// })
-				// .spread(function(projects, images) {
-				//     var images = _.indexBy(images, 'id');
-				//     //_.indexBy: Creates an object composed of keys generated from the results of running each element of the collection through the given callback. The corresponding value of each key is the last element responsible for generating the key
-				//     projects.comments = _.map(post.comments, function(comment) {
-				//       comment.user = images[comment.user];
-				//       return comment;
-				//     });
-				//     callback(null,post);
-				// })
-				// .catch(function(err) {
-				//     if (err) {
-				//       callback(err);
-				//     }
-				// });
-		    },
-		    count:function(callback){
-
-		            Project.count({title:{'contains':filter.slug}}).exec(function (err,count){
-						if(err)
-							callback(err)
-						callback(null,count)
-						
-				});
-		    }
-		},
-		function(err, results){
-				
-				// console.log(results);
-			if(err){
-
-				res.status(401).send(err);
-			}
-			else{
-
-				res.status(200).send({data:results.data,total:results.count})
-			}
-
 			
 
-		});
+			path = sails.config.PATH_TO_WEBSITE +'assets/templates'
+
+			var files   = [];
+	
+
+			var walker  = walk.walk(path, { followLinks: false });
+
+			walker.on('file', function(root, stat, next) {
+			    // Add this file to the list of files
+			    files.push({path :root + '/' + stat.name, name: stat.name.substring(0,stat.name.length-5)});
+			    next();
+			});
+
+			walker.on('end', function() {
+			    // console.log(files);
+			    res.send({data:files});
+			});
+			
+
 
 	},
+
+
+
+
 	fetch:function(req,res,next) {
 		
-		console.log("FETCH ONE ARTICLE");
+		console.log("FETCH ONE HTML PAGE");
+		// console.log(req.params.name);
+		path = sails.config.PATH_TO_WEBSITE +'assets/templates/'+req.params.name+'.html'
+
+		fs.readFile(path, 'utf8', function (err,data) {
+		  if (err) {
+		    return console.log(err);
+		  }
+		  // console.log(data);
+		res.send({data : data})
+		});
 		
-				Project.find(req.params.id).populateAll().exec(function (err,items){
-					
-						if(err)
-							callback(err)
+		   
+	},
 
-						// callback(null,items)
-						if(items.length>0)
-						{
-								var project= items[0];
-								// console.log('item',item);
-								async.series({
-								image:function(cbparalelle) {
-									async.map(project.images,
-									function(item1,cb1) {
-										// console.log('item1',item1);
-										Image.findOne(item1.image).exec(function(err,data) {
-											item1.image=data
-											cb1(null,item1)
-										})
+	savepage:function(req,res,next) {
+		
+		console.log("SAVE ONE HTML PAGE");
+		// console.log(req.body.name);
+		// console.log(req.body.page);
 
-									},function(err, results) {
-										// console.log('results',results);
-										cbparalelle(null,results)
-									})
-								},
-								document:function(cbparalelle) {
-									async.map(project.documents,
-									function(item1,cb1) {
-										// console.log('item1',item1);
-										Document.findOne(item1.document).exec(function(err,data) {
-											item1.document=data
-											cb1(null,item1)
-										})
 
-									},function(err, results) {
-										// console.log('results',results);
-										cbparalelle(null,results)
-									})
-								},
-								comment:function(cbparalelle) {
-											console.log('------------------------------');
-											// console.log(project.comments);
-											var allcomments = [];
-									async.mapSeries(project.comments,
-									function(item1,cb1) {
-										console.log('item1',item1);
-										Comment.find(item1.id).populate('reponses').exec(function(err,data) {
-											// item1.comment=data
-											console.log(data);
-											console.log('------------------------------');
-											// console.log(project.comments.indexOf(item1));
-											// item1=data
-											// project.comments.splice(project.comments.indexOf(item1),1,data[0])
-											allcomments.push(data[0])
-											// console.log(data);
-											cb1(null,item1)
-										})
 
-									},function(err, results) {
-										
-										project.comments=allcomments;
-										console.log('allcomments',allcomments);
-										cbparalelle(null,allcomments)
-									})
-								}},function(err,ress) {
+		path = sails.config.PATH_TO_WEBSITE +'assets/templates/'+req.body.name+'.html'
 
- 										console.log('DELETE');
-									if(project.category)
-										project.category=project.category.id;
-									if(project.author)
-										project.author=project.author.id;
-
-									var projecttogo = _.clone(project)
-
-									delete projecttogo.comments
-									projecttogo.comments=ress.comment
-									console.log(projecttogo.comments);
-									console.log(projecttogo);
-									console.log('Final Data');
-									console.log('fetch ONE Project', projecttogo);
-									res.status(200).send(projecttogo)
-								})
-								
-							}
-							
-								
-								// callback(null,items);
-
-	
-						
-				});
+		fs.writeFile(path, req.body.page,'utf8', function (err) {
+		  if (err) {
+		    // return console.log(err);
+		    res.send({response : 'err'})
+		  }
+		  // console.log('done');
+			res.send({response : 'ok'})
+		});
 		
 		   
 	},
@@ -826,7 +701,6 @@ module.exports = {
 			    oldproject.date= req.body.date;
 			    oldproject.start= req.body.start;
 			    oldproject.end= req.body.end;
-			    oldproject.evenement= req.body.evenement;
 			    console.log('here');
 			    oldproject.category= req.body.category;
 			        console.log('here2');

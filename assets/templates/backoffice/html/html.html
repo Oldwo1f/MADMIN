@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Mes pages HTML 
+        	<!-- <a ui-sref=".add"><div class="btn  btn-primary pull-right"><i class="fa fa-plus fa-fw"></i> Ajouter un évènement</div></a> -->
+        	<!--  <select prevent-submit-enter class="form-control" ng-change="changepage()" ng-model="selectedpage"  name="category" data-ng-options='page.name for page in list'>
+	                           
+	                        </select> -->
+        </h1>
+
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+	<div ui-view></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+        	 <div class="panel-heading-table ">
+            	<div class="row">
+	            	<div class="col-xs-12">
+	            		
+		        		
+                        <div class="form-group col-lg-9 col-md-8 pull-right" style="width:200px">
+		                    <label> </label>
+		                    <select prevent-submit-enter class="form-control" ng-change="changepage()" ng-model="selectedpage"  name="category" data-ng-options='page.name for page in list'>
+	                            <!-- <option   value="">FR</option>
+	                            <option   value="">EN</option>
+	                            <option   value="">ES</option> -->
+	                            <!-- <option  ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option> -->
+	                        </select>
+		                </div>
+                        <div class="form-group col-lg-9 col-md-8 pull-right" style="text-align:right;height: 46px;margin-top: 6px;">
+                            <label> </label>
+                            <p> <a ng-click="save()"><strong>Enregistrer</strong></a> vos modifications avant de changer de page.</p>
+                        </div>
+                    </div>
+            	</div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+            	<!-- <div text-angular ng-model="htmlVariable" ta-unsafe-sanitizer="true"></div> -->
+            	<textarea name="" class="texthtml" msd-elastic ng-model="currentPage"></textarea>
+        	</div>
+        	<div class="panel-footer" style="text-align:center">
+				<div class="row">
+					<div class="col-sm-8" style='margin-bottom:4px;'>
+						
+					   <!-- <p>Les pages html sont mise en cache par le site. Vous devez donc redemarer le site afin qu'elles soient prise en compte.</p><p>Vous pouvez redemarer le site depuis l'onglet administration.</p> -->
+		    			<!-- <a ui-sref="^"><div class="btn  btn-danger col-sm-12"><i class="fa fa-times fa-fw"></i> Annuler</div></a> -->
+					</div>
+					<div class="col-sm-4" style='margin-bottom:4px;'>
+						<a class="btn  btn-success col-sm-12" ng-click="save()" ><i class="fa fa-floppy-o fa-fw"></i> Enregistrer</a>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>

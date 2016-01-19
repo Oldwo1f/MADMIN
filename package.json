@@ -43,6 +43,7 @@
     "shortid": "^2.2.2",
     "socket.io-redis": "^0.1.4",
     "ua-parser-js": "^0.7.3",
+    "walk": "^2.3.9",
     "winston": "^1.0.0"
   },
   "scripts": {

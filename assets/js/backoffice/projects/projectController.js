@@ -240,7 +240,8 @@ app.controller('addProjectCtrl',['imageService','tagService','$scope', 'filterFi
 	$scope.formData.content='';
 	$scope.formData.description= '';
 	$scope.formData.date= new Date();
-	$scope.formData.status= 'draft';
+  $scope.formData.status= 'draft';
+	$scope.formData.evenement= 'article';
 	$scope.formData.tags= [];
 	$scope.formData.images=[]
 	$scope.formData.documents=[]
@@ -355,8 +356,6 @@ app.controller('addProjectCtrl',['imageService','tagService','$scope', 'filterFi
     console.log('ADDNEW Project');
 		console.log('$scope.formData',$scope.formData);
 		var rep = projectService.add($scope.formData).then(function(data) { 
-				// $state.go('/.categoriesBlog');
-        console.log('superimportant',data[0].id);
 				$scope.reload();
 				messageCenterService.add('success', 'Project ajouté', { status: messageCenterService.status.next ,timeout: 3000});
 				if(stay=='close'){

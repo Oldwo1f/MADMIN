@@ -17,6 +17,7 @@
 var cssFilesToInject = [
   '../bower_components/bootstrap/dist/css/bootstrap.min.css',
   'bower_components/angular-loading-bar/build/loading-bar.css',
+  '/bower_components/textAngular/dist/textAngular.css',
   'styles/**/*.css'
 ];
 
@@ -67,6 +68,9 @@ var jsFilesToInject = [
   'bower_components/angular-morris-chart/src/angular-morris-chart.js',
   'bower_components/angular-audio/app/angular.audio.js',
   'bower_components/angular-loading-bar/build/loading-bar.min.js',
+  '/bower_components/textAngular/dist/textAngular-rangy.min.js',
+  '/bower_components/textAngular/dist/textAngular-sanitize.min.js',
+  '/bower_components/textAngular/dist/textAngular.min.js',
   // 'bower_components/ng-load/ng-load.js',
   // 'bower_components/sb-admin-v2/demo/js/dashboard-demo.js',
   // 'js/plugin/jquery.js',
